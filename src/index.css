@@ -4,13 +4,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 :root {
-  --black: rgb(33, 39, 48);
+  --black: #212730;
   --black-50: rgb(33, 39, 48, 0.5);
   --black-10: rgb(33, 39, 48, 0.1);
   --grey: rgb(57, 62, 70);
+  --grey2: hsl(217, 10%, 20%);
   --blue: rgb(0, 93, 244);
   --blue-button-hover: hsl(217, 100%, 35%);
   --blue-button-active: hsl(217, 100%, 15%);
@@ -19,11 +21,11 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
   width: 100%;
   height: fit-content;
   background-color: var(--white);
   display: grid;
+  overflow-x: hidden;
 }
 
 .container {
@@ -44,21 +46,22 @@ h1 {
 }
 h2 {
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 500;
 }
 h3 {
   font-size: 28px;
 }
 h4 {
   font-size: 24px;
+  font-weight: 600;
 }
 h5 {
   font-size: 20px;
   font-weight: 300;
 }
 h6 {
-  font-weight: 300;
-  font-size: 13px;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 /* button */
@@ -83,13 +86,20 @@ h6 {
 }
 
 /* components_________________________________________ */
+
+/* header_________________________________________ */
 .header {
   width: 100%;
+  max-width: 1300px;
   height: fit-content;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px;
+  position: fixed;
+  background-color: var(--white);
+  border-radius: 10px;
+  z-index: 10;
 }
 .header img {
   cursor: pointer;
@@ -201,9 +211,110 @@ h6 {
   }
 }
 
+/* lowongan_________________________________________ */
+input[list]::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+.lowongan {
+  width: 100%;
+  gap: 20px;
+  height: fit-content;
+  background: #1e96ff;
+  background: linear-gradient(
+    45deg,
+    rgba(30, 150, 255, 1) 0%,
+    rgba(8, 75, 197, 1) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
+  color: var(--white);
+  border-radius: 30px;
+  margin: 20px 0;
+}
+.lowongan form {
+  background-color: var(--white);
+  width: 100%;
+  max-width: 950px;
+  border-radius: 20px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  align-items: center;
+  box-shadow: 5px 5px 10px 0 rgb(0, 0, 0, 0.25);
+  gap: 10px;
+}
+.lowongan form input {
+  font-size: 16px;
+  width: 100%;
+  border: transparent;
+  padding: 0 5px;
+}
+.lowongan form input:focus {
+  outline: transparent;
+}
+.lowongan form input:last-child {
+  background-color: red;
+}
+.lowongan form button {
+  width: 250px;
+  height: 60px;
+  border-radius: 0 20px 20px 0;
+  border: transparent;
+  font-size: 16px;
+  background-color: var(--grey);
+  color: var(--white);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.lowongan form button:hover {
+  background-color: var(--grey2);
+  transition: 0.3s;
+}
+.garis {
+  background-color: hsl(0, 0%, 70%);
+  width: 6px;
+  border-radius: 1px;
+  height: 40px;
+}
+.l-filter {
+  max-width: 950px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.lowongan select {
+  padding: 5px 20px;
+  width: auto;
+  min-width: fit-content;
+  background-color: transparent;
+  border: 2px solid var(--white);
+  border-radius: 50px;
+  font-size: 16px;
+  color: var(--white);
+  appearance: none;
+  background-image: url("./arrow-down2.svg");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+}
+.lowongan select:focus {
+  outline: none;
+}
+.lowongan option {
+  color: var(--black);
+}
 /*  */
 @media screen and (width < 1300px) {
   .container {
     padding: 0 20px;
+  }
+  .header {
+    left: 0;
+    padding: 10 20px;
   }
 }
