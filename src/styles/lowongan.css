@@ -75,3 +75,24 @@
   display: flex;
   gap: 10px;
 }
+
+@media screen and (width < 1100px) {
+  .k-list {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media screen and (width < 1000px) {
+  .k-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media screen and (width < 750px) {
+  .k-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (width < 500px) {
+  .k-list {
+    grid-template-columns: 1fr;
+  }
+}
