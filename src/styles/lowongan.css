@@ -1,0 +1,77 @@
+.kerja {
+  width: 100%;
+  height: fit-content;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+.k-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px;
+}
+.k-l-item {
+  box-shadow: 0 0 10px 0 rgb(0, 0, 0, 0.25);
+  border-radius: 10px;
+  background-color: var(--white);
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.k-l-item:hover {
+  color: var(--white);
+  background-color: var(--black);
+  transition: 0.3s;
+}
+
+.k-l-i-lihat {
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  gap: 10px;
+  background-color: var(--white-dark);
+  border-radius: 50px;
+  color: var(--black);
+  transition: 0.3s;
+}
+.k-l-i-lihat-on {
+  width: 100px;
+  transition: 0.3s;
+}
+.k-l-jenis {
+  display: flex;
+  padding: 5px 10px;
+  gap: 10px;
+  background-color: var(--black-10);
+  border-radius: 50px;
+  position: absolute;
+  right: 20px;
+}
+.k-l-jenis-on {
+  background-color: var(--white-dark);
+  color: var(--black);
+}
+/* pengaturan warna huruf */
+.k-l-item-white {
+  color: var(--white);
+}
+#k-l-i-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+#k-l-i-location {
+  display: flex;
+  gap: 10px;
+}

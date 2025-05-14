@@ -8,7 +8,7 @@
 }
 
 :root {
-  --black: #212730;
+  --black: #393e46;
   --black-50: rgb(33, 39, 48, 0.5);
   --black-10: rgb(33, 39, 48, 0.1);
   --grey: rgb(57, 62, 70);
@@ -405,8 +405,6 @@ input[list]::-webkit-calendar-picker-indicator {
   margin: 50px 0;
   gap: 20px;
 }
-.f-t-item {
-}
 .f-t-item li {
   list-style: none;
 }
@@ -513,4 +511,55 @@ input[list]::-webkit-calendar-picker-indicator {
     gap: 20px;
     text-align: center;
   }
+}
+
+/* pagination_________________________ */
+.pagination {
+  margin: 50px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  gap: 10px;
+}
+.p-item {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: transparent;
+  background-color: var(--white-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--black);
+}
+.pagig-on {
+  background-color: var(--blue);
+  color: var(--white);
+}
+.p-arrow {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--black);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.p-arrow:hover {
+  background-color: var(--black-10);
+}
+.p-bullet {
+  display: flex;
+  width: fit-content;
+  gap: 2px;
+}
+.p-b-item {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--black-50);
 }

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Lowongan from "./pages/Lowongan.jsx";
+import Kerja from "./pages/Kerja.jsx";
+import Home from "./pages/home.jsx";
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" Component={Home} />
-          <Route path="/lowongan" Component={Lowongan} />
+          <Route path="/lowongan" Component={Kerja} />
         </Routes>
       </BrowserRouter>
     </>

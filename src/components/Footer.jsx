@@ -93,7 +93,7 @@ export default function Footer() {
                   onClick={() => (window.location.href = "/lowongan")}
                   className="button-second"
                 >
-                  Mencari Pekerjaan
+                  Mencari Pekerjaan?
                 </button>
                 <button
                   onClick={() => (window.location.href = "/lowongan")}
