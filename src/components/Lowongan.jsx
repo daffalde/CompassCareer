@@ -12,6 +12,7 @@ export default function Lowongan() {
           <input type="text" placeholder="Pekerjaan apa?" />
           <div className="garis"></div>
           <input
+            id="lowongan-secondinput"
             list="prov"
             type="text"
             placeholder="Dari mana?"
@@ -24,7 +25,7 @@ export default function Lowongan() {
                 <option key={provinsi.id} value={provinsi.name}></option>
               ))}
           </datalist>
-          <img src="./arrow-down1.svg" alt="arrow down" />
+          <img id="arrow-down1" src="./arrow-down1.svg" alt="arrow down" />
           <button>Cari</button>
         </form>
         <div className="l-filter">

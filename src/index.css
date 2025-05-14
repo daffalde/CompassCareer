@@ -33,7 +33,6 @@ body {
   max-width: 1300px;
   width: 100%;
   height: fit-content;
-  min-height: 100vh;
 }
 
 p {
@@ -57,7 +56,7 @@ h4 {
 }
 h5 {
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 600;
 }
 h6 {
   font-weight: 600;
@@ -85,9 +84,33 @@ h6 {
   background-color: var(--blue-button-active);
 }
 
+.button-second {
+  font-size: 16px;
+  background-color: transparent;
+  border: 2px solid var(--black);
+  color: var(--black);
+  padding: 10px 20px;
+  border-radius: 500px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.button-second:hover {
+  background-color: var(--black-10);
+  transition: 0.3s;
+}
+.button-second:active {
+  background-color: var(--black-50);
+}
+
 /* components_________________________________________ */
 
 /* header_________________________________________ */
+.header-void {
+  width: 100%;
+  height: 80px;
+}
 .header {
   width: 100%;
   max-width: 1300px;
@@ -96,10 +119,32 @@ h6 {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  position: fixed;
   background-color: var(--white);
-  border-radius: 10px;
+  border-radius: 0 10px 10p 0;
   z-index: 10;
+  position: fixed;
+  animation: header-on 0.5s linear forwards;
+}
+.header-off {
+  top: -100px;
+  position: fixed;
+  animation: header-off 0.5s linear forwards;
+}
+@keyframes header-off {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: -100px;
+  }
+}
+@keyframes header-on {
+  0% {
+    top: -100px;
+  }
+  100% {
+    top: 0px;
+  }
 }
 .header img {
   cursor: pointer;
@@ -152,12 +197,14 @@ h6 {
   border-radius: 10px;
   position: absolute;
   right: 20px;
+  top: 0;
+  background-color: var(--white);
 }
 
 .hlm-wrap {
   width: 100%;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   left: 0;
   display: none;
 }
@@ -229,10 +276,11 @@ input[list]::-webkit-calendar-picker-indicator {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 50px 0;
+  padding: 50px 20px;
   color: var(--white);
   border-radius: 30px;
   margin: 20px 0;
+  text-align: center;
 }
 .lowongan form {
   background-color: var(--white);
@@ -316,5 +364,153 @@ input[list]::-webkit-calendar-picker-indicator {
   .header {
     left: 0;
     padding: 10 20px;
+  }
+}
+@media screen and (width < 600px) {
+  .lowongan {
+    padding: 20px;
+    width: 100%;
+  }
+  .lowongan h4 {
+    font-size: 20px;
+  }
+  .lowongan form,
+  .lowongan form button {
+    height: 50px;
+    width: 100%;
+  }
+  .lowongan form button {
+    width: 130px;
+  }
+  #lowongan-secondinput,
+  .garis {
+    display: none;
+  }
+  #arrow-down1 {
+    display: none;
+  }
+}
+
+/* Footer_________________________________________ */
+.footer {
+  background-color: var(--white-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.f-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin: 50px 0;
+  gap: 20px;
+}
+.f-t-item {
+}
+.f-t-item li {
+  list-style: none;
+}
+.f-t-item li a {
+  color: var(--black);
+  text-decoration: none;
+  line-height: 30px;
+  font-weight: 500;
+}
+.f-t-item li a:hover {
+  text-decoration: underline;
+}
+.f-t-item:first-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 10px;
+}
+.f-t-item:first-child span {
+  display: flex;
+  gap: 10px;
+}
+.f-t-item:first-child span button {
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: transparent;
+}
+.f-t-item:first-child span button:hover {
+  background-color: var(--black-10);
+}
+.f-t-item:not(:first-child) {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+}
+.f-t-item:last-child span {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.f-t-item:nth-child(3) span {
+  display: flex;
+  gap: 10px;
+}
+#f-t-i-img {
+  width: 150px;
+}
+.f-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--black-50);
+  padding: 10px 0;
+}
+.f-bottom span {
+  display: flex;
+  gap: 30px;
+}
+.f-bottom span a {
+  text-decoration: none;
+  color: var(--black);
+}
+.f-bottom span a:hover {
+  text-decoration: underline;
+}
+
+@media screen and (width < 1000px) {
+  .f-top {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (width < 750px) {
+  .f-top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (width < 550px) {
+  .f-top {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .f-t-item:first-child {
+    align-items: center;
+  }
+  .f-top:first-child span {
+    width: 100%;
+    justify-content: center;
+  }
+  .f-t-item:nth-child(3) span {
+    justify-content: center;
+  }
+  .f-bottom {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
   }
 }

@@ -6,7 +6,7 @@
 /* hero_____________________ */
 .h-hero {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -135,12 +135,13 @@
   font-size: 20px;
 }
 
-/* kategori_____________________ */
+/* lowongan_____________________ */
 .h-lowongan {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  margin: 50px 0;
 }
 .h-l-list {
   display: grid;
@@ -187,4 +188,81 @@
   justify-content: start;
   align-items: end;
   gap: 20px;
+}
+
+@media screen and (width <1200px) {
+  .h-l-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (width < 900px) {
+  .h-hero {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    height: fit-content;
+  }
+  #h-h-img {
+    width: 100%;
+  }
+  .h-h-action {
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    flex-direction: column;
+  }
+  .h-h-title {
+    width: 100%;
+  }
+  .h-h-title h1 {
+    font-size: 24px;
+  }
+
+  .h-kategori {
+    margin-top: 0;
+    margin-bottom: 250px;
+  }
+  .h-k-title {
+    width: 100%;
+    text-align: center;
+  }
+  .h-k-list {
+    position: absolute;
+    top: 180px;
+    width: 100%;
+    padding: 0;
+    padding: 10px;
+  }
+  .grad1,
+  .grad2 {
+    top: 180px;
+    width: 30px;
+  }
+  .h-lowongan {
+    flex-direction: column;
+  }
+  .h-l-list {
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+  }
+  .h-l-title {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+  .h-l-title h4 {
+    font-size: 20px;
+  }
+}
+@media screen and (width <700px) {
+  .h-l-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (width <500px) {
+  .h-l-list {
+    grid-template-columns: 1fr;
+  }
 }

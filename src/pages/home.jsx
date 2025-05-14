@@ -4,6 +4,8 @@ import "../styles/home.css";
 import Lowongan from "../components/Lowongan";
 import { HomeKategori } from "../data/DataSecondary";
 import { lowongan } from "../data/Data";
+import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -97,6 +99,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

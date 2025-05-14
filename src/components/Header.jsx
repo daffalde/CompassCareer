@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Header() {
@@ -6,10 +6,31 @@ export default function Header() {
 
   const [ham, setHam] = useState(false);
 
+  const [muncul, setMuncul] = useState(true);
+  const [nilai, setNilai] = useState(0);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    function headerScroll() {
+      setHam(false);
+      setMuncul(false);
+      setNilai(window.scrollY);
+      const currentY = window.scrollY;
+      if (currentY < lastY) {
+        setMuncul(true);
+      } else {
+        setMuncul(false);
+      }
+    }
+    window.addEventListener("scroll", headerScroll);
+    return () => removeEventListener("scroll", headerScroll);
+  });
+
   const path = window.location.pathname;
   return (
     <>
-      <div className="header">
+      <div className="header-void"></div>
+      <div className={`header ${muncul ? "" : "header-off"}`}>
         <img
           draggable={false}
           onClick={() => nav("/")}
@@ -55,6 +76,7 @@ export default function Header() {
       </div>
       <div
         onClick={() => setHam(false)}
+        onScroll={() => setHam(false)}
         className={`hlm-wrap ${ham ? "hlm-true" : ""}`}
       >
         <div className="header-list-mobile">
