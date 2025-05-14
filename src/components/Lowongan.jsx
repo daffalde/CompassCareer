@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { provinsi } from "../data/Provinsi";
+import { kategori } from "../data/Data";
 
-export default function Lowongan({ onSearch, onJenis, onTanggal, onGaji }) {
+export default function Lowongan({
+  onSearch,
+  onJenis,
+  onTanggal,
+  onGaji,
+  onKategori,
+}) {
   const [where, SetWhere] = useState("");
   const [cari, setCari] = useState("");
 
@@ -20,6 +27,10 @@ export default function Lowongan({ onSearch, onJenis, onTanggal, onGaji }) {
 
   function handleGaji(e) {
     onGaji(e.target.value);
+  }
+
+  function handleKategori(e) {
+    onKategori(e.target.value);
   }
 
   return (
@@ -79,6 +90,14 @@ export default function Lowongan({ onSearch, onJenis, onTanggal, onGaji }) {
             <option value="6-10">Rp 6-10 juta</option>
             <option value="11-50">Rp 11-50 juta</option>
             <option value="50">{`Rp >50 juta`}</option>
+          </select>
+          <select onChange={handleKategori}>
+            <option hidden value="" disabled selected>
+              Kategori
+            </option>
+            {kategori.map((e) => (
+              <option key={e.id}>{e.nama}</option>
+            ))}
           </select>
         </div>
       </div>

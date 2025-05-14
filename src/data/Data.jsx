@@ -6,7 +6,7 @@ export const lowongan = [
     nama: "FrontEnd Developer",
     gajiMin: 4000000,
     gajiMax: 5000000,
-    kategori: "Teknolgi IT",
+    kategori: "Teknologi IT",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:
@@ -33,7 +33,7 @@ export const lowongan = [
     nama: "Administrasi",
     gajiMin: 4000000,
     gajiMax: 5000000,
-    kategori: "Teknolgi IT",
+    kategori: "Administrasi",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:
@@ -57,10 +57,10 @@ export const lowongan = [
   {
     id: 3,
     tanggal: "2025-05-01",
-    nama: "FrontEnd Developer",
+    nama: "Marketing",
     gajiMin: 15000000,
     gajiMax: 20000000,
-    kategori: "Teknolgi IT",
+    kategori: "Pemasaran",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:
@@ -87,7 +87,7 @@ export const lowongan = [
     nama: "FrontEnd Developer",
     gajiMin: 4000000,
     gajiMax: 5000000,
-    kategori: "Teknolgi IT",
+    kategori: "Teknologi IT",
     jenis: "Magang",
     tingkat: "Pemula",
     tentang:
@@ -114,7 +114,7 @@ export const lowongan = [
     nama: "FrontEnd Developer",
     gajiMin: 7000000,
     gajiMax: 8000000,
-    kategori: "Teknolgi IT",
+    kategori: "Teknologi IT",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:
@@ -141,7 +141,7 @@ export const lowongan = [
     nama: "FrontEnd Developer",
     gajiMin: 4000000,
     gajiMax: 5000000,
-    kategori: "Teknolgi IT",
+    kategori: "Teknologi IT",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:
@@ -168,7 +168,7 @@ export const lowongan = [
     nama: "FrontEnd Developer",
     gajiMin: 4000000,
     gajiMax: 5000000,
-    kategori: "Teknolgi IT",
+    kategori: "Teknologi IT",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:
@@ -195,7 +195,7 @@ export const lowongan = [
     nama: "FrontEnd Developer",
     gajiMin: 4000000,
     gajiMax: 5000000,
-    kategori: "Teknolgi IT",
+    kategori: "Teknologi IT",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:
@@ -222,7 +222,7 @@ export const lowongan = [
     nama: "FrontEnd Developer",
     gajiMin: 4000000,
     gajiMax: 5000000,
-    kategori: "Teknolgi IT",
+    kategori: "Teknologi IT",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:
@@ -249,7 +249,7 @@ export const lowongan = [
     nama: "FrontEnd Developer",
     gajiMin: 4000000,
     gajiMax: 5000000,
-    kategori: "Teknolgi IT",
+    kategori: "Teknologi IT",
     jenis: "Full Time",
     tingkat: "Pemula",
     tentang:

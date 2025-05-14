@@ -20,6 +20,7 @@ export default function Kerja() {
   const [gajiMinResult, setGajiMinResult] = useState(0);
   const [gajiMaxResult, setGajiMaxResult] = useState(99999999999999);
   const [tanggalResult, SetTanggalResult] = useState(100000);
+  const [kategoriResult, setKategoriResult] = useState("");
 
   function handleSearch(data) {
     setSearchResult(data.pekerjaan);
@@ -68,6 +69,10 @@ export default function Kerja() {
     }
   }
 
+  function handleKategori(data) {
+    setKategoriResult(data);
+  }
+
   return (
     <>
       <div className="container">
@@ -78,6 +83,7 @@ export default function Kerja() {
             onJenis={handleJenis}
             onTanggal={handleTanggal}
             onGaji={handleGaji}
+            onKategori={handleKategori}
           />
           <div className="k-list">
             {currentItems
@@ -95,7 +101,10 @@ export default function Kerja() {
                     "[]"
                   ) &&
                   job.gajiMin >= gajiMinResult &&
-                  job.gajiMax <= gajiMaxResult
+                  job.gajiMax <= gajiMaxResult &&
+                  job.kategori
+                    .toLowerCase()
+                    .includes(kategoriResult.toLowerCase())
               )
               .map((e) => (
                 <div
