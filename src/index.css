@@ -356,6 +356,12 @@ input[list]::-webkit-calendar-picker-indicator {
 .lowongan option {
   color: var(--black);
 }
+
+/* location */
+#lowongan-filter {
+  display: none;
+}
+
 /*  */
 @media screen and (width < 1300px) {
   .container {
@@ -388,6 +394,9 @@ input[list]::-webkit-calendar-picker-indicator {
   }
   #arrow-down1 {
     display: none;
+  }
+  #lowongan-filter {
+    display: block;
   }
 }
 

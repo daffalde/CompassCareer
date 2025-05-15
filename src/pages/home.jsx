@@ -59,33 +59,28 @@ export default function Home() {
           </div>
           <div className="h-lowongan">
             <div className="h-l-list">
-              {Array(6)
-                .fill(lowongan[0])
-                .map((e) => (
-                  <div className="h-l-l-item" key={e.id}>
-                    <span>
-                      <p>{e.kategori}</p>
-                      <h6>{e.nama}</h6>
-                    </span>
-                    <div className="h-l-l-i-info">
-                      <img src="./location1.svg" alt="location image" />
-                      <p style={{ fontWeight: "600", color: "#212730" }}>
-                        Jakarta Selatan
-                      </p>
-                      <p>Full Time</p>
-                    </div>
-                    <div className="h-l-l-i-perusahaan">
-                      <span>
-                        <p>{e.tanggal}</p>
-                        <h6>{e.perusahaan.nama}</h6>
-                      </span>
-                      <img
-                        src="./data/perusahaan1.png"
-                        alt="perusahaan profil"
-                      />
-                    </div>
+              {lowongan.slice(0, 6).map((e) => (
+                <div className="h-l-l-item" key={e.id}>
+                  <span>
+                    <p>{e.kategori}</p>
+                    <h6>{e.nama}</h6>
+                  </span>
+                  <div className="h-l-l-i-info">
+                    <img src="./location1.svg" alt="location image" />
+                    <p style={{ fontWeight: "600", color: "#212730" }}>
+                      Jakarta Selatan
+                    </p>
+                    <p>Full Time</p>
                   </div>
-                ))}
+                  <div className="h-l-l-i-perusahaan">
+                    <span>
+                      <p>{e.tanggal}</p>
+                      <h6>{e.perusahaan.nama}</h6>
+                    </span>
+                    <img src="./data/perusahaan1.png" alt="perusahaan profil" />
+                  </div>
+                </div>
+              ))}
             </div>
             <div className="h-l-title">
               <h4>Lihat lowongan terbaru yang baru dipublikasikan</h4>

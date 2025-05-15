@@ -335,6 +335,34 @@ export const kategori = [
     id: "3",
     nama: "Pemasaran",
   },
+  {
+    id: "4",
+    nama: "Desain dan Kreatif",
+  },
+  {
+    id: "5",
+    nama: "Akuntansi",
+  },
+  {
+    id: "6",
+    nama: "Manajemen",
+  },
+  {
+    id: "7",
+    nama: "Teknik dan Industri",
+  },
+  {
+    id: "8",
+    nama: "Pendidikan",
+  },
+  {
+    id: "9",
+    nama: "Kesehatan dan Medis",
+  },
+  {
+    id: "10",
+    nama: "Pertanian",
+  },
   //dst...
 ];
 

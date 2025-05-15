@@ -34,7 +34,7 @@ export default function Header() {
         <img
           draggable={false}
           onClick={() => nav("/")}
-          src="./logo1.svg"
+          src="/logo1.svg"
           alt="logo"
         />
         <ul className="header-list">

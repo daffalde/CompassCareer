@@ -8,6 +8,7 @@ export default function Lowongan({
   onTanggal,
   onGaji,
   onKategori,
+  onLocation,
 }) {
   const [where, SetWhere] = useState("");
   const [cari, setCari] = useState("");
@@ -31,6 +32,10 @@ export default function Lowongan({
 
   function handleKategori(e) {
     onKategori(e.target.value);
+  }
+
+  function handleLocation(e) {
+    onLocation(e.target.value);
   }
 
   return (
@@ -65,7 +70,7 @@ export default function Lowongan({
         </form>
         <div className="l-filter">
           <select onChange={handleTanggal}>
-            <option hidden value="" disabled selected>
+            <option hidden selected>
               Tanggal diposting
             </option>
             <option value="hari">Hari ini</option>
@@ -95,9 +100,21 @@ export default function Lowongan({
             <option hidden value="" disabled selected>
               Kategori
             </option>
-            {kategori.map((e) => (
-              <option key={e.id}>{e.nama}</option>
-            ))}
+            {kategori
+              .sort((a, b) => a.nama.localeCompare(b.nama))
+              .map((e) => (
+                <option key={e.id}>{e.nama}</option>
+              ))}
+          </select>
+          <select onChange={handleLocation} id="lowongan-filter">
+            <option value="" hidden disabled selected>
+              Lokasi
+            </option>
+            {provinsi
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((e) => (
+                <option key={e.id}>{e.name}</option>
+              ))}
           </select>
         </div>
       </div>

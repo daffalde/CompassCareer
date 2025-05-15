@@ -7,8 +7,10 @@ import "../styles/lowongan.css";
 import usePagination from "../components/Pagination";
 import { Titik } from "../components/Bullet";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 export default function Kerja() {
+  const nav = useNavigate();
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const { currentItems, totalPages, nextPage, prevPage, page, currentPage } =
@@ -21,6 +23,7 @@ export default function Kerja() {
   const [gajiMaxResult, setGajiMaxResult] = useState(99999999999999);
   const [tanggalResult, SetTanggalResult] = useState(100000);
   const [kategoriResult, setKategoriResult] = useState("");
+  const [lokasiFilterResult, setLokasiFilterResult] = useState("");
 
   function handleSearch(data) {
     setSearchResult(data.pekerjaan);
@@ -72,6 +75,9 @@ export default function Kerja() {
   function handleKategori(data) {
     setKategoriResult(data);
   }
+  function hanldeLokasi(data) {
+    setLokasiFilterResult(data);
+  }
 
   return (
     <>
@@ -84,6 +90,7 @@ export default function Kerja() {
             onTanggal={handleTanggal}
             onGaji={handleGaji}
             onKategori={handleKategori}
+            onLocation={hanldeLokasi}
           />
           <div className="k-list">
             {currentItems
@@ -104,10 +111,14 @@ export default function Kerja() {
                   job.gajiMax <= gajiMaxResult &&
                   job.kategori
                     .toLowerCase()
-                    .includes(kategoriResult.toLowerCase())
+                    .includes(kategoriResult.toLowerCase()) &&
+                  job.perusahaan.provinsi
+                    .toLowerCase()
+                    .includes(lokasiFilterResult.toLocaleLowerCase())
               )
               .map((e) => (
                 <div
+                  onClick={() => nav(`/lowongan/${e.id}`)}
                   key={e.id}
                   onMouseOver={() => setHoveredItem(e.id)}
                   onMouseOut={() => setHoveredItem(null)}
