@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="container">
           <div className="f-top">
             <div className="f-t-item">
-              <img id="f-t-i-img" src="./logo3.svg" alt="logo footer" />
+              <img id="f-t-i-img" src="/logo3.svg" alt="logo footer" />
               <p>
                 Platform job portal yang membantu pencari kerja menemukan
                 peluang terbaik
@@ -18,28 +18,28 @@ export default function Footer() {
                     (window.location.href = "https://www.facebook.com/")
                   }
                 >
-                  <img src="./fb.svg" alt="facebook social media image" />
+                  <img src="/fb.svg" alt="facebook social media image" />
                 </button>
                 <button
                   onClick={() =>
                     (window.location.href = "https://www.instagram.com/")
                   }
                 >
-                  <img src="./ig.svg" alt="instagram social media image" />
+                  <img src="/ig.svg" alt="instagram social media image" />
                 </button>
                 <button
                   onClick={() =>
                     (window.location.href = "https://www.youtube.com/")
                   }
                 >
-                  <img src="./yt.svg" alt="youtube social media image" />
+                  <img src="/yt.svg" alt="youtube social media image" />
                 </button>
                 <button
                   onClick={() =>
                     (window.location.href = "https://mail.google.com/")
                   }
                 >
-                  <img src="./gl.svg" alt="email social media image" />
+                  <img src="/gl.svg" alt="email social media image" />
                 </button>
               </span>
             </div>
@@ -69,19 +69,19 @@ export default function Footer() {
                 </li>
                 <li>
                   <span>
-                    <img src="./mail1.svg" alt="logo mail hubungi kami" />
+                    <img src="/mail1.svg" alt="logo mail hubungi kami" />
                     <p>support@yourjobportal.com</p>
                   </span>
                 </li>
                 <li>
                   <span>
-                    <img src="./phone1.svg" alt="logo telepon hubungi kami" />
+                    <img src="/phone1.svg" alt="logo telepon hubungi kami" />
                     <p>+62 xxx-xxxx-xxxx</p>
                   </span>
                 </li>
                 <li>
                   <span>
-                    <img src="./location2.svg" alt="logo lokasi hubungi kami" />
+                    <img src="/location2.svg" alt="logo lokasi hubungi kami" />
                     <p>DKI Jakarta</p>
                   </span>
                 </li>

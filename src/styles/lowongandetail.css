@@ -1,0 +1,74 @@
+.t-f-l-b-wrap {
+  display: flex;
+  text-align: justify;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.body-left {
+  width: fit-content;
+}
+.body-right {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.body-right img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+}
+
+.body-gaji {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  cursor: default;
+}
+.body-gaji p {
+  color: hsl(0, 0%, 50%);
+}
+.body-gaji span {
+  width: 100%;
+}
+.b-g-detail {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+}
+
+.lowongan-lain-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+.lowongan-lain {
+  width: 100%;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.lowongan-lain:hover {
+  background-color: var(--white-dark);
+  transition: 0.2s;
+}
+.lowongan-lain img:first-child {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+}
+.lowongan-lain span {
+  display: flex;
+  gap: 10px;
+}

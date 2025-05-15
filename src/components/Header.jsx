@@ -71,7 +71,7 @@ export default function Header() {
           </div>
         </ul>
         <button onClick={() => setHam(!ham)} className="ham-button">
-          <img src="./ham.svg" alt="hamburger button" />
+          <img src="/ham.svg" alt="hamburger button" />
         </button>
       </div>
       <div
