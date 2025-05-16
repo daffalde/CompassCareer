@@ -291,7 +291,7 @@ export const perusahaan = [
   //bisa di tambah,hapus,edit
   {
     id: 1,
-    nama: "PT Astra Indonesia",
+    nama: "Tokopedia",
     profil: "/data/perusahaan1.png",
     email: "johndoe@example.com",
     situs: "https://www.astra.com",
@@ -342,7 +342,7 @@ export const perusahaan = [
     didirikan: "1960",
     bidang: "Industri Otomotif",
     lokasi: "Jakarta Selatan",
-    provinsi: "DKI Jakarta",
+    provinsi: "Jawa Barat",
     tentang:
       "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
     visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
