@@ -5,12 +5,20 @@ import { lowongan } from "../data/Data";
 import "../styles/lowongandetail.css";
 import "../styles/template.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Kerjadetail() {
   const url = window.location.pathname;
   const urlId = url.split("/").pop();
   const data = lowongan.filter((e) => e.id === Number(urlId));
   const nav = useNavigate();
+
+  useEffect(() => {
+    function StayUp() {
+      window.scrollTo({ top: 0 });
+    }
+    StayUp();
+  }, []);
 
   console.log(data[0]);
   return (
@@ -138,7 +146,10 @@ export default function Kerjadetail() {
                       .map((list) => (
                         <div
                           className="lowongan-lain"
-                          onClick={() => nav(`/lowongan/${list.id}`)}
+                          onClick={() => {
+                            window.scrollTo({ top: 0 });
+                            nav(`/lowongan/${list.id}`);
+                          }}
                           key={list.id}
                         >
                           <h6>{list.nama}</h6>

@@ -7,7 +7,7 @@ import "../styles/lowongan.css";
 import usePagination from "../components/Pagination";
 import { Titik } from "../components/Bullet";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Kerja() {
   const nav = useNavigate();
@@ -16,14 +16,27 @@ export default function Kerja() {
   const { currentItems, totalPages, nextPage, prevPage, page, currentPage } =
     usePagination(lowongan, 10);
 
+  const url = useLocation();
+  const params = new URLSearchParams(url.search);
+  const queryKategori = params.get("kategori");
+
   const [searchResult, setSearchResult] = useState("");
   const [lokasiResult, setLokasiResult] = useState("");
   const [jenisResult, setJenisResult] = useState("");
   const [gajiMinResult, setGajiMinResult] = useState(0);
   const [gajiMaxResult, setGajiMaxResult] = useState(99999999999999);
   const [tanggalResult, SetTanggalResult] = useState(100000);
-  const [kategoriResult, setKategoriResult] = useState("");
+  const [kategoriResult, setKategoriResult] = useState(
+    queryKategori == null ? "" : queryKategori
+  );
   const [lokasiFilterResult, setLokasiFilterResult] = useState("");
+
+  useEffect(() => {
+    function getTop() {
+      window.scrollTo({ top: 0 });
+    }
+    getTop();
+  }, []);
 
   function handleSearch(data) {
     setSearchResult(data.pekerjaan);

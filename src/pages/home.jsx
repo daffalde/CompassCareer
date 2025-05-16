@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import "../styles/home.css";
 import Lowongan from "../components/Lowongan";
 import { HomeKategori } from "../data/DataSecondary";
-import { lowongan } from "../data/Data";
+import { kategori, lowongan } from "../data/Data";
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 
 export default function Home() {
+  const nav = useNavigate();
   return (
     <>
       <div className="container">
@@ -30,7 +31,10 @@ export default function Home() {
             </div>
             <img id="h-h-img" src="./home1.png" alt="hero image" />
           </div>
-          <Lowongan />
+          <div className="h-search">
+            <Lowongan />
+            <div onClick={() => nav("/lowongan")} className="h-s-wrap"></div>
+          </div>
           <div className="h-kategori">
             <div className="h-k-title">
               <div className="the-void1"></div>
@@ -39,15 +43,19 @@ export default function Home() {
               </h4>
             </div>
             <div className="h-k-list">
-              {HomeKategori.map((e) => (
-                <div key={e.id} className="h-k-l-item">
-                  <img src={e.pic} alt="gambar kategori" />
+              {kategori.slice(0, 10).map((e, i) => (
+                <div
+                  onClick={() => nav(`/lowongan?kategori=${e.nama}`)}
+                  key={e.id}
+                  className="h-k-l-item"
+                >
+                  <img src={`/data/${e.nama}.svg`} alt="gambar kategori" />
                   <img
                     className="h-k-l-i-img2"
                     src="./arrow-diag1.svg"
                     alt="gambar panah selengkapnya kategori"
                   />
-                  <p>{e.name}</p>
+                  <p>{e.nama}</p>
                 </div>
               ))}
               <div className="h-k-l-item">
@@ -60,7 +68,11 @@ export default function Home() {
           <div className="h-lowongan">
             <div className="h-l-list">
               {lowongan.slice(0, 6).map((e) => (
-                <div className="h-l-l-item" key={e.id}>
+                <div
+                  className="h-l-l-item"
+                  onClick={() => nav(`/lowongan/${e.id}`)}
+                  key={e.id}
+                >
                   <span>
                     <p>{e.kategori}</p>
                     <h6>{e.nama}</h6>

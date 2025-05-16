@@ -16,7 +16,7 @@ export default function Header() {
       setMuncul(false);
       setNilai(window.scrollY);
       const currentY = window.scrollY;
-      if (currentY < lastY) {
+      if (currentY < lastY || currentY == 0) {
         setMuncul(true);
       } else {
         setMuncul(false);

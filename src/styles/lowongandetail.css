@@ -58,6 +58,18 @@
   padding: 5px 10px;
   cursor: pointer;
   transition: 0.2s;
+  position: relative;
+}
+.lowongan-lain::after {
+  content: "";
+  border: 1px solid var(--black-10);
+  width: 95%;
+  display: block;
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%);
 }
 .lowongan-lain:hover {
   background-color: var(--white-dark);
@@ -71,4 +83,10 @@
 .lowongan-lain span {
   display: flex;
   gap: 10px;
+}
+
+@media screen and (width < 500px) {
+  .lowongan-lain p {
+    font-size: 13px;
+  }
 }

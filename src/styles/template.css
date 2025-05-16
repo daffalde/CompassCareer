@@ -177,4 +177,11 @@
   .t-h-b-desc p {
     font-size: 10px;
   }
+  .t-f-l-body {
+    box-shadow: none;
+    padding: 0;
+  }
+  .body-right {
+    width: 100%;
+  }
 }

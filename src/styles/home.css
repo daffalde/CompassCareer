@@ -35,6 +35,17 @@
   width: 500px;
 }
 
+/* search */
+.h-search {
+  position: relative;
+}
+.h-s-wrap {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  height: 430px;
+}
+
 /* kategori_____________________ */
 .h-kategori {
   width: 100%;
