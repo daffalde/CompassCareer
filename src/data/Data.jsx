@@ -306,6 +306,205 @@ export const perusahaan = [
     lowongan: [
       {
         id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 2,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 3,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 4,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 5,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 6,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 7,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 8,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 9,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
+        //ini ke data lowongan
+      },
+    ],
+  },
+  {
+    id: 10,
+    nama: "PT Astra Indonesia",
+    profil: "/data/perusahaan1.png",
+    email: "johndoe@example.com",
+    situs: "https://www.astra.com",
+    didirikan: "1960",
+    bidang: "Industri Otomotif",
+    lokasi: "Jakarta Selatan",
+    provinsi: "DKI Jakarta",
+    tentang:
+      "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+    visi: "Pertumbuhan berkelanjutan melalui inovasi dan efisiensi operasional.\nPengembangan sumber daya manusia untuk menciptakan tenaga kerja yang kompeten dan berdaya saing.\nTanggung jawab sosial dan lingkungan, memastikan bahwa bisnis yang dijalankan memberikan dampak positif bagi masyarakat dan ekosistem.",
+    misi: "Inovasi & daya saing – Mengembangkan produk dan layanan unggul.\nPengembangan SDM – Investasi dalam pelatihan dan kesejahteraan karyawan.\nEfisiensi operasional – Optimalisasi teknologi dan strategi bisnis.\nTanggung jawab sosial & lingkungan – Program keberlanjutan untuk masyarakat dan ekosistem.\nKemitraan strategis – Membangun hubungan erat dengan mitra bisnis dan komunitas.",
+    lowongan: [
+      {
+        id: 1,
+        nama: "Web Developer",
         //ini ke data lowongan
       },
     ],

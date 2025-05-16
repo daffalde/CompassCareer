@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Kerja from "./pages/Kerja.jsx";
 import Home from "./pages/home.jsx";
 import Kerjadetail from "./pages/Kerjadetail.jsx";
+import Perusahaan from "./pages/Perusahaan.jsx";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           <Route path="/" Component={Home} />
           <Route path="/lowongan" Component={Kerja} />
           <Route path="/lowongan/:id" Component={Kerjadetail} />
+          <Route path="/perusahaan" Component={Perusahaan} />
         </Routes>
       </BrowserRouter>
     </>
