@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 
 export default function Header() {
   const nav = useNavigate();
+  const [ham, setHam] = useState(false);
 
   // cek user
   const [cekUser, setCekUser] = useState(false);
@@ -37,6 +38,7 @@ export default function Header() {
               </li>
               <li>
                 <button
+                  onClick={() => setHam(true)}
                   style={{ backgroundImage: `url("${userData.profil}")` }}
                   id="user-profil"
                 ></button>
@@ -242,8 +244,6 @@ export default function Header() {
   }
   // ____________________________________________________________
 
-  const [ham, setHam] = useState(false);
-
   const [muncul, setMuncul] = useState(true);
   const [nilai, setNilai] = useState(0);
 
@@ -316,8 +316,8 @@ export default function Header() {
         className={`hlm-wrap ${ham ? "hlm-true" : ""}`}
       >
         {/* header ham menu______________________________________ */}
-        {loginUserHam()}
       </div>
+      {ham && loginUserHam()}
     </>
   );
 }
