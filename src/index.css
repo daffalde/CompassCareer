@@ -106,6 +106,26 @@ h6 {
   background-color: var(--black-50);
 }
 
+.button-signout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: #ff2323;
+  color: var(--white);
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 10px 15px;
+  border: transparent;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 15px;
+}
+.button-signout:hover {
+  background-color: hsl(0, 100%, 40%);
+  transition: 0.3s;
+}
+
 /* components_________________________________________ */
 
 /* header_________________________________________ */
@@ -163,6 +183,19 @@ h6 {
   align-items: center;
   gap: 30px;
 }
+#user-profil {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid var(--black-10);
+
+  cursor: pointer;
+}
+#user-profil:hover {
+  border: 3px solid var(--black-50);
+}
 .header-list a {
   text-decoration: none;
   font-weight: 600;
@@ -202,6 +235,10 @@ h6 {
   top: 0;
   background-color: var(--white);
 }
+.header-list-mobile ul {
+  display: flex;
+  flex-direction: column;
+}
 
 .hlm-wrap {
   width: 100%;
@@ -233,15 +270,60 @@ h6 {
   color: var(--black);
   font-weight: 500;
 }
-.hlm-navigasi {
-  margin-bottom: 10px;
-}
 .hlm-action {
   display: flex;
   justify-content: end;
   align-items: center;
 }
 
+/* _________________ */
+.hlm-user {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: default;
+}
+.hlm-u-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+.gap-ham {
+  border: 1px solid var(--black-10);
+}
+.hlm-cv-up {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+}
+.input-file-class {
+  width: 100px;
+  height: 140px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: var(--white-dark);
+  z-index: 2;
+}
+#input-file {
+  display: none;
+}
+.hlm-cv-up-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  height: 140px;
+}
 @media screen and (width < 800px) {
   .ham-button {
     display: block;

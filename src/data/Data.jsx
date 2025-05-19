@@ -291,6 +291,7 @@ export const perusahaan = [
   //bisa di tambah,hapus,edit
   {
     id: 1,
+    role: "perusahaan",
     nama: "Tokopedia",
     profil: "/data/perusahaan1.png",
     email: "johndoe@example.com",
@@ -529,7 +530,9 @@ export const user = [
   //bisa di tambah,hapus,edit
   {
     id: 1,
+    role: "pelamar",
     nama: "john doe",
+    profil: "/data/user.jpg",
     email: "johndoe@example.com",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
