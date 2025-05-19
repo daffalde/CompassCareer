@@ -6,6 +6,7 @@ import Perusahaan from "./pages/Perusahaan.jsx";
 import Perusahaandetail from "./pages/Perusahaandetail.jsx";
 import Aboutus from "./pages/Aboutus.jsx";
 import Login from "./pages/Login.jsx";
+import Logout from "./pages/Logout.jsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/perusahaan/:id" Component={Perusahaandetail} />
           <Route path="/tentang" Component={Aboutus} />
           <Route path="/login" Component={Login} />
+          <Route path="/signup" Component={Logout} />
         </Routes>
       </BrowserRouter>
     </>
