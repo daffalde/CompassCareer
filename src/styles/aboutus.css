@@ -1,0 +1,238 @@
+/* firts page */
+
+.aboutus-head {
+  width: 100%;
+  height: calc(100vh - 85px);
+  border-radius: 30px;
+  background-image: url("/about-header.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  flex-direction: column;
+}
+.aboutus-head h1 {
+  font-size: 35px;
+}
+.aboutus-head span {
+  display: flex;
+  gap: 20px;
+}
+.aboutus-head span button {
+  height: 60px;
+  width: 300px;
+}
+.aboutus-head span button:nth-child(2) {
+  padding: 0 20px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: var(--white);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.aboutus-head span button:nth-child(2):hover {
+  background-color: var(--white-dark);
+  transition: 0.3s;
+}
+
+/* second page */
+.aboutus-about {
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+}
+.a-a-left,
+.a-a-rigth {
+  width: 50%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
+}
+.a-a-left img {
+  width: 100%;
+}
+.a-a-rigth p {
+  text-align: justify;
+}
+
+/* third page */
+.aboutus-benefit {
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+}
+#person-working {
+  width: 100%;
+  border-radius: 30px;
+  box-shadow: 0 0 50px 20px hsl(0, 0%, 85%);
+}
+.a-a-right span {
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+  margin-top: 10px;
+}
+.a-a-right span img {
+  width: 25px;
+}
+
+/* gap */
+.aboutus-gap {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  background-color: var(--white-dark);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.aboutus-gap p {
+  color: hsl(0, 0%, 50%);
+}
+
+/* timeline */
+.aboutus-timeline {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+}
+.a-t-left {
+  width: 50%;
+  border-right: 2px solid var(--black-10);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: end;
+  padding: 0 30px;
+}
+.a-t-right {
+  width: 50%;
+  border-left: 2px solid var(--black-10);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding: 0 30px;
+}
+
+/* _______________________________ */
+.a-t-b {
+  margin-bottom: 180px;
+}
+.a-t-blue {
+  background: #005df4;
+  background: #669ffa;
+  background: linear-gradient(
+    90deg,
+    rgba(102, 159, 250, 1) 0%,
+    rgba(0, 93, 244, 1) 100%
+  );
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 50px;
+  position: relative;
+  text-align: end;
+}
+.a-t-blue::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 50%;
+  bottom: 50%;
+  transform: translateY(-50%);
+  right: -41.5px;
+  background: #005df4;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 93, 244, 1) 0%,
+    rgba(102, 159, 250, 1) 100%
+  );
+}
+
+.a-t-desc {
+  text-align: end;
+  margin-top: 10px;
+}
+.a-t-desc p {
+  display: block;
+  box-shadow: 0 0 10px 0 hsl(0, 0%, 75%);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+/* _____________________ */
+.a-t-b-2 {
+  top: 150px;
+  margin-bottom: 180px;
+  position: relative;
+}
+
+.a-t-blue2 {
+  background: #005df4;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 93, 244, 1) 0%,
+    rgba(102, 159, 250, 1) 100%
+  );
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 50px;
+  position: relative;
+  text-align: start;
+}
+.a-t-blue2::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 50%;
+  bottom: 50%;
+  transform: translateY(-50%);
+  left: -41.5px;
+  background: #005df4;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 93, 244, 1) 0%,
+    rgba(102, 159, 250, 1) 100%
+  );
+}
+
+.a-t-desc2 {
+  text-align: start;
+  margin-top: 10px;
+}
+.a-t-desc2 p {
+  display: block;
+  box-shadow: 0 0 10px 0 hsl(0, 0%, 75%);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 5px;
+}

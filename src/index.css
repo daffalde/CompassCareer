@@ -13,7 +13,7 @@
   --black-10: rgb(33, 39, 48, 0.1);
   --grey: rgb(57, 62, 70);
   --grey2: hsl(217, 10%, 20%);
-  --blue: rgb(0, 93, 244);
+  --blue: #005df4;
   --blue-button-hover: hsl(217, 100%, 35%);
   --blue-button-active: hsl(217, 100%, 15%);
   --white: rgb(255, 255, 255);
