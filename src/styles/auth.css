@@ -1,0 +1,130 @@
+.auth-head {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.auth-head img {
+  cursor: pointer;
+}
+.auth-body {
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* auth form */
+.a-b-content {
+  width: 450px;
+  height: fit-content;
+  border-radius: 20px;
+  box-shadow: 0 0 10px 0 hsl(0, 0%, 75%);
+  padding: 50px 50px;
+  text-align: center;
+  gap: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.a-b-content form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.a-b-content form span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+}
+.a-b-content form input {
+  width: 100%;
+  font-size: 16px;
+  padding: 6px 5px;
+  border: 3px solid var(--black-10);
+  border-radius: 5px;
+}
+.a-b-content form span:nth-child(2) {
+  position: relative;
+}
+#show-pass {
+  position: absolute;
+  bottom: 0;
+  height: 40px;
+  right: 0;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: transparent;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: 0.3s;
+}
+#show-pass:active {
+  background-color: var(--black-10);
+  transition: 0.3s;
+}
+
+.button-auth {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.auth-body a {
+  color: var(--black);
+  text-decoration: none;
+  font-weight: 600;
+}
+.auth-body a:hover {
+  text-decoration: underline;
+}
+.oauth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.oauth button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid var(--black-10);
+  font-weight: 500;
+  cursor: pointer;
+  background-color: var(--white);
+  transition: 0.3s;
+}
+.oauth button:hover {
+  background-color: var(--black-10);
+  transition: 0.3s;
+}
+
+@media screen and (width < 600px) {
+  .auth-body {
+    height: fit-content;
+    padding: 40px 0;
+  }
+  .a-b-content {
+    width: 100%;
+    padding: 0;
+    box-shadow: none;
+  }
+}

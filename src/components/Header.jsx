@@ -66,7 +66,9 @@ export default function Header() {
           </div>
           <div className="h-action">
             <li>
-              <button className="button-main">Masuk</button>
+              <button onClick={() => nav("/login")} className="button-main">
+                Masuk
+              </button>
             </li>
           </div>
         </ul>
@@ -95,7 +97,9 @@ export default function Header() {
 
             <div className="hlm-action">
               <li>
-                <button className="button-main">Masuk</button>
+                <button onClick={() => nav("/login")} className="button-main">
+                  Masuk
+                </button>
               </li>
             </div>
           </ul>

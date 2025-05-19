@@ -5,6 +5,7 @@ import Kerjadetail from "./pages/Kerjadetail.jsx";
 import Perusahaan from "./pages/Perusahaan.jsx";
 import Perusahaandetail from "./pages/Perusahaandetail.jsx";
 import Aboutus from "./pages/Aboutus.jsx";
+import Login from "./pages/Login.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/perusahaan" Component={Perusahaan} />
           <Route path="/perusahaan/:id" Component={Perusahaandetail} />
           <Route path="/tentang" Component={Aboutus} />
+          <Route path="/login" Component={Login} />
         </Routes>
       </BrowserRouter>
     </>
