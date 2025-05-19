@@ -67,6 +67,16 @@ export default function Logout() {
                   />
                 </button>
               </span>
+              <span id="role">
+                <label for="role">Role</label>
+                <select id="role">
+                  <option value="" hidden selected>
+                    Pelamar/Perusahaan
+                  </option>
+                  <option value="pelamar">Pelamar</option>
+                  <option value="perusahaan">Perusahaan</option>
+                </select>
+              </span>
               <button className="button-main button-auth">Daftar</button>
             </form>
             <div className="auth-gap"></div>

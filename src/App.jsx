@@ -7,6 +7,7 @@ import Perusahaandetail from "./pages/Perusahaandetail.jsx";
 import Aboutus from "./pages/Aboutus.jsx";
 import Login from "./pages/Login.jsx";
 import Logout from "./pages/Logout.jsx";
+import Test from "./pages/Test.jsx";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/tentang" Component={Aboutus} />
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={Logout} />
+
+          <Route path="/test" Component={Test} />
         </Routes>
       </BrowserRouter>
     </>

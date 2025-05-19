@@ -614,3 +614,23 @@ export const skill = [
   },
   //dst...
 ];
+
+// _________________testing login
+const userTes = [
+  {
+    id: 1,
+    name: "John Doe",
+    email: "johdoe@gmail.com",
+    password: "12345678",
+    role: "pelamar",
+    token: "oasndawubdaowndoaw",
+  },
+  {
+    id: 1,
+    name: "Tokopedia",
+    email: "tokopedia@gmail.com",
+    password: "12345678",
+    role: "perusahaan",
+    token: "oasndawubdaowndoaw",
+  },
+];
