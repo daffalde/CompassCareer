@@ -297,6 +297,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:
@@ -309,6 +310,10 @@ export const perusahaan = [
         nama: "Web Developer",
         //ini ke data lowongan
       },
+      {
+        id: 2,
+        nama: "Product Manager",
+      },
     ],
   },
   {
@@ -319,6 +324,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:
@@ -341,6 +347,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "Jawa Barat",
     tentang:
@@ -363,6 +370,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:
@@ -385,6 +393,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:
@@ -407,6 +416,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:
@@ -429,6 +439,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:
@@ -451,6 +462,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:
@@ -473,6 +485,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:
@@ -495,6 +508,7 @@ export const perusahaan = [
     situs: "https://www.astra.com",
     didirikan: "1960",
     bidang: "Industri Otomotif",
+    karyawan: ">10.000",
     lokasi: "Jakarta Selatan",
     provinsi: "DKI Jakarta",
     tentang:

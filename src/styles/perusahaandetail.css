@@ -1,0 +1,10 @@
+.info-perusahaan {
+  width: 100%;
+}
+.info-perusahaan span {
+  display: flex;
+}
+.info-perusahaan span p:first-child {
+  display: block;
+  width: 200px;
+}

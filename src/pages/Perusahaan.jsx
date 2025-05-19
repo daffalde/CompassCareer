@@ -5,8 +5,10 @@ import "../styles/perusahaan.css";
 import { lowongan, perusahaan } from "../data/Data";
 import Footer from "../components/Footer";
 import usePagination from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
 
 export default function Perusahaan() {
+  const nav = useNavigate();
   const inputCari = useRef("");
   const [inputLokasi, setInputLokasi] = useState("");
   const [lokasi, setLokasi] = useState("");
@@ -74,7 +76,11 @@ export default function Perusahaan() {
                 e.provinsi.toLowerCase().includes(lokasi.toLowerCase())
             )
             .map((e) => (
-              <div className="p-b-list" key={e.id}>
+              <div
+                className="p-b-list"
+                onClick={() => nav(`/perusahaan/${e.id}`)}
+                key={e.id}
+              >
                 <button className="p-b-l-save">
                   <img src="/save1.svg" alt="save icon" />
                 </button>

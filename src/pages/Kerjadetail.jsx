@@ -19,8 +19,6 @@ export default function Kerjadetail() {
     }
     StayUp();
   }, []);
-
-  console.log(data[0]);
   return (
     <>
       <div className="container">
