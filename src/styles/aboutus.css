@@ -41,6 +41,19 @@
   transition: 0.3s;
 }
 
+@media screen and (width < 700px) {
+  .aboutus-head span {
+    width: 100%;
+  }
+  .aboutus-head span button {
+    width: 100%;
+  }
+}
+@media screen and (width < 500px) {
+  .aboutus-head span {
+    flex-direction: column;
+  }
+}
 /* second page */
 .aboutus-about {
   width: 100%;
@@ -67,6 +80,39 @@
   text-align: justify;
 }
 
+@media screen and (width < 900px) {
+  .aboutus-about {
+    flex-direction: column;
+    gap: 0;
+    height: fit-content;
+    margin: 80px 0;
+  }
+  .a-a-left,
+  .a-a-rigth {
+    width: 100%;
+  }
+  .aboutus-head h1 {
+    font-size: 30px;
+  }
+}
+
+@media screen and (width < 500px) {
+  .aboutus-about {
+    flex-direction: column;
+    gap: 0;
+    height: fit-content;
+    margin: 80px 0;
+  }
+  .a-a-left,
+  .a-a-rigth {
+    width: 100%;
+  }
+  .aboutus-head h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+}
+
 /* third page */
 .aboutus-benefit {
   width: 100%;
@@ -91,22 +137,40 @@
 .a-a-right span img {
   width: 25px;
 }
+@media screen and (width < 800px) {
+  .aboutus-benefit {
+    flex-direction: column;
+    margin: 80px 0;
+    gap: 50px;
+    height: fit-content;
+  }
+}
 
 /* gap */
 .aboutus-gap {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 100%;
   height: fit-content;
   background-color: var(--white-dark);
   border-radius: 20px;
   padding: 40px;
   text-align: center;
-  justify-content: center;
-  align-items: center;
   gap: 30px;
 }
 .aboutus-gap p {
   color: hsl(0, 0%, 50%);
+}
+
+@media screen and (width < 800px) {
+  .aboutus-gap {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (width < 500px) {
+  .aboutus-gap {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* timeline */
@@ -235,4 +299,28 @@
   padding: 10px;
   border-radius: 10px;
   margin-top: 5px;
+}
+
+.atb-hide {
+  display: none;
+}
+
+@media screen and (width < 700px) {
+  .aboutus-timeline {
+    height: fit-content;
+  }
+  .a-t-left {
+    display: none;
+  }
+  .atb-hide {
+    display: block;
+  }
+  .a-t-right {
+    padding: 0 30px;
+    width: 100%;
+  }
+  .a-t-b-2 {
+    margin-bottom: 50px;
+    top: 0;
+  }
 }

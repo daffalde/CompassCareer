@@ -72,7 +72,8 @@ export default function Aboutus() {
           <span>
             <h1>{user.length}+</h1>
             <p>
-              Sudah ada {user.length} pelamar yang bergabung kesempatan baru.
+              Sudah ada {user.length} pelamar yang bergabung untuk kesempatan
+              baru.
             </p>
           </span>
         </div>
@@ -128,7 +129,7 @@ export default function Aboutus() {
         <br />
         <div className="aboutus-timeline">
           <div className="a-t-left">
-            <span className="a-t-b">
+            <span className="a-t-b atb-show">
               <div className="a-t-blue">#1 Daftar & Buat Profil</div>
               <div className="a-t-desc">
                 <p>
@@ -137,7 +138,7 @@ export default function Aboutus() {
                 </p>
               </div>
             </span>
-            <span className="a-t-b">
+            <span className="a-t-b atb-show">
               <div className="a-t-blue">#3 Temukan Pekerjaan</div>
               <div className="a-t-desc">
                 <p>
@@ -148,6 +149,17 @@ export default function Aboutus() {
             </span>
           </div>
           <div className="a-t-right">
+            {/* hide first */}
+            <span className="a-t-b-2 atb-hide">
+              <div className="a-t-blue2">#1 Daftar & Buat Profil</div>
+              <div className="a-t-desc2">
+                <p>
+                  Registrasi akun dan lengkapi profil dengan informasi pribadi
+                  serta keahlian Anda.
+                </p>
+              </div>
+            </span>
+            {/* _______________________ */}
             <span className="a-t-b-2">
               <div className="a-t-blue2">#2 Unggah CV</div>
               <div className="a-t-desc2">
@@ -157,6 +169,17 @@ export default function Aboutus() {
                 </p>
               </div>
             </span>
+            {/* hide first */}
+            <span className="a-t-b-2 atb-hide">
+              <div className="a-t-blue2">#3 Temukan Pekerjaan</div>
+              <div className="a-t-desc2">
+                <p>
+                  Jelajahi lowongan yang cocok dan dapatkan rekomendasi otomatis
+                  berdasarkan CV Anda.
+                </p>
+              </div>
+            </span>
+            {/* _______________________ */}
             <span className="a-t-b-2">
               <div className="a-t-blue2">#4 Lamar & Pantau Status</div>
               <div className="a-t-desc2">
