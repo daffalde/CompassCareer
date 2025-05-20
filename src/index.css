@@ -69,8 +69,7 @@ h6 {
   background-color: var(--blue);
   border: transparent;
   color: var(--white);
-  padding: 0 20px;
-  height: 40px;
+  padding: 10px 20px;
   border-radius: 500px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
@@ -90,8 +89,7 @@ h6 {
   background-color: transparent;
   border: 2px solid var(--black);
   color: var(--black);
-  padding: 0 20px;
-  height: 40px;
+  padding: 10px 20px;
   border-radius: 500px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;

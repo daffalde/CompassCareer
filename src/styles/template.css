@@ -40,6 +40,8 @@
   border-radius: 10px;
   position: absolute;
   top: 60px;
+  object-fit: cover;
+  object-position: center;
 }
 .t-h-bottom {
   width: 100%;
@@ -140,12 +142,18 @@
   background-color: var(--white-dark);
   display: flex;
   width: fit-content;
+  height: fit-content;
   padding: 10px 20px;
   border-radius: 50px;
   color: var(--black);
   cursor: default;
+  transition: 0.3s;
+  gap: 10px;
 }
-
+.s-item:hover {
+  transform: scale(1.13);
+  transition: 0.3s;
+}
 .paragraph {
   width: 100%;
   text-align: justify;

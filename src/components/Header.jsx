@@ -7,7 +7,7 @@ export default function Header() {
   const [ham, setHam] = useState(false);
 
   // get lebar window
-  const [lebar, setLebar] = useState(0);
+  const [lebar, setLebar] = useState(window.innerWidth);
   useEffect(() => {
     function handleLebar() {
       setLebar(window.innerWidth);
@@ -49,11 +49,6 @@ export default function Header() {
           <>
             <div className="h-action">
               <li>
-                <button onClick={() => nav("/login")} className="button-main">
-                  Upload CV
-                </button>
-              </li>
-              <li>
                 <button
                   onClick={() => setHam(true)}
                   style={{ backgroundImage: `url("${userData.profil}")` }}
@@ -75,6 +70,7 @@ export default function Header() {
               </li>
               <li>
                 <button
+                  onClick={() => setHam(true)}
                   style={{ backgroundImage: `url("${userData.profil}")` }}
                   id="user-profil"
                 ></button>
@@ -169,36 +165,36 @@ export default function Header() {
                       </li>
                     </div>
                     <div className="gap-ham"></div>
-                    {/* cv_____________ */}
-                    <form className="hlm-cv-up">
-                      <div className="hlm-cv-up-left">
-                        <label className="input-file-class" for="input-file">
-                          {pdfFile ? (
-                            <>
-                              <img src="/pdf.svg" alt="upload icon" />
-                              <p>{pdfFile.name}</p>
-                            </>
-                          ) : (
-                            <img src="/upload.svg" alt="upload icon" />
-                          )}
-                        </label>
-                        <input
-                          onChange={handlePdf}
-                          accept="application/pdf"
-                          id="input-file"
-                          type="file"
-                        />
-                      </div>
-                      <div className="hlm-cv-up-right">
-                        <div>
-                          <h6>Unggah CV anda</h6>
-                          <p style={{ color: "grey" }}>pdf.Max 10mb</p>
-                        </div>
-                        <button className="button-main">Cari Pekerjaan</button>
-                      </div>
-                    </form>
                   </>
                 ) : null}
+                {/* cv_____________ */}
+                <form className="hlm-cv-up">
+                  <div className="hlm-cv-up-left">
+                    <label className="input-file-class" for="input-file">
+                      {pdfFile ? (
+                        <>
+                          <img src="/pdf.svg" alt="upload icon" />
+                          <p>{pdfFile.name}</p>
+                        </>
+                      ) : (
+                        <img src="/upload.svg" alt="upload icon" />
+                      )}
+                    </label>
+                    <input
+                      onChange={handlePdf}
+                      accept="application/pdf"
+                      id="input-file"
+                      type="file"
+                    />
+                  </div>
+                  <div className="hlm-cv-up-right">
+                    <div>
+                      <h6>Unggah CV anda</h6>
+                      <p style={{ color: "grey" }}>pdf.Max 10mb</p>
+                    </div>
+                    <button className="button-main">Cari Pekerjaan</button>
+                  </div>
+                </form>
                 <div className="hlm-action">
                   <li>
                     <button onClick={handleLogout} className="button-signout">
@@ -231,8 +227,10 @@ export default function Header() {
                 <div className="gap-ham"></div>
                 {/* user menu________ */}
                 <div className="hlm-navigasi">
-                  <li className={path == "/profil" ? "active-m" : ""}>
-                    <NavLink to="/profil">Lihat Profil</NavLink>
+                  <li
+                    className={path == "/profil-perusahaan" ? "active-m" : ""}
+                  >
+                    <NavLink to="/profil-perusahaan">Lihat Profil</NavLink>
                   </li>
                   <li className={path == "/lowongan-post" ? "active-m" : ""}>
                     <NavLink to="/perusahaan-post">Daftar Lowongan </NavLink>

@@ -46,6 +46,7 @@ export default function Test() {
     localStorage.setItem("auth", JSON.stringify(data));
     Cookies.set("token", "abcdefghijklmn");
     handleCookie();
+    window.location.reload();
   }
 
   function loginPerusahaan() {
@@ -53,6 +54,7 @@ export default function Test() {
     localStorage.setItem("auth", JSON.stringify(data));
     Cookies.set("token", "abcdefghijklmn");
     handleCookie();
+    window.location.reload();
   }
 
   //   test pdf

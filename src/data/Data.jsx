@@ -532,6 +532,7 @@ export const user = [
     id: 1,
     role: "pelamar",
     nama: "john doe",
+    spesialisasi: "Web Developer",
     profil: "/data/user.jpg",
     email: "johndoe@example.com",
     lokasi: "Jakarta Selatan",
@@ -539,7 +540,36 @@ export const user = [
     skill: ["HTML", "CSS", "JavaScript", "React", "Laravel", "MySql"],
     tentang:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    cv: [{ id: 1, cv: "/data/cv1.png" }],
+    cv: [
+      {
+        id: 1,
+        nama: "CV.pdf",
+        link: "/Lindekin.pdf",
+        tanggal: "2025-05-02",
+        size: 250000,
+      },
+      {
+        id: 3,
+        nama: "CV.pdf",
+        link: "/Lindekin.pdf",
+        tanggal: "2025-05-02",
+        size: 250000,
+      },
+      {
+        id: 2,
+        nama: "CV.pdf",
+        link: "/Lindekin.pdf",
+        tanggal: "2025-05-02",
+        size: 250000,
+      },
+      {
+        id: 4,
+        nama: "CV.pdf",
+        link: "/Lindekin.pdf",
+        tanggal: "2025-05-02",
+        size: 250000,
+      },
+    ],
     status: "Ditinjau",
     lowongan: [
       {
