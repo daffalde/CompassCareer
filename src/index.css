@@ -234,6 +234,7 @@ h6 {
   right: 20px;
   top: 85px;
   background-color: var(--white);
+  z-index: 11;
 }
 .header-list-mobile ul {
   display: flex;
@@ -246,7 +247,7 @@ h6 {
   position: fixed;
   left: 0;
   display: none;
-  z-index: 0;
+  z-index: 10;
 }
 .hlm-true {
   display: block;
@@ -313,6 +314,18 @@ h6 {
   border-radius: 5px;
   background-color: var(--white-dark);
   z-index: 2;
+  cursor: pointer;
+  flex-direction: column;
+  padding: 10px;
+}
+.input-file-class img {
+  width: 30px;
+}
+.input-file-class p {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--black-50);
 }
 #input-file {
   display: none;

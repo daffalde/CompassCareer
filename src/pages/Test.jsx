@@ -54,10 +54,28 @@ export default function Test() {
     Cookies.set("token", "abcdefghijklmn");
     handleCookie();
   }
+
+  //   test pdf
+  const [fileName, setFileName] = useState("");
+
+  function handleFileChange(e) {
+    const file = e.target.files[0];
+  }
+
+  const [lebar, setLebar] = useState(0);
+  useEffect(() => {
+    function handleLebar() {
+      setLebar(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleLebar);
+    return () => removeEventListener("resize", handleLebar);
+  });
   return (
     <>
       <div className="container">
         <Header />
+        <p>{lebar}</p>
         <h1>ini halaman tester</h1>
         <p>apakah Cookies ada = {kuki}</p>
         <button onClick={handleAddKuki}>set cookies</button>
@@ -72,6 +90,15 @@ export default function Test() {
         <button onClick={LogOut}>Log Out</button>
         <br />
         <button onClick={cekUser}>Cek user</button>
+        <br />
+        <br />
+        <br />
+        <br />
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={handleFileChange}
+        />
       </div>
     </>
   );
