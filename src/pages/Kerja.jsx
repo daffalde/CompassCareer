@@ -14,7 +14,7 @@ export default function Kerja() {
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const { currentItems, totalPages, nextPage, prevPage, page, currentPage } =
-    usePagination(lowongan, 10);
+    usePagination(lowongan, 16);
 
   const url = useLocation();
   const params = new URLSearchParams(url.search);
@@ -132,56 +132,53 @@ export default function Kerja() {
               .map((e) => (
                 <div
                   onClick={() => nav(`/lowongan/${e.id}`)}
+                  className="lowongan-card"
                   key={e.id}
-                  onMouseOver={() => setHoveredItem(e.id)}
-                  onMouseOut={() => setHoveredItem(null)}
-                  className="k-l-item"
                 >
-                  <img
-                    id="k-l-i-img"
-                    src={e.perusahaan.profil}
-                    alt="profil perusahaan dari lowongan"
-                  />
-                  <span>
-                    <h5>{e.nama}</h5>
-                    <p>{e.perusahaan.nama}</p>
-                  </span>
-                  <span id="k-l-i-location">
-                    <img
-                      src={
-                        hoveredItem === e.id
-                          ? "./location3.svg"
-                          : "./location1.svg"
-                      }
-                      alt="icon lokasi dari lowongan"
-                    />
-                    <p>{e.perusahaan.provinsi}</p>
-                  </span>
-                  <span>
-                    <p>{moment(e.tanggal, "YYYYMMDD").fromNow()}</p>
-                    <h6>
-                      Rp {Number(e.gajiMin).toLocaleString("id-ID")}-
-                      {Number(e.gajiMax).toLocaleString("id-ID")}
-                    </h6>
-                  </span>
-                  <div
-                    className={`k-l-i-lihat ${
-                      hoveredItem === e.id ? "k-l-i-lihat-on" : ""
-                    }`}
-                  >
-                    {hoveredItem === e.id ? <p>Lihat</p> : null}
-                    <img src="./pagig-arrow.svg" alt="arrow lihat detail" />
+                  <div className="l-c-wrap">
+                    <div className="l-c-tanggal">
+                      <p>{moment(e.tanggal).format("LL")}</p>
+                      <button>
+                        <img src="/save1.svg" alt="save-logo" />
+                      </button>
+                    </div>
+                    <div className="l-c-title">
+                      <span>
+                        <p>{e.perusahaan.nama}</p>
+                        <h5>{e.nama}</h5>
+                      </span>
+                      <img
+                        src={e.perusahaan.profil}
+                        alt="gambar profil perusahaan"
+                      />
+                    </div>
+                    <div className="l-c-skill">
+                      {e.skill.slice(0, 5).map((skill, index) => (
+                        <p key={index}>{skill}</p>
+                      ))}
+                    </div>
                   </div>
-                  <div
-                    className={`k-l-jenis ${
-                      hoveredItem === e.id ? "k-l-jenis-on" : ""
-                    }`}
-                  >
-                    <p>{e.jenis}</p>
+                  <div className="l-c-action">
+                    <span>
+                      <h6>
+                        Rp.
+                        {e.gajiMin / 1000000 >= 1
+                          ? `${e.gajiMin / 1000000}Jt`
+                          : `${e.gajiMin / 1000}Rb`}
+                        -
+                        {e.gajiMax / 1000000 >= 1
+                          ? `${e.gajiMax / 1000000}Jt`
+                          : `${e.gajiMax / 1000}Rb`}
+                      </h6>
+                      <p>{e.perusahaan.provinsi}</p>
+                    </span>
+                    <button className="button-main">Lihat</button>
                   </div>
                 </div>
               ))}
           </div>
+
+          {/* pagination */}
           <div className="pagination">
             <div onClick={prevPage} className="p-arrow">
               <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />

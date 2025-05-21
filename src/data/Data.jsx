@@ -648,6 +648,33 @@ export const skill = [
   //dst...
 ];
 
+export const color = [
+  {
+    id: 1,
+    color: "#FFFAE6",
+  },
+  {
+    id: 2,
+    color: "#F9ECD9",
+  },
+  {
+    id: 3,
+    color: "#F7E3CC",
+  },
+  {
+    id: 4,
+    color: "#F7CEE2",
+  },
+  {
+    id: 5,
+    color: "#CCCAF0",
+  },
+  {
+    id: 6,
+    color: "#CFDFEF",
+  },
+];
+
 // _________________testing login
 const userTes = [
   {

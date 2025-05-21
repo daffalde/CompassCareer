@@ -83,62 +83,6 @@
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
-.p-b-list {
-  display: flex;
-  border: 3px solid var(--black-10);
-  border-radius: 15px;
-  justify-content: start;
-  align-items: start;
-  gap: 10px;
-  padding: 20px;
-  cursor: pointer;
-  background-color: var(--white);
-  transition: 0.3s;
-  position: relative;
-}
-.p-b-list:hover {
-  border: 3px solid var(--black-50);
-  transform: scale(1.025);
-  transition: 0.3s;
-}
-.p-b-list:active {
-  border: 3px solid var(--black);
-}
-.p-b-l-save {
-  width: 40px;
-  height: 40px;
-  border: 2px solid transparent;
-  background-color: var(--white);
-  border-radius: 50%;
-  position: absolute;
-  right: 20px;
-  padding: 5px;
-  transition: 0.3s;
-  cursor: pointer;
-}
-.p-b-l-save:hover {
-  transition: 0.3s;
-  border: 2px solid var(--black-50);
-}
-.p-b-l-save img {
-  width: 100%;
-}
-.p-b-l-img {
-  border-radius: 50%;
-  width: 70px;
-}
-.p-b-l-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  gap: 5px;
-}
-.p-b-l-info div {
-  display: flex;
-  gap: 5px;
-  color: grey;
-}
 
 @media screen and (width < 1300px) {
   .perusahaan-head {

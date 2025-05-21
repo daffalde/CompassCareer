@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <>
       <div className="footer">
-        <div className="container">
+        <div className="container-footer">
           <div className="f-top">
             <div className="f-t-item">
               <img id="f-t-i-img" src="/logo3.svg" alt="logo footer" />

@@ -9,6 +9,7 @@ import Login from "./pages/Login.jsx";
 import Logout from "./pages/Logout.jsx";
 import Test from "./pages/Test.jsx";
 import Profil from "./pages/Profil.jsx";
+import Tersimpan from "./pages/Tersimpan.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={Logout} />
           <Route path="/profil" Component={Profil} />
+          <Route path="/tersimpan" Component={Tersimpan} />
 
           <Route path="/test" Component={Test} />
         </Routes>
