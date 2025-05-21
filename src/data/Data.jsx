@@ -583,6 +583,18 @@ export const user = [
         //ini ke data perusahaan tersimpan dari user
       },
     ],
+    offer: [
+      {
+        id: 1,
+        tanggal: "2025-05-10",
+        lowongan: {
+          id: 1,
+          //ini mengarah ke lowongan yang di lamar
+        },
+        status: "Ditinjau/Diterima/Ditolak",
+        notes: "",
+      },
+    ],
   }, //dst...
 ];
 
@@ -646,33 +658,6 @@ export const skill = [
     nama: "Excel",
   },
   //dst...
-];
-
-export const color = [
-  {
-    id: 1,
-    color: "#FFFAE6",
-  },
-  {
-    id: 2,
-    color: "#F9ECD9",
-  },
-  {
-    id: 3,
-    color: "#F7E3CC",
-  },
-  {
-    id: 4,
-    color: "#F7CEE2",
-  },
-  {
-    id: 5,
-    color: "#CCCAF0",
-  },
-  {
-    id: 6,
-    color: "#CFDFEF",
-  },
 ];
 
 // _________________testing login

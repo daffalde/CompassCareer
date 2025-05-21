@@ -160,13 +160,13 @@ export default function Header() {
                         <NavLink to="/lowongan">Cari Pekerjaan</NavLink>
                       </li>
                       <li
-                        onClick={() => nav("/lowongan")}
+                        onClick={() => nav("/perusahaan")}
                         className={path == "/perusahaan" ? "active-m" : ""}
                       >
                         <NavLink to="/perusahaan">Perusahaan</NavLink>
                       </li>
                       <li
-                        onClick={() => nav("/lowongan")}
+                        onClick={() => nav("/tentang")}
                         className={path == "/tentang" ? "active-m" : ""}
                       >
                         <NavLink to="/tentang">Tentang Kami</NavLink>
@@ -408,7 +408,15 @@ export default function Header() {
       >
         {/* header ham menu______________________________________ */}
       </div>
-      {ham && loginUserHam()}
+      {ham && (
+        <div
+          onClick={() => setHam(false)}
+          onScroll={() => setHam(false)}
+          className="hlm-wraping"
+        >
+          {loginUserHam()}
+        </div>
+      )}
     </>
   );
 }

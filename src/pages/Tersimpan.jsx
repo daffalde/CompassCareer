@@ -2,10 +2,10 @@ import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles/tersimpan.css";
-import { color, lowongan, perusahaan } from "../data/Data";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import usePagination from "../components/Pagination";
+import { lowongan, perusahaan } from "../data/Data";
 
 export default function Tersimpan() {
   const nav = useNavigate();
@@ -74,7 +74,7 @@ export default function Tersimpan() {
                     <div className="l-c-action">
                       <span>
                         <h6>
-                          Rp.
+                          Rp{" "}
                           {e.gajiMin / 1000000 >= 1
                             ? `${e.gajiMin / 1000000}Jt`
                             : `${e.gajiMin / 1000}Rb`}

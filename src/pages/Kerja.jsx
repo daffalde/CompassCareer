@@ -161,7 +161,7 @@ export default function Kerja() {
                   <div className="l-c-action">
                     <span>
                       <h6>
-                        Rp.
+                        Rp{" "}
                         {e.gajiMin / 1000000 >= 1
                           ? `${e.gajiMin / 1000000}Jt`
                           : `${e.gajiMin / 1000}Rb`}
