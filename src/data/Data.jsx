@@ -589,10 +589,104 @@ export const user = [
         tanggal: "2025-05-10",
         lowongan: {
           id: 1,
+          tanggal: "2025-05-10",
+          nama: "FrontEnd Developer",
+          gajiMin: 4000000,
+          gajiMax: 5000000,
+          kategori: "Teknologi IT",
+          jenis: "Full Time",
+          tingkat: "Pemula",
+          tentang:
+            "Bertanggung jawab atas distribusi SPK, pengelolaan DO (Delivery Order), serta pembuatan dokumen penagihan leasing dan COP sesuai prosedur.\nMelakukan rekapan data penjualan, memverifikasi faktur pajak, dan memastikan pengajuan vendor, BSI, dan dokumentasi unit sesuai dengan ketentuan yang berlaku.\nMengelola opname SPK, STNK, dan BPKB secara rutin serta memastikan pengajuan faktur polisi dan dokumen terkait dilakukan tepat waktu.\nMengatur dan menyusun surat jalan pelanggan, serta melakukan follow-up AR Unit untuk memastikan pembayaran tepat waktu.\nMelakukan filing dan pengelolaan dokumen administratif untuk memastikan keteraturan dan aksesibilitas data.",
+          syarat:
+            "Lulusan Sarjana (S1 Akuntansi / Keuangan / Manajemen / atau yang setara)\nKomunikasi yang baik\nBahasa Inggris dasar\nMengetahui SOP Administrasi\nBersedia ditempatkan di seluruh cabang BMW Astra sesuai lokasi domisili",
+          skill: ["HTML", "CSS", "JavaScript", "React", "Laravel", "MySql"],
+          perusahaan:
+            //ini ke data perusahaan
+            {
+              id: 1,
+              nama: "PT Astra Indonesia",
+              profil: "/data/perusahaan1.png",
+              bidang: "Industri Otomotif",
+              lokasi: "PekanBaru",
+              provinsi: "Riau",
+              tentang:
+                "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+            },
           //ini mengarah ke lowongan yang di lamar
         },
-        status: "Ditinjau/Diterima/Ditolak",
+        status: "Ditinjau", ///Diterima/Ditolak
         notes: "",
+      },
+      {
+        id: 2,
+        tanggal: "2025-05-10",
+        lowongan: {
+          id: 1,
+          tanggal: "2025-05-10",
+          nama: "FrontEnd Developer",
+          gajiMin: 4000000,
+          gajiMax: 5000000,
+          kategori: "Teknologi IT",
+          jenis: "Full Time",
+          tingkat: "Pemula",
+          tentang:
+            "Bertanggung jawab atas distribusi SPK, pengelolaan DO (Delivery Order), serta pembuatan dokumen penagihan leasing dan COP sesuai prosedur.\nMelakukan rekapan data penjualan, memverifikasi faktur pajak, dan memastikan pengajuan vendor, BSI, dan dokumentasi unit sesuai dengan ketentuan yang berlaku.\nMengelola opname SPK, STNK, dan BPKB secara rutin serta memastikan pengajuan faktur polisi dan dokumen terkait dilakukan tepat waktu.\nMengatur dan menyusun surat jalan pelanggan, serta melakukan follow-up AR Unit untuk memastikan pembayaran tepat waktu.\nMelakukan filing dan pengelolaan dokumen administratif untuk memastikan keteraturan dan aksesibilitas data.",
+          syarat:
+            "Lulusan Sarjana (S1 Akuntansi / Keuangan / Manajemen / atau yang setara)\nKomunikasi yang baik\nBahasa Inggris dasar\nMengetahui SOP Administrasi\nBersedia ditempatkan di seluruh cabang BMW Astra sesuai lokasi domisili",
+          skill: ["HTML", "CSS", "JavaScript", "React", "Laravel", "MySql"],
+          perusahaan:
+            //ini ke data perusahaan
+            {
+              id: 1,
+              nama: "PT Astra Indonesia",
+              profil: "/data/perusahaan1.png",
+              bidang: "Industri Otomotif",
+              lokasi: "PekanBaru",
+              provinsi: "Riau",
+              tentang:
+                "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+            },
+          //ini mengarah ke lowongan yang di lamar
+        },
+        status: "Diterima", ///Diterima/Ditolak
+        notes:
+          "Selamat! Kami dengan senang hati menginformasikan bahwa Anda telah diterima untuk posisi di Pt Something. \n\nKami sangat terkesan dengan keterampilan dan pengalaman Anda, dan kami yakin Anda akan menjadi bagian berharga dalam tim kami. Dalam beberapa hari ke depan, kami akan menghubungi Anda untuk mendiskusikan langkah selanjutnya, termasuk detail onboarding dan persiapan kerja. \n\nTerima kasih telah melamar dan kami tidak sabar untuk bekerja bersama Anda!",
+      },
+      {
+        id: 3,
+        tanggal: "2025-05-10",
+        lowongan: {
+          id: 1,
+          tanggal: "2025-05-10",
+          nama: "FrontEnd Developer",
+          gajiMin: 4000000,
+          gajiMax: 5000000,
+          kategori: "Teknologi IT",
+          jenis: "Full Time",
+          tingkat: "Pemula",
+          tentang:
+            "Bertanggung jawab atas distribusi SPK, pengelolaan DO (Delivery Order), serta pembuatan dokumen penagihan leasing dan COP sesuai prosedur.\nMelakukan rekapan data penjualan, memverifikasi faktur pajak, dan memastikan pengajuan vendor, BSI, dan dokumentasi unit sesuai dengan ketentuan yang berlaku.\nMengelola opname SPK, STNK, dan BPKB secara rutin serta memastikan pengajuan faktur polisi dan dokumen terkait dilakukan tepat waktu.\nMengatur dan menyusun surat jalan pelanggan, serta melakukan follow-up AR Unit untuk memastikan pembayaran tepat waktu.\nMelakukan filing dan pengelolaan dokumen administratif untuk memastikan keteraturan dan aksesibilitas data.",
+          syarat:
+            "Lulusan Sarjana (S1 Akuntansi / Keuangan / Manajemen / atau yang setara)\nKomunikasi yang baik\nBahasa Inggris dasar\nMengetahui SOP Administrasi\nBersedia ditempatkan di seluruh cabang BMW Astra sesuai lokasi domisili",
+          skill: ["HTML", "CSS", "JavaScript", "React", "Laravel", "MySql"],
+          perusahaan:
+            //ini ke data perusahaan
+            {
+              id: 1,
+              nama: "PT Astra Indonesia",
+              profil: "/data/perusahaan1.png",
+              bidang: "Industri Otomotif",
+              lokasi: "PekanBaru",
+              provinsi: "Riau",
+              tentang:
+                "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
+            },
+          //ini mengarah ke lowongan yang di lamar
+        },
+        status: "Ditolak", ///Diterima/Ditolak
+        notes:
+          "Terima kasih telah melamar posisi di Pt Something.\n\n Kami sangat menghargai waktu dan usaha yang Anda investasikan dalam proses ini. Setelah mempertimbangkan semua kandidat, kami harus menginformasikan bahwa kami belum dapat melanjutkan dengan aplikasi Anda saat ini. \n\nNamun, kami sangat mengapresiasi keahlian dan pengalaman Anda, dan berharap ada kesempatan di masa depan yang lebih sesuai. Kami mendoakan kesuksesan dalam perjalanan karier Anda.erima kasih atas minat Anda terhadap perusahaan kami.",
       },
     ],
   }, //dst...

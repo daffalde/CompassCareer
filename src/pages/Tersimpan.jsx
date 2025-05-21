@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles/tersimpan.css";
@@ -50,7 +50,7 @@ export default function Tersimpan() {
                   >
                     <div className="l-c-wrap">
                       <div className="l-c-tanggal">
-                        <p>{moment(e.tanggal).format("LL")}</p>
+                        <p>{moment(e.tanggal, "YYYYMMDD").fromNow()}</p>
                         <button>
                           <img src="/save1.svg" alt="save-logo" />
                         </button>

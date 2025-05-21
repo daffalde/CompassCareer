@@ -137,7 +137,7 @@ export default function Kerja() {
                 >
                   <div className="l-c-wrap">
                     <div className="l-c-tanggal">
-                      <p>{moment(e.tanggal).format("LL")}</p>
+                      <p>{moment(e.tanggal, "YYYYMMDD").fromNow()}</p>
                       <button>
                         <img src="/save1.svg" alt="save-logo" />
                       </button>
