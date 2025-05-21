@@ -128,24 +128,23 @@ export default function Header() {
                 <div className="gap-ham"></div>
                 {/* user menu________ */}
                 <div className="hlm-navigasi">
-                  <li className={path == "/profil" ? "active-m" : ""}>
+                  <li
+                    onClick={() => nav("/profil")}
+                    className={path == "/profil" ? "active-m" : ""}
+                  >
                     <NavLink to="/profil">Lihat Profil</NavLink>
                   </li>
                   <li
-                    className={path == "/lowongan-tersimpan" ? "active-m" : ""}
+                    onClick={() => nav("/tersimpan")}
+                    className={path == "/tersimpan" ? "active-m" : ""}
                   >
-                    <NavLink to="/lowongan-tersimpan">
-                      Lowongan Tersimpan
-                    </NavLink>
+                    <NavLink to="/tersimpan">Tersimpan</NavLink>
                   </li>
                   <li
-                    className={
-                      path == "/perusahaan-tersimpan" ? "active-m" : ""
-                    }
+                    onClick={() => nav("/status-lamaran")}
+                    className={path == "/status-lamaran" ? "active-m" : ""}
                   >
-                    <NavLink to="/perusahaan-tersimpan">
-                      Perusahaan Tersimpan
-                    </NavLink>
+                    <NavLink to="/status-lamaran">Status Lamaran</NavLink>
                   </li>
                 </div>
                 <div className="gap-ham"></div>
@@ -154,13 +153,22 @@ export default function Header() {
                     {" "}
                     {/* menu_____________ */}
                     <div className="hlm-navigasi">
-                      <li className={path == "/lowongan" ? "active-m" : ""}>
+                      <li
+                        onClick={() => nav("/lowongan")}
+                        className={path == "/lowongan" ? "active-m" : ""}
+                      >
                         <NavLink to="/lowongan">Cari Pekerjaan</NavLink>
                       </li>
-                      <li className={path == "/perusahaan" ? "active-m" : ""}>
+                      <li
+                        onClick={() => nav("/lowongan")}
+                        className={path == "/perusahaan" ? "active-m" : ""}
+                      >
                         <NavLink to="/perusahaan">Perusahaan</NavLink>
                       </li>
-                      <li className={path == "/tentang" ? "active-m" : ""}>
+                      <li
+                        onClick={() => nav("/lowongan")}
+                        className={path == "/tentang" ? "active-m" : ""}
+                      >
                         <NavLink to="/tentang">Tentang Kami</NavLink>
                       </li>
                     </div>
@@ -228,14 +236,21 @@ export default function Header() {
                 {/* user menu________ */}
                 <div className="hlm-navigasi">
                   <li
+                    onClick={() => nav("profil-perusahaan")}
                     className={path == "/profil-perusahaan" ? "active-m" : ""}
                   >
                     <NavLink to="/profil-perusahaan">Lihat Profil</NavLink>
                   </li>
-                  <li className={path == "/lowongan-post" ? "active-m" : ""}>
+                  <li
+                    onClick={() => nav("lowongan-post")}
+                    className={path == "/lowongan-post" ? "active-m" : ""}
+                  >
                     <NavLink to="/perusahaan-post">Daftar Lowongan </NavLink>
                   </li>
-                  <li className={path == "/pelamar" ? "active-m" : ""}>
+                  <li
+                    onClick={() => nav("pelamar")}
+                    className={path == "/pelamar" ? "active-m" : ""}
+                  >
                     <NavLink to="/pelamar">Manajemen Pelamar</NavLink>
                   </li>
                 </div>
@@ -244,13 +259,22 @@ export default function Header() {
                   <>
                     {/* menu_____________ */}
                     <div className="hlm-navigasi">
-                      <li className={path == "/lowongan" ? "active-m" : ""}>
+                      <li
+                        onClick={() => nav("/lowongan")}
+                        className={path == "/lowongan" ? "active-m" : ""}
+                      >
                         <NavLink to="/lowongan">Cari Pekerjaan</NavLink>
                       </li>
-                      <li className={path == "/perusahaan" ? "active-m" : ""}>
+                      <li
+                        onClick={() => nav("/lowongan")}
+                        className={path == "/perusahaan" ? "active-m" : ""}
+                      >
                         <NavLink to="/perusahaan">Perusahaan</NavLink>
                       </li>
-                      <li className={path == "/tentang" ? "active-m" : ""}>
+                      <li
+                        onClick={() => nav("/lowongan")}
+                        className={path == "/tentang" ? "active-m" : ""}
+                      >
                         <NavLink to="/tentang">Tentang Kami</NavLink>
                       </li>
                     </div>
@@ -277,17 +301,25 @@ export default function Header() {
           <div className="header-list-mobile">
             <ul>
               <div className="hlm-navigasi">
-                <li className={path == "/lowongan" ? "active-m" : ""}>
+                <li
+                  onClick={() => nav("/lowongan")}
+                  className={path == "/lowongan" ? "active-m" : ""}
+                >
                   <NavLink to="/lowongan">Cari Pekerjaan</NavLink>
                 </li>
-                <li className={path == "/perusahaan" ? "active-m" : ""}>
+                <li
+                  onClick={() => nav("/lowongan")}
+                  className={path == "/perusahaan" ? "active-m" : ""}
+                >
                   <NavLink to="/perusahaan">Perusahaan</NavLink>
                 </li>
-                <li className={path == "/tenatng" ? "active-m" : ""}>
+                <li
+                  onClick={() => nav("/lowongan")}
+                  className={path == "/tentang" ? "active-m" : ""}
+                >
                   <NavLink to="/tentang">Tentang Kami</NavLink>
                 </li>
               </div>
-
               <div className="hlm-action">
                 <li>
                   <button onClick={() => nav("/login")} className="button-main">
