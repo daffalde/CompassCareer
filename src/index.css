@@ -273,6 +273,7 @@ h6 {
 }
 .header-list-mobile li {
   list-style: none;
+  cursor: pointer;
 }
 .hlm-navigasi li {
   width: 350px;
@@ -315,6 +316,7 @@ h6 {
 }
 .gap-ham {
   border: 1px solid var(--black-10);
+  margin: 5px 0;
 }
 .hlm-cv-up {
   display: flex;

@@ -100,6 +100,10 @@
   border: 2px solid var(--black-10);
   border-radius: 5px;
 }
+.c-c-form p {
+  color: var(--black-50);
+  font-size: 13px;
+}
 
 .t-f-l-b-title {
   display: flex;
@@ -253,6 +257,7 @@
   display: none;
 }
 
+/* perushaan */
 @media screen and (width < 700px) {
   .cv-l-wrap {
     grid-template-columns: 1fr 1fr;

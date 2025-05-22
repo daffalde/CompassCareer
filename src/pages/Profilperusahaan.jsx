@@ -1,15 +1,14 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles/profil.css";
-import { provinsi } from "../data/Provinsi";
+import "../styles/template.css";
+import { useState } from "react";
 import { lowongan } from "../data/Data";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
 
-export default function Profil() {
-  const nav = useNavigate();
+export default function Profilperusahaan() {
   const data = JSON.parse(localStorage.getItem("auth"));
+  const nav = useNavigate();
 
   //   change picture
   const [handleImage, setHandleImage] = useState(false);
@@ -35,12 +34,14 @@ export default function Profil() {
   const [handleRingkasan, setHandleRingkasan] = useState(false);
   const [ringkasan, setRingkasan] = useState("");
 
-  //   add skill
-  const [handleSkill, setHandleSkill] = useState(false);
-  const [keahlian, setKeahlian] = useState("");
+  //   change visi
+  const [handleVisi, setHandleVisi] = useState(false);
+  const [visi, setVisi] = useState("");
 
-  //   option pada cv
-  const [optionId, setOptionId] = useState(null);
+  //   change misi
+  const [handleMisi, setHandleMisi] = useState(false);
+  const [misi, setMisi] = useState("");
+
   return (
     <>
       {/* pop up_____________________________________________________ */}
@@ -78,15 +79,15 @@ export default function Profil() {
       {handleBio && (
         <div className="change">
           <form className="change-content">
-            <h6>Ubah profil</h6>
+            <h6>Ubah profil perusahaan</h6>
             <div className="c-c-form">
               <div>
-                <label for="c-c-f-nama">Nama lengkap</label>
+                <label for="c-c-f-nama">Nama perusahaan</label>
                 <input
                   id="c-c-f-nama"
                   value={nama}
                   type="text"
-                  placeholder={data.nama ? data.nama : "John Doe"}
+                  placeholder={data.nama ? data.nama : "Company corp."}
                   onChange={(e) => setNama(e.target.value)}
                 />
               </div>
@@ -118,14 +119,12 @@ export default function Profil() {
                 </datalist>
               </div>
               <div>
-                <label for="c-c-f-nama">Spesialisasi</label>
+                <label for="c-c-f-nama">Jumlah karyawan</label>
                 <input
                   id="c-c-f-nama"
                   value={spesialisasi}
                   type="text"
-                  placeholder={
-                    data.spesialisasi ? data.spesialisasi : "John Doe"
-                  }
+                  placeholder={data.spesialisasi ? data.spesialisasi : ">5000"}
                   onChange={(e) => setSpesialisasi(e.target.value)}
                 />
               </div>
@@ -142,41 +141,10 @@ export default function Profil() {
           </form>
         </div>
       )}
-      {handleSkill && (
-        <div className="change">
-          <form className="change-content">
-            <h6>Tambah Keahlian</h6>
-            <div className="c-c-form">
-              <div>
-                <label for="c-c-f-nama">
-                  Bantu perusahaan menemukan Anda dengan menampilkan semua
-                  keahlian Anda.
-                </label>
-                <input
-                  id="c-c-f-nama"
-                  value={keahlian}
-                  type="text"
-                  placeholder="Desain,Analisis,Komputer,dll...."
-                  onChange={(e) => setKeahlian(e.target.value)}
-                />
-              </div>
-            </div>
-            <span>
-              <button
-                onClick={() => setHandleSkill(false)}
-                className="button-second"
-              >
-                Batal
-              </button>
-              <button className="button-main">Tambah</button>
-            </span>
-          </form>
-        </div>
-      )}
       {handleRingkasan && (
         <div className="change">
           <form className="change-content">
-            <h6>Ubah Ringkasan</h6>
+            <h6>Ubah ringkasan perusahaan</h6>
             <div className="c-c-form">
               <div>
                 <label for="c-c-f-area"></label>
@@ -187,7 +155,7 @@ export default function Profil() {
                   placeholder={
                     data.tentang
                       ? data.tentang
-                      : "Tuliskan tentang diri anda...."
+                      : "Tuliskan tentang perusahaan anda...."
                   }
                   onChange={(e) => setRingkasan(e.target.value)}
                 ></textarea>
@@ -205,8 +173,75 @@ export default function Profil() {
           </form>
         </div>
       )}
+      {handleVisi && (
+        <div className="change">
+          <form className="change-content">
+            <h6>Ubah visi perusahaan</h6>
+            <div className="c-c-form">
+              <div>
+                <label for="c-c-f-area"></label>
+                <textarea
+                  id="c-c-f-area"
+                  value={visi}
+                  type="text"
+                  placeholder={
+                    data.visi ? data.visi : `Visi pertama\nVisi kedua\n....`
+                  }
+                  onChange={(e) => setVisi(e.target.value)}
+                ></textarea>
+                <p>
+                  *harap jangan menggunakan angka untuk listing,karena akan
+                  listing otomatis
+                </p>
+              </div>
+            </div>
+            <span>
+              <button
+                onClick={() => setHandleVisi(false)}
+                className="button-second"
+              >
+                Batal
+              </button>
+              <button className="button-main">Simpan</button>
+            </span>
+          </form>
+        </div>
+      )}
+      {handleMisi && (
+        <div className="change">
+          <form className="change-content">
+            <h6>Ubah visi perusahaan</h6>
+            <div className="c-c-form">
+              <div>
+                <label for="c-c-f-area"></label>
+                <textarea
+                  id="c-c-f-area"
+                  value={misi}
+                  type="text"
+                  placeholder={
+                    data.visi ? data.visi : `Misi pertama\nMisi kedua\n....`
+                  }
+                  onChange={(e) => setMisi(e.target.value)}
+                ></textarea>
+                <p>
+                  *harap jangan menggunakan angka untuk listing,karena akan
+                  listing otomatis
+                </p>
+              </div>
+            </div>
+            <span>
+              <button
+                onClick={() => setHandleMisi(false)}
+                className="button-second"
+              >
+                Batal
+              </button>
+              <button className="button-main">Simpan</button>
+            </span>
+          </form>
+        </div>
+      )}
 
-      {/* ___________________________________________________________ */}
       <div className="container">
         <Header />
         <div className="template-head">
@@ -227,7 +262,7 @@ export default function Profil() {
                   {data.lokasi},{data.provinsi}
                 </p>
                 <img src="/dot1.svg" alt="dot gap" />
-                <p>{data.spesialisasi}</p>
+                <p>{data.karyawan} Karyawan</p>
               </span>
               <span>
                 <button
@@ -244,111 +279,84 @@ export default function Profil() {
         <div className="template-foot">
           <div className="t-f-left">
             <div className="t-f-l-body">
+              <form className="body-form">
+                <label for="b-f-web">Situs web</label>
+                <input
+                  placeholder={
+                    data.situs ? data.situs : "https://www.industry.com"
+                  }
+                  type="text"
+                  id="b-f-web"
+                />
+                <label for="b-f-tahun">Tahun didirikan</label>
+                <input
+                  placeholder={data.didirikan ? data.didirikan : "1990"}
+                  type="text"
+                  id="b-f-tahun"
+                />
+                <label for="b-f-industri">Industri</label>
+                <input
+                  placeholder={
+                    data.bidang ? data.bidang : "Banking & Financial"
+                  }
+                  type="text"
+                  id="b-f-industri"
+                />
+                <br />
+                <button className="button-main">Simpan</button>
+              </form>
+            </div>
+            <div className="t-f-l-body">
               <div className="paragraph">
                 <span className="t-f-l-b-title">
-                  <h6>Ringkasan pribadi</h6>
+                  <h6>Tentang perusahaan</h6>
                   <img
                     onClick={() => setHandleRingkasan(true)}
                     src="/pencil2.svg"
                     alt="pencil icon"
                   />
                 </span>
-                <p>{data.tentang}</p>
+                <p>{data.tentang ? data.tentang : "Belum ada data"}</p>
               </div>
-              <div className="skill">
-                <h6>Keahlian:</h6>
-                <div className="s-wrap">
-                  {data.skill.map((e, i) => (
-                    <div className="s-item" key={i}>
+              <div className="paragraph">
+                <span className="t-f-l-b-title">
+                  <h6>Visi</h6>
+                  <img
+                    onClick={() => setHandleVisi(true)}
+                    src="/pencil2.svg"
+                    alt="pencil icon"
+                  />
+                </span>
+                {data.visi ? (
+                  data.visi.split("\n").map((e, i) => (
+                    <span className="numbering-item" key={i}>
+                      <p>{i + 1}.</p>
                       <p>{e}</p>
-                      <img
-                        style={{ width: "10px" }}
-                        src="/close.svg"
-                        alt="close icon"
-                      />
-                    </div>
-                  ))}
-                  <div
-                    onClick={() => setHandleSkill(true)}
-                    style={{ fontWeight: "500" }}
-                    className="s-item"
-                  >
-                    +
-                  </div>
-                </div>
+                    </span>
+                  ))
+                ) : (
+                  <p>Belum ada data</p>
+                )}
               </div>
-              <div className="cv-list">
-                <h6>CV Tersimpan:</h6>
-                <p>
-                  Unggah CV untuk lamaran dan akses mudah di mana pun Anda
-                  berada.
-                </p>
-                <div className="cv-l-wrap">
-                  {data.cv.map((e) => (
-                    <div
-                      onClick={() => window.open(e.link)}
-                      className="cv-l-item"
-                      key={e.id}
-                    >
-                      <button
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          setOptionId(e.id);
-                        }}
-                        className="cv-l-i-option"
-                      >
-                        <img src="/3dots.svg" alt="option" />
-                      </button>
-                      {optionId === null ? null : optionId === e.id ? (
-                        <>
-                          <div className="cv-l-i-option-wrap-content">
-                            <button
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                //logic
-                              }}
-                            >
-                              Cari Lowongan
-                            </button>
-                            <button
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                //logic
-                              }}
-                            >
-                              Hapus
-                            </button>
-                          </div>
-                          <div
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              setOptionId(null);
-                            }}
-                            className="cv-l-i-option-wrap"
-                          ></div>
-                        </>
-                      ) : null}
-                      <img id="pdf-image" src="/pdf.svg" alt="pdf logo" />
-                      <h6>{e.nama}</h6>
-                      <span>
-                        <p>{e.size / 1000} Kb</p>
-                        <p>{moment(e.tanggal).format("LL")}</p>
-                      </span>
-                    </div>
-                  ))}
-
-                  {/* !tambahin logic buat up pdf */}
-                  <div className="cv-l-plus">
-                    <label
-                      for="cv-input"
-                      style={{ fontWeight: "500" }}
-                      className="s-item"
-                    >
-                      +
-                    </label>
-                    <input id="cv-input" type="file" />
-                  </div>
-                </div>
+              <div className="paragraph">
+                <span className="t-f-l-b-title">
+                  <h6>Misi</h6>
+                  <img
+                    onClick={() => setHandleMisi(true)}
+                    src="/pencil2.svg"
+                    alt="pencil icon"
+                  />
+                </span>
+                {data.misi ? (
+                  data.misi.split("\n").map((e, i) => (
+                    <span className="numbering-item" key={i}>
+                      <p>{i + 1}.</p>
+                      <p>{e}</p>
+                    </span>
+                  ))
+                ) : (
+                  <p>Belum ada data</p>
+                )}
               </div>
             </div>
           </div>
@@ -385,7 +393,7 @@ export default function Profil() {
         </div>
       </div>
       <br />
-      <br />
+
       <Footer />
     </>
   );

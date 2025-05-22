@@ -11,6 +11,9 @@ import Test from "./pages/Test.jsx";
 import Profil from "./pages/Profil.jsx";
 import Tersimpan from "./pages/Tersimpan.jsx";
 import Status from "./pages/Status.jsx";
+import Profilperusahaan from "./pages/Profilperusahaan.jsx";
+import Lowonganlist from "./pages/Lowonganlist.jsx";
+import Posting from "./pages/Posting.jsx";
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
           <Route path="/profil" Component={Profil} />
           <Route path="/tersimpan" Component={Tersimpan} />
           <Route path="/status-lamaran" Component={Status} />
+          <Route path="/profil-perusahaan" Component={Profilperusahaan} />
+          <Route path="/lowongan-post" Component={Lowonganlist} />
+          <Route path="/posting" Component={Posting} />
 
           <Route path="/test" Component={Test} />
         </Routes>

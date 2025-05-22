@@ -64,7 +64,7 @@ export default function Header() {
           <>
             <div className="h-action">
               <li>
-                <button onClick={() => nav("/login")} className="button-main">
+                <button onClick={() => nav("/posting")} className="button-main">
                   Posting
                 </button>
               </li>
@@ -236,19 +236,19 @@ export default function Header() {
                 {/* user menu________ */}
                 <div className="hlm-navigasi">
                   <li
-                    onClick={() => nav("profil-perusahaan")}
+                    onClick={() => nav("/profil-perusahaan")}
                     className={path == "/profil-perusahaan" ? "active-m" : ""}
                   >
                     <NavLink to="/profil-perusahaan">Lihat Profil</NavLink>
                   </li>
                   <li
-                    onClick={() => nav("lowongan-post")}
+                    onClick={() => nav("/lowongan-post")}
                     className={path == "/lowongan-post" ? "active-m" : ""}
                   >
                     <NavLink to="/perusahaan-post">Daftar Lowongan </NavLink>
                   </li>
                   <li
-                    onClick={() => nav("pelamar")}
+                    onClick={() => nav("/pelamar")}
                     className={path == "/pelamar" ? "active-m" : ""}
                   >
                     <NavLink to="/pelamar">Manajemen Pelamar</NavLink>
