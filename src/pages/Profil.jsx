@@ -9,7 +9,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function Profil() {
   const nav = useNavigate();
-  const data = JSON.parse(localStorage.getItem("auth"));
+  const data = JSON.parse(sessionStorage.getItem("data"));
+  console.log(data);
+
+  // function data dummy____________________________________________________________
+
+  // _______________________________________________________________________________
 
   //   change picture
   const [handleImage, setHandleImage] = useState(false);
@@ -52,7 +57,7 @@ export default function Profil() {
               <label
                 style={{
                   backgroundImage: `url("${
-                    imagePreview ? imagePreview : data.profil
+                    imagePreview ? imagePreview : data.data_pelamar.picture
                   }")`,
                 }}
                 for="input-picture"
@@ -96,7 +101,11 @@ export default function Profil() {
                   id="c-c-f-nama"
                   value={lokasi}
                   type="text"
-                  placeholder={data.lokasi ? data.lokasi : "Jakarta Pusat"}
+                  placeholder={
+                    data.data_pelamar.lokasi
+                      ? data.data_pelamar.lokasi
+                      : "Jakarta Pusat"
+                  }
                   onChange={(e) => setLokasi(e.target.value)}
                 />
               </div>
@@ -107,7 +116,11 @@ export default function Profil() {
                   list="prov"
                   value={provinsii}
                   type="text"
-                  placeholder={data.provinsi ? data.provinsi : "DKI Jakarta"}
+                  placeholder={
+                    data.data_pelamar.provinsi
+                      ? data.data_pelamar.provinsi
+                      : "DKI Jakarta"
+                  }
                   onChange={(e) => setProvinsii(e.target.value)}
                 />
                 <datalist id="prov">
@@ -124,7 +137,9 @@ export default function Profil() {
                   value={spesialisasi}
                   type="text"
                   placeholder={
-                    data.spesialisasi ? data.spesialisasi : "John Doe"
+                    data.data_pelamar.spesialis
+                      ? data.data_pelamar.spesialis
+                      : "Web Developer,Manajemen,dll..."
                   }
                   onChange={(e) => setSpesialisasi(e.target.value)}
                 />
@@ -185,8 +200,8 @@ export default function Profil() {
                   value={ringkasan}
                   type="text"
                   placeholder={
-                    data.tentang
-                      ? data.tentang
+                    data.data_pelamar.tentang
+                      ? data.data_pelamar.tentang
                       : "Tuliskan tentang diri anda...."
                   }
                   onChange={(e) => setRingkasan(e.target.value)}
@@ -211,7 +226,14 @@ export default function Profil() {
         <Header />
         <div className="template-head">
           <div className="t-h-top">
-            <img src={data.profil} alt="gambar profil user" />
+            <img
+              src={
+                data.data_pelamar.picture
+                  ? data.data_pelamar.picture
+                  : "/profil.svg"
+              }
+              alt="gambar profil user"
+            />
             <div onClick={() => setHandleImage(true)} className="t-h-t-edit">
               <img src="/pencil.svg" alt="pencil icon" />
             </div>
@@ -224,10 +246,10 @@ export default function Profil() {
             <div className="t-h-b-desc">
               <span>
                 <p>
-                  {data.lokasi},{data.provinsi}
+                  {data.data_pelamar.lokasi},{data.data_pelamar.provinsi}
                 </p>
                 <img src="/dot1.svg" alt="dot gap" />
-                <p>{data.spesialisasi}</p>
+                <p>{data.data_pelamar.spesialis}</p>
               </span>
               <span>
                 <button
@@ -253,21 +275,23 @@ export default function Profil() {
                     alt="pencil icon"
                   />
                 </span>
-                <p>{data.tentang}</p>
+                <p>{data.data_pelamar.tentang}</p>
               </div>
               <div className="skill">
                 <h6>Keahlian:</h6>
                 <div className="s-wrap">
-                  {data.skill.map((e, i) => (
-                    <div className="s-item" key={i}>
-                      <p>{e}</p>
-                      <img
-                        style={{ width: "10px" }}
-                        src="/close.svg"
-                        alt="close icon"
-                      />
-                    </div>
-                  ))}
+                  {data.data_pelamar.skill
+                    ? data.data_pelamar.skill.map((e, i) => (
+                        <div className="s-item" key={i}>
+                          <p>{e}</p>
+                          <img
+                            style={{ width: "10px" }}
+                            src="/close.svg"
+                            alt="close icon"
+                          />
+                        </div>
+                      ))
+                    : null}
                   <div
                     onClick={() => setHandleSkill(true)}
                     style={{ fontWeight: "500" }}
@@ -284,58 +308,60 @@ export default function Profil() {
                   berada.
                 </p>
                 <div className="cv-l-wrap">
-                  {data.cv.map((e) => (
-                    <div
-                      onClick={() => window.open(e.link)}
-                      className="cv-l-item"
-                      key={e.id}
-                    >
-                      <button
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          setOptionId(e.id);
-                        }}
-                        className="cv-l-i-option"
-                      >
-                        <img src="/3dots.svg" alt="option" />
-                      </button>
-                      {optionId === null ? null : optionId === e.id ? (
-                        <>
-                          <div className="cv-l-i-option-wrap-content">
-                            <button
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                //logic
-                              }}
-                            >
-                              Cari Lowongan
-                            </button>
-                            <button
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                //logic
-                              }}
-                            >
-                              Hapus
-                            </button>
-                          </div>
-                          <div
+                  {data.data_pelamar.cv
+                    ? data.data_pelamar.cv.map((e) => (
+                        <div
+                          onClick={() => window.open(e.link)}
+                          className="cv-l-item"
+                          key={e.id}
+                        >
+                          <button
                             onClick={(event) => {
                               event.stopPropagation();
-                              setOptionId(null);
+                              setOptionId(e.id_cv);
                             }}
-                            className="cv-l-i-option-wrap"
-                          ></div>
-                        </>
-                      ) : null}
-                      <img id="pdf-image" src="/pdf.svg" alt="pdf logo" />
-                      <h6>{e.nama}</h6>
-                      <span>
-                        <p>{e.size / 1000} Kb</p>
-                        <p>{moment(e.tanggal).format("LL")}</p>
-                      </span>
-                    </div>
-                  ))}
+                            className="cv-l-i-option"
+                          >
+                            <img src="/3dots.svg" alt="option" />
+                          </button>
+                          {optionId === null ? null : optionId === e.id_cv ? (
+                            <>
+                              <div className="cv-l-i-option-wrap-content">
+                                <button
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    //logic
+                                  }}
+                                >
+                                  Cari Lowongan
+                                </button>
+                                <button
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    //logic
+                                  }}
+                                >
+                                  Hapus
+                                </button>
+                              </div>
+                              <div
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  setOptionId(null);
+                                }}
+                                className="cv-l-i-option-wrap"
+                              ></div>
+                            </>
+                          ) : null}
+                          <img id="pdf-image" src="/pdf.svg" alt="pdf logo" />
+                          <h6>{e.nama}</h6>
+                          <span>
+                            <p>{e.size / 1000} Kb</p>
+                            <p>{moment(e.tanggal).format("LL")}</p>
+                          </span>
+                        </div>
+                      ))
+                    : null}
 
                   {/* !tambahin logic buat up pdf */}
                   <div className="cv-l-plus">

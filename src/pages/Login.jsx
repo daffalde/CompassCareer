@@ -21,7 +21,11 @@ export default function Login() {
 
   // function data dummy____________________________________________________________
   async function getData() {
-    const { data } = await supabase.from("pelamar").select("*,data_pelamar(*)");
+    const { data } = await supabase
+      .from("pelamar")
+      .select(
+        "*,data_pelamar(*,cv(*),application(*),lowongan_tersimpan(*,lowongan(*)),perusahaan_tersimpan(*,data_perusahaan(*)))"
+      );
     const filterEmail = data.filter(
       (e) => e.email === inputEmail && e.password === inputPass
     );
