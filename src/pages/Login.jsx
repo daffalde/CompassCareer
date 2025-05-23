@@ -19,16 +19,26 @@ export default function Login() {
     setSeePass(!seePass);
   }
 
+  // handle role
+  const [handleRole, setHandleRole] = useState(null);
+  const [rolePelamar, setRolePelamar] = useState(false);
+  const [rolePerusahaan, setRolePerusahaan] = useState(false);
+  const [nextButton, setNextButton] = useState(false);
+
   // function data dummy____________________________________________________________
   async function getData() {
-    const { data } = await supabase
+    const rolePelamar = await supabase
       .from("pelamar")
       .select(
         "*,data_pelamar(*,cv(*),application(*),lowongan_tersimpan(*,lowongan(*)),perusahaan_tersimpan(*,data_perusahaan(*)))"
       );
-    const filterEmail = data.filter(
-      (e) => e.email === inputEmail && e.password === inputPass
-    );
+    const rolePerusahaan = await supabase
+      .from("perusahaan")
+      .select("*,data_perusahaan(*,lowongan(*,application(*)))");
+
+    const filterEmail = (
+      handleRole === "pelamar" ? rolePelamar : rolePerusahaan
+    ).data.filter((e) => e.email === inputEmail && e.password === inputPass);
     try {
       const { password, ...dataUser } = filterEmail[0];
       console.log(dataUser);
@@ -60,7 +70,16 @@ export default function Login() {
     <>
       <div className="container">
         <div className="auth-head">
+          {nextButton ? (
+            <div
+              onClick={() => {
+                setNextButton(false);
+              }}
+              className="back-head"
+            ></div>
+          ) : null}
           <img
+            className="auth-head-img"
             onClick={() => nav("/")}
             src="/logo1.svg"
             alt="logo Compass Career"
@@ -68,6 +87,12 @@ export default function Login() {
         </div>
         <div className="auth-body">
           <div className="a-b-content">
+            <div
+              onClick={() => {
+                setNextButton(false);
+              }}
+              className="a-b-back"
+            ></div>
             <span>
               <h5>Masuk ke akun anda</h5>
               <p>Akses peluang kerja terbaik dengan sekali login</p>
@@ -112,6 +137,61 @@ export default function Login() {
             <p>
               Belum punya akun? <a href="/signup">Sign Up</a>
             </p>
+
+            {/* cover role */}
+            <div className={`a-b-role ${nextButton ? "a-b-role-hidden" : ""}`}>
+              <span>
+                <p>Masuk sebagai apa?</p>
+                <h4>Pilih Peran, Masuk dan Mulai Perjalananmu!</h4>
+              </span>
+              <div>
+                <button
+                  onClick={() => {
+                    setRolePelamar(true);
+                    setRolePerusahaan(false);
+                    setHandleRole("pelamar");
+                  }}
+                  className={`role-button ${rolePelamar ? "role-on" : ""}`}
+                >
+                  <img
+                    height={"40%"}
+                    src={rolePelamar ? "/pelamar-off.svg" : "/pelamar-on.svg"}
+                    alt="icon role perusahaan"
+                  />
+                  <p>Pelamar</p>
+                </button>
+                <button
+                  onClick={() => {
+                    setRolePerusahaan(true);
+                    setRolePelamar(false);
+                    setHandleRole("perusahaan");
+                  }}
+                  className={`role-button ${rolePerusahaan ? "role-on" : ""}`}
+                >
+                  <img
+                    height={"40%"}
+                    src={
+                      rolePerusahaan ? "/company-on.svg" : "/company-off.svg"
+                    }
+                    alt="icon role perusahaan"
+                  />
+                  <p>Perusahaan</p>
+                </button>
+              </div>
+              <br />
+              <br />
+              <br />
+              <button
+                className="button-main a-b-role-button"
+                onClick={() => {
+                  if (handleRole !== null) {
+                    setNextButton(!nextButton);
+                  }
+                }}
+              >
+                Lanjut <img src="/right-arrow.svg" alt="right arrow icon" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
