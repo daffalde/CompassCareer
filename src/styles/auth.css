@@ -55,6 +55,9 @@
 .pass-input {
   position: relative;
 }
+.passs {
+  position: relative;
+}
 #show-pass {
   position: absolute;
   bottom: 0;

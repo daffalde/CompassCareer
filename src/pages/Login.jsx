@@ -25,14 +25,20 @@ export default function Login() {
     const filterEmail = data.filter(
       (e) => e.email === inputEmail && e.password === inputPass
     );
-    const { password, ...dataUser } = filterEmail[0];
-    console.log(dataUser);
-    if (filterEmail.length != 0) {
-      console.log("berhasil masuk");
-      Cookies.set("token");
-      sessionStorage.setItem("data", JSON.stringify(dataUser));
-      nav("/");
-    } else {
+    try {
+      const { password, ...dataUser } = filterEmail[0];
+      console.log(dataUser);
+      if (filterEmail.length != 0) {
+        console.log("berhasil masuk");
+        Cookies.set("token");
+        sessionStorage.setItem("data", JSON.stringify(dataUser));
+        nav("/");
+      } else {
+        console.log("gagal masuk");
+        setLoading(false);
+        setCaution(true);
+      }
+    } catch (e) {
       console.log("gagal masuk");
       setLoading(false);
       setCaution(true);
@@ -73,7 +79,7 @@ export default function Login() {
                   onChange={(e) => setInputEmail(e.target.value)}
                 />
               </span>
-              <span>
+              <span className="passs">
                 <label htmlFor="password">Password</label>
                 <input
                   type={seePass ? "text" : "password"}
