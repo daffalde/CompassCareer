@@ -26,6 +26,11 @@ export const lowongan = [
         tentang:
           "PT Astra International Tbk adalah sebuah grup usaha besar di Indonesia yang didirikan pada tahun 1957. Perusahaan ini bergerak di berbagai sektor, termasuk otomotif, jasa keuangan, alat berat, pertambangan, agribisnis, infrastruktur, teknologi informasi, dan properti. Astra juga dikenal sebagai perusahaan yang memiliki program tanggung jawab sosial yang berkelanjuta",
       },
+      applicant:[{
+        //ke daftar yang melamar pekerjaan/ke user
+
+      },//dst...
+    ]
   },
   {
     id: 2,
@@ -570,7 +575,6 @@ export const user = [
         size: 250000,
       },
     ],
-    status: "Ditinjau",
     lowongan: [
       {
         id: "1",

@@ -27,11 +27,12 @@ export default function Header() {
   // cek user
   const [cekUser, setCekUser] = useState(false);
   const [userData, setUserData] = useState({});
+  console.log(userData);
   function authCek() {
     const cookie = Cookies.get("token");
     if (cookie) {
       setCekUser(true);
-      setUserData(JSON.parse(localStorage.getItem("auth")));
+      setUserData(JSON.parse(sessionStorage.getItem("data")));
     } else {
       setCekUser(false);
     }

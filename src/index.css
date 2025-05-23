@@ -71,6 +71,31 @@ h6 {
   font-size: 16px;
 }
 
+.caution {
+  text-align: start;
+  font-size: 16px;
+  color: #ff2c2c;
+}
+
+/* loading */
+#loading-botton {
+  height: 20px;
+  width: 20px;
+}
+#loading-botton img {
+  width: 100%;
+  animation: loading 1s infinite linear;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* button */
 .button-main {
   font-size: 16px;
@@ -83,6 +108,10 @@ h6 {
   font-family: "Poppins", sans-serif;
   transition: 0.3s;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 .button-main:hover {
   background-color: var(--blue-button-hover);

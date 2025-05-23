@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Cookies from "js-cookie";
 import { perusahaan, user } from "../data/Data";
+import { supabase } from "../data/supabaseClient";
 
 export default function Test() {
   const [kuki, setKuki] = useState("");
@@ -73,6 +74,15 @@ export default function Test() {
     window.addEventListener("resize", handleLebar);
     return () => removeEventListener("resize", handleLebar);
   });
+
+  // supabase
+  useEffect(() => {
+    async function getData() {
+      const { data } = await supabase.from("pelamar").select("*");
+      console.log(data);
+    }
+    getData();
+  }, []);
   return (
     <>
       <div className="container">

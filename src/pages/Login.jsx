@@ -1,17 +1,53 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import "../styles/auth.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "../data/supabaseClient";
+import { LoadingButton } from "../components/Loading";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const nav = useNavigate();
   const [seePass, setSeePass] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [caution, setCaution] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleShowPass(e) {
     e.preventDefault();
     setSeePass(!seePass);
+  }
+
+  // function data dummy____________________________________________________________
+  async function getData() {
+    const { data } = await supabase.from("pelamar").select("*");
+    const filterEmail = data.filter(
+      (e) => e.email === email && e.password === password
+    );
+    const selectData = {
+      id: filterEmail[0].id,
+      nama: filterEmail[0].nama,
+      email: filterEmail[0].email,
+    };
+    if (filterEmail.length != 0) {
+      console.log("berhasil masuk");
+      Cookies.set("token");
+      sessionStorage.setItem("data", JSON.stringify(selectData));
+      nav("/");
+    } else {
+      console.log("gagal masuk");
+      setLoading(false);
+      setCaution(true);
+    }
+  }
+
+  // _______________________________________________________________________________
+
+  function handleLogin(e) {
+    e.preventDefault();
+    setLoading(true);
+    getData();
   }
   return (
     <>
@@ -29,11 +65,11 @@ export default function Login() {
               <h5>Masuk ke akun anda</h5>
               <p>Akses peluang kerja terbaik dengan sekali login</p>
             </span>
-            <form>
+            <form onSubmit={handleLogin}>
               <span>
-                <label for="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   placeholder="Johndoe@example.com"
                   value={email}
@@ -41,7 +77,7 @@ export default function Login() {
                 />
               </span>
               <span>
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   type={seePass ? "text" : "password"}
                   id="password"
@@ -56,20 +92,16 @@ export default function Login() {
                   />
                 </button>
               </span>
-              <button className="button-main button-auth">Masuk</button>
+              {caution && (
+                <p className="caution">
+                  Login gagal! Periksa kembali email dan password kamu.
+                </p>
+              )}
+              <button className="button-main button-auth">
+                Masuk {loading && <LoadingButton />}
+              </button>
             </form>
             <a href="#">Lupa password?</a>
-            <div className="auth-gap"></div>
-            <span className="oauth">
-              <button>
-                <img src="/gl-auth.svg" alt="google icon" />
-                <p>Login dengan Google</p>
-              </button>
-              <button>
-                <img src="/fb-auth.svg" alt="facebook icon" />
-                <p>Login dengan Facebook</p>
-              </button>
-            </span>
             <p>
               Belum punya akun? <a href="/signup">Sign Up</a>
             </p>

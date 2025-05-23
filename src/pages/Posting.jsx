@@ -95,13 +95,13 @@ export default function Posting() {
             <label for="posting-tentang">Tentang pekerjaan</label>
             <textarea
               id="posting-tentang"
-              placeholder={`Tekan "enter" untuk ke list selnjautnya`}
+              placeholder={`Tekan "enter" untuk ke list selanjutnya`}
             ></textarea>
 
             <label for="posting-syarat">Persyaratan</label>
             <textarea
               id="posting-syarat"
-              placeholder={`Tekan "enter" untuk ke list selnjautnya`}
+              placeholder={`Tekan "enter" untuk ke list selanjutnya`}
             ></textarea>
             <p>
               *harap jangan menggunakan angka untuk listing,karena akan listing
