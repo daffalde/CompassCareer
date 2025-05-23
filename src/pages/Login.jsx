@@ -9,8 +9,8 @@ import Cookies from "js-cookie";
 export default function Login() {
   const nav = useNavigate();
   const [seePass, setSeePass] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputPass, setInputPass] = useState("");
   const [caution, setCaution] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -21,19 +21,16 @@ export default function Login() {
 
   // function data dummy____________________________________________________________
   async function getData() {
-    const { data } = await supabase.from("pelamar").select("*");
+    const { data } = await supabase.from("pelamar").select("*,data_pelamar(*)");
     const filterEmail = data.filter(
-      (e) => e.email === email && e.password === password
+      (e) => e.email === inputEmail && e.password === inputPass
     );
-    const selectData = {
-      id: filterEmail[0].id,
-      nama: filterEmail[0].nama,
-      email: filterEmail[0].email,
-    };
+    const { password, ...dataUser } = filterEmail[0];
+    console.log(dataUser);
     if (filterEmail.length != 0) {
       console.log("berhasil masuk");
       Cookies.set("token");
-      sessionStorage.setItem("data", JSON.stringify(selectData));
+      sessionStorage.setItem("data", JSON.stringify(dataUser));
       nav("/");
     } else {
       console.log("gagal masuk");
@@ -72,8 +69,8 @@ export default function Login() {
                   type="email"
                   id="email"
                   placeholder="Johndoe@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={inputEmail}
+                  onChange={(e) => setInputEmail(e.target.value)}
                 />
               </span>
               <span>
@@ -82,8 +79,8 @@ export default function Login() {
                   type={seePass ? "text" : "password"}
                   id="password"
                   placeholder="Minimum 8 karakter"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={inputPass}
+                  onChange={(e) => setInputPass(e.target.value)}
                 />
                 <button id="show-pass" onClick={handleShowPass}>
                   <img

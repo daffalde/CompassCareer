@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { supabase } from "../data/supabaseClient";
 
 export default function Header() {
   const nav = useNavigate();
@@ -24,10 +25,13 @@ export default function Header() {
     window.location.reload();
   }
 
+  // function data dummy____________________________________________________________
   // cek user
   const [cekUser, setCekUser] = useState(false);
   const [userData, setUserData] = useState({});
+
   console.log(userData);
+
   function authCek() {
     const cookie = Cookies.get("token");
     if (cookie) {
@@ -42,6 +46,8 @@ export default function Header() {
     authCek();
   }, []);
 
+  // _______________________________________________________________________________
+
   // fungsi header
   function loginUser() {
     if (cekUser) {
@@ -52,7 +58,13 @@ export default function Header() {
               <li>
                 <button
                   onClick={() => setHam(true)}
-                  style={{ backgroundImage: `url("${userData.profil}")` }}
+                  style={{
+                    backgroundImage: `url("${
+                      userData.data_pelamar.picture
+                        ? userData.data_pelamar.picture
+                        : "/profil.svg"
+                    }")`,
+                  }}
                   id="user-profil"
                 ></button>
               </li>
@@ -72,7 +84,13 @@ export default function Header() {
               <li>
                 <button
                   onClick={() => setHam(true)}
-                  style={{ backgroundImage: `url("${userData.profil}")` }}
+                  style={{
+                    backgroundImage: `url("${
+                      userData.data_perusahaan.picture
+                        ? userData.data_perusahaan.picture
+                        : "/profil.svg"
+                    }")`,
+                  }}
                   id="user-profil"
                 ></button>
               </li>
@@ -118,7 +136,13 @@ export default function Header() {
                 {/* user_____________ */}
                 <div className="hlm-user">
                   <div
-                    style={{ backgroundImage: `url("${userData.profil}")` }}
+                    style={{
+                      backgroundImage: `url("${
+                        userData.data_pelamar.picture
+                          ? userData.data_pelamar.picture
+                          : "/profil.svg"
+                      }")`,
+                    }}
                     className="hlm-u-img"
                   ></div>
                   <div className="hlm-u-desc">
@@ -225,7 +249,13 @@ export default function Header() {
                 {/* user_____________ */}
                 <div className="hlm-user">
                   <div
-                    style={{ backgroundImage: `url("${userData.profil}")` }}
+                    style={{
+                      backgroundImage: `url("${
+                        userData.data_perusahaan.picture
+                          ? userData.data_perusahaan.picture
+                          : "/profil.svg"
+                      }")`,
+                    }}
                     className="hlm-u-img"
                   ></div>
                   <div className="hlm-u-desc">
@@ -357,6 +387,7 @@ export default function Header() {
   });
 
   const path = window.location.pathname;
+
   return (
     <>
       <div className="header-void"></div>
