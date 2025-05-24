@@ -1,11 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import { provinsi } from "../data/Provinsi";
 import "../styles/perusahaan.css";
-import { lowongan, perusahaan } from "../data/Data";
+import { kategori } from "../data/Data";
 import Footer from "../components/Footer";
-import usePagination from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
+import { LoadingPage } from "../components/Loading";
+import { supabase } from "../data/supabaseClient";
 
 export default function Perusahaan() {
   const nav = useNavigate();
@@ -13,6 +14,10 @@ export default function Perusahaan() {
   const [inputLokasi, setInputLokasi] = useState("");
   const [lokasi, setLokasi] = useState("");
   const [cari, setCari] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Jumlah item per halaman
 
   function handleCari(e) {
     e.preventDefault();
@@ -20,121 +25,168 @@ export default function Perusahaan() {
     setLokasi(inputLokasi);
   }
 
-  const { currentItems, totalPages, nextPage, prevPage, page, currentPage } =
-    usePagination(perusahaan, 10);
+  async function getPerusahaan() {
+    try {
+      const { data, error } = await supabase
+        .from("perusahaan")
+        .select("*, data_perusahaan(*,lowongan(*))");
+
+      if (error) {
+        console.error("Error fetching data:", error);
+      } else {
+        setData(data);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getPerusahaan();
+  }, []);
+
+  // Hitung pagination
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = data.slice(startIndex, endIndex);
+
   return (
     <>
       <div className="container">
         <Header />
-        <div
-          style={{ backgroundImage: `url("/building-header.jpg")` }}
-          className="perusahaan-head"
-        >
-          <span>
-            <h2>Temukan Perusahaan Impian untuk Karier Anda</h2>
-            <p>
-              Jelajahi peluang kerja dari berbagai perusahaan terbaik untuk
-              karier Anda.
-            </p>
-          </span>
-          <div className="p-h-search">
-            <form>
+        {loading ? (
+          <LoadingPage />
+        ) : (
+          <>
+            <div
+              style={{ backgroundImage: `url("/building-header.jpg")` }}
+              className="perusahaan-head"
+            >
               <span>
-                <img src="/search1.svg" alt="search logo" />
-                <input
-                  ref={inputCari}
-                  type="text"
-                  placeholder="Cari Perusahaan...."
-                />
+                <h2>Temukan Perusahaan Impian untuk Karier Anda</h2>
+                <p>
+                  Jelajahi peluang kerja dari berbagai perusahaan terbaik untuk
+                  karier Anda.
+                </p>
               </span>
-              <div className="perusahaan-gap"></div>
-              <span>
-                <img src="/location4.svg" alt="location logo" />
-                <input
-                  list="prov"
-                  value={inputLokasi}
-                  onChange={(e) => setInputLokasi(e.target.value)}
-                  type="text"
-                  placeholder="Lokasi?"
-                />
-                <datalist id="prov">
-                  {inputLokasi.length >= 2 &&
-                    provinsi.map((provinsi) => (
-                      <option key={provinsi.id} value={provinsi.name}></option>
-                    ))}
-                </datalist>
-              </span>
-              <button onClick={handleCari}>Cari</button>
-            </form>
-          </div>
-        </div>
-        <div className="perusahaan-body">
-          {currentItems
-            .filter(
-              (e) =>
-                e.nama.toLowerCase().includes(cari.toLowerCase()) &&
-                e.provinsi.toLowerCase().includes(lokasi.toLowerCase())
-            )
-            .map((e) => (
-              <div
-                className="p-b-list"
-                onClick={() => nav(`/perusahaan/${e.id}`)}
-                key={e.id}
-              >
-                <button className="p-b-l-save">
-                  <img src="/save1.svg" alt="save icon" />
-                </button>
-                <img
-                  className="p-b-l-img"
-                  src={e.profil}
-                  alt="gambar profil perusahaan"
-                />
-                <div className="p-b-l-info">
+              <div className="p-h-search">
+                <form>
                   <span>
-                    <p style={{ color: "grey" }}>{e.bidang}</p>
-                    <h5>{e.nama}</h5>
+                    <img src="/search1.svg" alt="search logo" />
+                    <input
+                      ref={inputCari}
+                      type="text"
+                      placeholder="Cari Perusahaan...."
+                    />
                   </span>
-                  <div>
-                    <img src="/location1.svg" alt="icon lokasi" />
-                    <p>
-                      {e.lokasi}, {e.provinsi}
-                    </p>
-                  </div>
-                  <p>
-                    {e.lowongan.length === 0
-                      ? `Belum ada lowongan yang tersedia`
-                      : `Ada ${e.lowongan.length} lowongan tersedia`}
-                  </p>
-                </div>
+                  <div className="perusahaan-gap"></div>
+                  <span>
+                    <img src="/location4.svg" alt="location logo" />
+                    <input
+                      list="prov"
+                      value={inputLokasi}
+                      onChange={(e) => setInputLokasi(e.target.value)}
+                      type="text"
+                      placeholder="Lokasi?"
+                    />
+                    <datalist id="prov">
+                      {inputLokasi.length >= 2 &&
+                        provinsi.map((provinsi) => (
+                          <option
+                            key={provinsi.id}
+                            value={provinsi.name}
+                          ></option>
+                        ))}
+                    </datalist>
+                  </span>
+                  <button onClick={handleCari}>Cari</button>
+                </form>
               </div>
-            ))}
-        </div>
-        <div className="pagination">
-          <div onClick={prevPage} className="p-arrow">
-            <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
-          </div>
-          {totalPages > 3 ? currentPage == totalPages ? <Titik /> : null : null}
-          {Array.from({ length: 3 }, (_, i) => {
-            const pageNum = currentPage - 1 + i; // Menampilkan halaman saat ini dan 2 di sekitarnya
-            return (
-              pageNum >= 1 &&
-              pageNum <= totalPages && ( // Pastikan dalam batas halaman
+            </div>
+            <div className="perusahaan-body">
+              {currentItems
+                .filter(
+                  (filtering) =>
+                    filtering.nama.toLowerCase().includes(cari.toLowerCase()) &&
+                    filtering.data_perusahaan.provinsi
+                      .toLowerCase()
+                      .includes(lokasi.toLowerCase())
+                )
+                .map((e) => (
+                  <div
+                    className="p-b-list"
+                    onClick={() => nav(`/perusahaan/${e.id_perusahaan}`)}
+                    key={e.id_perusahaan}
+                  >
+                    <button className="p-b-l-save">
+                      <img src="/save1.svg" alt="save icon" />
+                    </button>
+                    <img
+                      className="p-b-l-img"
+                      src={
+                        e.data_perusahaan.picture
+                          ? e.data_perusahaan.picture
+                          : "/profil-perusahaan.svg"
+                      }
+                      alt="gambar profil perusahaan"
+                    />
+                    <div className="p-b-l-info">
+                      <span>
+                        <p style={{ color: "grey" }}>
+                          {e.data_perusahaan.bidang}
+                        </p>
+                        <h5>{e.nama}</h5>
+                      </span>
+                      <div>
+                        <img src="/location1.svg" alt="icon lokasi" />
+                        <p>
+                          {e.data_perusahaan.lokasi},{" "}
+                          {e.data_perusahaan.provinsi}
+                        </p>
+                      </div>
+                      <p>
+                        {e.data_perusahaan.lowongan.length === 0
+                          ? `Belum ada lowongan yang tersedia`
+                          : `Ada ${e.data_perusahaan.lowongan.length} lowongan tersedia`}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="pagination">
+              <div
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                className="p-arrow"
+              >
+                <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
+              </div>
+              {Array.from({ length: totalPages }, (_, i) => (
                 <div
-                  key={pageNum}
+                  key={i}
                   className={`p-item ${
-                    currentPage === pageNum ? "pagig-on" : ""
+                    currentPage === i + 1 ? "pagig-on" : ""
                   }`}
+                  onClick={() => setCurrentPage(i + 1)}
                 >
-                  <p onClick={() => page(pageNum)}>{pageNum}</p>
+                  <p>{i + 1}</p>
                 </div>
-              )
-            );
-          })}
-          {totalPages > 3 ? currentPage == 1 ? <Titik /> : null : null}
-          <div onClick={nextPage} className="p-arrow">
-            <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
-          </div>
-        </div>
+              ))}
+              <div
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                className="p-arrow"
+              >
+                <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <Footer />
     </>
