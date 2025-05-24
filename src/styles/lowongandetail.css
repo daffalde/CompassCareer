@@ -1,9 +1,10 @@
 .t-f-l-b-wrap {
+  width: 100%;
   display: flex;
   text-align: justify;
   gap: 20px;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 }
 .body-left {
   width: fit-content;
