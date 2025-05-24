@@ -16,6 +16,7 @@ export default function Perusahaan() {
   const [cari, setCari] = useState("");
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [user, setUser] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Jumlah item per halaman
 
@@ -27,10 +28,10 @@ export default function Perusahaan() {
 
   async function getPerusahaan() {
     try {
+      setUser(JSON.parse(sessionStorage.getItem("data")));
       const { data, error } = await supabase
         .from("perusahaan")
-        .select("*, data_perusahaan(*,lowongan(*))");
-
+        .select("*, data_perusahaan(*,lowongan(*),perusahaan_tersimpan(*))");
       if (error) {
         console.error("Error fetching data:", error);
       } else {
@@ -52,6 +53,28 @@ export default function Perusahaan() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = data.slice(startIndex, endIndex);
+
+  // tombol simpan
+  async function simpanPerusahaan(e) {
+    await supabase.from("perusahaan_tersimpan").insert({
+      id_pelamar: user.id_pelamar,
+      id_perusahaan: e,
+    });
+    getPerusahaan();
+  }
+
+  //tombol hapus simpan
+  async function hapusSimpanPerusahaan(e) {
+    try {
+      await supabase
+        .from("perusahaan_tersimpan")
+        .delete()
+        .eq("id_perusahaan_tersimpan", e);
+      getPerusahaan();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <>
@@ -121,9 +144,32 @@ export default function Perusahaan() {
                     onClick={() => nav(`/perusahaan/${e.id_perusahaan}`)}
                     key={e.id_perusahaan}
                   >
-                    <button className="p-b-l-save">
-                      <img src="/save1.svg" alt="save icon" />
-                    </button>
+                    {e.data_perusahaan.perusahaan_tersimpan.length !== 0 ? (
+                      <button
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          hapusSimpanPerusahaan(
+                            e.data_perusahaan.perusahaan_tersimpan.find(
+                              (element) =>
+                                element.id_pelamar === user.id_pelamar
+                            ).id_perusahaan_tersimpan
+                          );
+                        }}
+                        className="p-b-l-save"
+                      >
+                        <img src="/save2.svg" alt="save icon" />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          simpanPerusahaan(e.id_perusahaan);
+                        }}
+                        className="p-b-l-save"
+                      >
+                        <img src="/save1.svg" alt="save icon" />
+                      </button>
+                    )}
                     <img
                       className="p-b-l-img"
                       src={

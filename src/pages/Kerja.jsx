@@ -15,13 +15,18 @@ export default function Kerja() {
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Jumlah item per halaman
+  const [user, setUser] = useState(null);
 
   // get data dummy_______________________________________________________
   async function getLowongan() {
     try {
       const dataLowongan = await supabase
         .from("lowongan")
-        .select("*,data_perusahaan(*)");
+        .select("*,data_perusahaan(*),lowongan_tersimpan(*)");
+      console.log(dataLowongan.data);
+      setUser(JSON.parse(sessionStorage.getItem("data")));
       setData(dataLowongan.data);
     } catch (e) {
       console.log(e);
@@ -36,10 +41,11 @@ export default function Kerja() {
 
   // _____________________________________________________________________
 
-  // function pagination
-
-  const { currentItems, totalPages, nextPage, prevPage, page, currentPage } =
-    usePagination(loading === false ? data : kategori, 16);
+  // Hitung pagination
+  const totalPages = Math.ceil(data ? data.length / itemsPerPage : null);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = data ? data.slice(startIndex, endIndex) : null;
 
   const url = useLocation();
   const params = new URLSearchParams(url.search);
@@ -118,6 +124,28 @@ export default function Kerja() {
     setLokasiFilterResult(data);
   }
 
+  // tombol simpan
+  async function simpanLowongan(e) {
+    await supabase.from("lowongan_tersimpan").insert({
+      id_pelamar: user.id_pelamar,
+      id_lowongan: e,
+    });
+    getLowongan();
+  }
+
+  //tombol hapus simpan
+  async function hapusSimpanLowongan(e) {
+    try {
+      await supabase
+        .from("lowongan_tersimpan")
+        .delete()
+        .eq("id_lowongan_tersimpan", e);
+      getLowongan();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <>
       <div className="container">
@@ -137,120 +165,142 @@ export default function Kerja() {
               />
               <div className="k-list">
                 {currentItems
-                  .filter(
-                    (job) =>
-                      job.posisi
-                        .toLowerCase()
-                        .includes(searchResult.toLowerCase()) &&
-                      job.data_perusahaan.provinsi
-                        .toLowerCase()
-                        .includes(lokasiResult.toLowerCase()) &&
-                      job.jenis
-                        .toLowerCase()
-                        .includes(jenisResult.toLowerCase()) &&
-                      moment(
-                        job.created_at.split("T")[0],
-                        "YYYYMMDD"
-                      ).isBetween(startDate, endDate, "day", "[]") &&
-                      job.gaji_min >= gajiMinResult &&
-                      job.gaji_max <= gajiMaxResult &&
-                      job.kategori
-                        .toLowerCase()
-                        .includes(kategoriResult.toLowerCase()) &&
-                      job.data_perusahaan.provinsi
-                        .toLowerCase()
-                        .includes(lokasiFilterResult.toLocaleLowerCase())
-                  )
-                  .map((e) => (
-                    <div
-                      onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
-                      className="lowongan-card"
-                      key={e.id}
-                    >
-                      <div className="l-c-wrap">
-                        <div className="l-c-tanggal">
-                          <p>
-                            {moment(
-                              e.created_at.split("T")[0],
-                              "YYYYMMDD"
-                            ).fromNow()}
-                          </p>
-                          <button>
-                            <img src="/save1.svg" alt="save-logo" />
-                          </button>
+                  ? currentItems
+                      .filter(
+                        (job) =>
+                          job.posisi
+                            .toLowerCase()
+                            .includes(searchResult.toLowerCase()) &&
+                          job.data_perusahaan.provinsi
+                            .toLowerCase()
+                            .includes(lokasiResult.toLowerCase()) &&
+                          job.jenis
+                            .toLowerCase()
+                            .includes(jenisResult.toLowerCase()) &&
+                          moment(
+                            job.created_at.split("T")[0],
+                            "YYYYMMDD"
+                          ).isBetween(startDate, endDate, "day", "[]") &&
+                          job.gaji_min >= gajiMinResult &&
+                          job.gaji_max <= gajiMaxResult &&
+                          job.kategori
+                            .toLowerCase()
+                            .includes(kategoriResult.toLowerCase()) &&
+                          job.data_perusahaan.provinsi
+                            .toLowerCase()
+                            .includes(lokasiFilterResult.toLocaleLowerCase())
+                      )
+                      .map((e) => (
+                        <div
+                          onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
+                          className="lowongan-card"
+                          key={e.id_lowongan}
+                        >
+                          <div className="l-c-wrap">
+                            <div className="l-c-tanggal">
+                              <p>
+                                {moment(
+                                  e.created_at.split("T")[0],
+                                  "YYYYMMDD"
+                                ).fromNow()}
+                              </p>
+                              {e.lowongan_tersimpan.length !== 0 ? (
+                                <button
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    hapusSimpanLowongan(
+                                      e.lowongan_tersimpan.find(
+                                        (element) =>
+                                          element.id_pelamar === user.id_pelamar
+                                      ).id_lowongan_tersimpan
+                                    );
+                                  }}
+                                >
+                                  <img src="/save2.svg" alt="save-logo" />
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    simpanLowongan(e.id_lowongan);
+                                  }}
+                                >
+                                  <img src="/save1.svg" alt="save-logo" />
+                                </button>
+                              )}
+                            </div>
+                            <div className="l-c-title">
+                              <span>
+                                <p>{e.data_perusahaan.nama}</p>
+                                <h5>{e.posisi}</h5>
+                              </span>
+                              <img
+                                src={
+                                  e.data_perusahaan.picture
+                                    ? e.data_perusahaan.picture
+                                    : "/profil-perusahaan.svg"
+                                }
+                                alt="gambar profil perusahaan"
+                              />
+                            </div>
+                            <div className="l-c-skill">
+                              {JSON.parse(e.skill) ? (
+                                JSON.parse(e.skill).map((skill, index) => (
+                                  <p key={index}>{skill}</p>
+                                ))
+                              ) : (
+                                <p>Belum ada data</p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="l-c-action">
+                            <span>
+                              <h6>
+                                Rp{" "}
+                                {e.gaji_min / 1000000 >= 1
+                                  ? `${e.gaji_min / 1000000}Jt`
+                                  : `${e.gaji_min / 1000}Rb`}
+                                -
+                                {e.gaji_max / 1000000 >= 1
+                                  ? `${e.gaji_max / 1000000}Jt`
+                                  : `${e.gaji_max / 1000}Rb`}
+                              </h6>
+                              <p>{e.data_perusahaan.provinsi}</p>
+                            </span>
+                            <button className="button-main">Lihat</button>
+                          </div>
                         </div>
-                        <div className="l-c-title">
-                          <span>
-                            <p>{e.data_perusahaan.nama}</p>
-                            <h5>{e.posisi}</h5>
-                          </span>
-                          <img
-                            src={
-                              e.data_perusahaan.picture
-                                ? e.data_perusahaan.picture
-                                : "/profil-perusahaan.svg"
-                            }
-                            alt="gambar profil perusahaan"
-                          />
-                        </div>
-                        <div className="l-c-skill">
-                          {JSON.parse(e.skill) ? (
-                            JSON.parse(e.skill).map((skill, index) => (
-                              <p key={index}>{skill}</p>
-                            ))
-                          ) : (
-                            <p>Belum ada data</p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="l-c-action">
-                        <span>
-                          <h6>
-                            Rp{" "}
-                            {e.gaji_min / 1000000 >= 1
-                              ? `${e.gaji_min / 1000000}Jt`
-                              : `${e.gaji_min / 1000}Rb`}
-                            -
-                            {e.gaji_max / 1000000 >= 1
-                              ? `${e.gaji_max / 1000000}Jt`
-                              : `${e.gaji_max / 1000}Rb`}
-                          </h6>
-                          <p>{e.data_perusahaan.provinsi}</p>
-                        </span>
-                        <button className="button-main">Lihat</button>
-                      </div>
-                    </div>
-                  ))}
+                      ))
+                  : null}
               </div>
 
-              {/* pagination */}
+              {/* Pagination */}
               <div className="pagination">
-                <div onClick={prevPage} className="p-arrow">
+                <div
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  className="p-arrow"
+                >
                   <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
                 </div>
-                {totalPages > 3 ? (
-                  currentPage == totalPages ? (
-                    <Titik />
-                  ) : null
-                ) : null}
-                {Array.from({ length: 3 }, (_, i) => {
-                  const pageNum = currentPage - 1 + i; // Menampilkan halaman saat ini dan 2 di sekitarnya
-                  return (
-                    pageNum >= 1 &&
-                    pageNum <= totalPages && ( // Pastikan dalam batas halaman
-                      <div
-                        key={pageNum}
-                        className={`p-item ${
-                          currentPage === pageNum ? "pagig-on" : ""
-                        }`}
-                      >
-                        <p onClick={() => page(pageNum)}>{pageNum}</p>
-                      </div>
-                    )
-                  );
-                })}
-                {totalPages > 3 ? currentPage == 1 ? <Titik /> : null : null}
-                <div onClick={nextPage} className="p-arrow">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <div
+                    key={i}
+                    className={`p-item ${
+                      currentPage === i + 1 ? "pagig-on" : ""
+                    }`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    <p>{i + 1}</p>
+                  </div>
+                ))}
+                <div
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  className="p-arrow"
+                >
                   <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
                 </div>
               </div>

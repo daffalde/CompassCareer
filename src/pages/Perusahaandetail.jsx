@@ -39,6 +39,47 @@ export default function Perusahaandetail() {
   useEffect(() => {
     getPerusahaan();
   }, []);
+
+  const user = JSON.parse(sessionStorage.getItem("data"));
+  // logic simpan_______________________________________________
+  const [simpanButton, setSimpanButton] = useState(true);
+  const [idTersimpan, setIdTersimpan] = useState(null);
+  async function cekSimpan() {
+    const ceking = await supabase
+      .from("perusahaan_tersimpan")
+      .select("*")
+      .eq("id_pelamar", user.id_pelamar);
+    const dataCek = ceking.data.filter((e) => e.id_pelamar === Number(urlId));
+    if (dataCek[0]) {
+      setIdTersimpan(dataCek[0].id_perusahaan_tersimpan);
+      setSimpanButton(false);
+    }
+  }
+
+  useEffect(() => {
+    cekSimpan();
+  }, []);
+  // tombol simpan
+  async function simpanLowongan(e) {
+    await supabase.from("perusahaan_tersimpan").insert({
+      id_pelamar: user.id_pelamar,
+      id_perusahaan: e,
+    });
+    window.location.reload();
+  }
+
+  //tombol hapus simpan
+  async function hapusSimpanLowongan() {
+    try {
+      await supabase
+        .from("perusahaan_tersimpan")
+        .delete()
+        .eq("id_perusahaan_tersimpan", idTersimpan);
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <>
       <div className="container">
@@ -73,7 +114,21 @@ export default function Perusahaandetail() {
                       <p>{e.data_perusahaan.karyawan} Karyawan</p>
                     </span>
                     <span>
-                      <button className="button-second">Simpan</button>
+                      {simpanButton ? (
+                        <button
+                          onClick={() => simpanLowongan(e.id_perusahaan)}
+                          className="button-second"
+                        >
+                          Simpan
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => hapusSimpanLowongan(e.id_perusahaan)}
+                          className="button-second"
+                        >
+                          Disimpan
+                        </button>
+                      )}
                     </span>
                   </div>
                 </div>
