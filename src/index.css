@@ -173,6 +173,11 @@ h6 {
   transition: 0.3s;
 }
 
+.button-disable {
+  opacity: 50%;
+  pointer-events: none;
+}
+
 /* components_________________________________________ */
 
 /* header_________________________________________ */

@@ -12,7 +12,7 @@ import { LoadingPage } from "../components/Loading";
 export default function Kerjadetail() {
   const url = window.location.pathname;
   const urlId = url.split("/").pop();
-  const data = lowongan.filter((e) => e.id === Number(urlId));
+  const user = JSON.parse(sessionStorage.getItem("data"));
 
   const [dataLowongan, setDataLowongan] = useState(null);
   const [otherLowongan, setOtherLowongan] = useState(null);
@@ -46,6 +46,46 @@ export default function Kerjadetail() {
     StayUp();
     getLowongan();
   }, []);
+
+  // logic simpan_______________________________________________
+  const [simpanButton, setSimpanButton] = useState(true);
+  const [idTersimpan, setIdTersimpan] = useState(null);
+  async function cekSimpan() {
+    const ceking = await supabase
+      .from("lowongan_tersimpan")
+      .select("*")
+      .eq("id_pelamar", user.id_pelamar);
+    const dataCek = ceking.data.filter((e) => e.id_lowongan === Number(urlId));
+    if (dataCek[0]) {
+      setIdTersimpan(dataCek[0].id_lowongan_tersimpan);
+      setSimpanButton(false);
+    }
+  }
+
+  useEffect(() => {
+    cekSimpan();
+  }, []);
+  // tombol simpan
+  async function simpanLowongan(e) {
+    await supabase.from("lowongan_tersimpan").insert({
+      id_pelamar: user.id_pelamar,
+      id_lowongan: e,
+    });
+    window.location.reload();
+  }
+
+  //tombol hapus simpan
+  async function hapusSimpanLowongan() {
+    try {
+      await supabase
+        .from("lowongan_tersimpan")
+        .delete()
+        .eq("id_lowongan_tersimpan", idTersimpan);
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <>
@@ -88,7 +128,21 @@ export default function Kerjadetail() {
                         </p>
                       </span>
                       <span>
-                        <button className="button-second">Simpan</button>
+                        {simpanButton ? (
+                          <button
+                            onClick={() => simpanLowongan(e.id_lowongan)}
+                            className="button-second"
+                          >
+                            Simpan
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => hapusSimpanLowongan(e.id_lowongan)}
+                            className="button-second"
+                          >
+                            Disimpan
+                          </button>
+                        )}
                         <button className="button-main">Lamar</button>
                       </span>
                     </div>

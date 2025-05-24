@@ -19,65 +19,80 @@ export default function Login() {
     setSeePass(!seePass);
   }
 
-  // handle role
+  // Handle role selection
   const [handleRole, setHandleRole] = useState(null);
-  const [rolePelamar, setRolePelamar] = useState(false);
-  const [rolePerusahaan, setRolePerusahaan] = useState(false);
   const [nextButton, setNextButton] = useState(false);
 
-  // function data dummy____________________________________________________________
+  // Function to fetch user data
   async function getData() {
-    const rolePelamar = await supabase
-      .from("pelamar")
-      .select(
-        "*,data_pelamar(*,cv(*),application(*),lowongan_tersimpan(*,lowongan(*)),perusahaan_tersimpan(*,data_perusahaan(*)))"
-      );
-    const rolePerusahaan = await supabase
-      .from("perusahaan")
-      .select("*,data_perusahaan(*,lowongan(*,application(*)))");
+    if (!inputEmail || !inputPass) {
+      console.log("Harap isi email dan password!");
+      setCaution(true);
+      return;
+    }
 
-    const filterEmail = (
-      handleRole === "pelamar" ? rolePelamar : rolePerusahaan
-    ).data.filter((e) => e.email === inputEmail && e.password === inputPass);
     try {
-      const { password, ...dataUser } = filterEmail[0];
-      console.log(dataUser);
-      if (filterEmail.length != 0) {
-        console.log("berhasil masuk");
-        Cookies.set("token");
+      let roleData;
+      if (handleRole === "pelamar") {
+        const { data, error } = await supabase
+          .from("pelamar")
+          .select(
+            "*,data_pelamar(*,cv(*),application(*),lowongan_tersimpan(*,lowongan(*)),perusahaan_tersimpan(*,data_perusahaan(*)))"
+          );
+
+        if (error) throw error;
+        roleData = data;
+      } else if (handleRole === "perusahaan") {
+        const { data, error } = await supabase
+          .from("perusahaan")
+          .select("*,data_perusahaan(*,lowongan(*,application(*)))");
+        if (error) throw error;
+        roleData = data;
+      } else {
+        console.log("Role tidak valid");
+        setCaution(true);
+        return;
+      }
+
+      // Filter user by email and password
+      const filterEmail = roleData.filter(
+        (e) => e.email === inputEmail && e.password === inputPass
+      );
+
+      if (filterEmail.length > 0) {
+        const { password, ...dataUser } = filterEmail[0];
+        console.log("Berhasil masuk", dataUser);
+        Cookies.set("token", "your_secure_token_here");
         sessionStorage.setItem("data", JSON.stringify(dataUser));
         nav("/");
       } else {
-        console.log("gagal masuk");
+        console.log("Gagal masuk: Email atau password salah.");
         setLoading(false);
         setCaution(true);
       }
-    } catch (e) {
-      console.log("gagal masuk");
+    } catch (error) {
+      console.error("Terjadi kesalahan dalam proses login:", error.message);
       setLoading(false);
       setCaution(true);
     }
   }
-
-  // _______________________________________________________________________________
 
   function handleLogin(e) {
     e.preventDefault();
     setLoading(true);
     getData();
   }
+
   return (
     <>
       <div className="container">
         <div className="auth-head">
-          {nextButton ? (
+          {nextButton && (
             <div
-              onClick={() => {
-                setNextButton(false);
-              }}
+              onClick={() => setNextButton(false)}
               className="back-head"
             ></div>
-          ) : null}
+          )}
           <img
             className="auth-head-img"
             onClick={() => nav("/")}
@@ -87,14 +102,14 @@ export default function Login() {
         </div>
         <div className="auth-body">
           <div className="a-b-content">
-            <div
-              onClick={() => {
-                setNextButton(false);
-              }}
-              className="a-b-back"
-            ></div>
+            {nextButton && (
+              <div
+                onClick={() => setNextButton(false)}
+                className="a-b-back"
+              ></div>
+            )}
             <span>
-              <h5>Masuk ke akun anda</h5>
+              <h5>Masuk ke akun Anda</h5>
               <p>Akses peluang kerja terbaik dengan sekali login</p>
             </span>
             <form onSubmit={handleLogin}>
@@ -138,7 +153,7 @@ export default function Login() {
               Belum punya akun? <a href="/signup">Sign Up</a>
             </p>
 
-            {/* cover role */}
+            {/* Role Selection */}
             <div className={`a-b-role ${nextButton ? "a-b-role-hidden" : ""}`}>
               <span>
                 <p>Masuk sebagai apa?</p>
@@ -147,46 +162,47 @@ export default function Login() {
               <div>
                 <button
                   onClick={() => {
-                    setRolePelamar(true);
-                    setRolePerusahaan(false);
                     setHandleRole("pelamar");
                   }}
-                  className={`role-button ${rolePelamar ? "role-on" : ""}`}
+                  className={`role-button ${
+                    handleRole === "pelamar" ? "role-on" : ""
+                  }`}
                 >
                   <img
-                    height={"40%"}
-                    src={rolePelamar ? "/pelamar-off.svg" : "/pelamar-on.svg"}
-                    alt="icon role perusahaan"
+                    height="40%"
+                    src={
+                      handleRole === "pelamar"
+                        ? "/pelamar-off.svg"
+                        : "/pelamar-on.svg"
+                    }
+                    alt="icon role pelamar"
                   />
                   <p>Pelamar</p>
                 </button>
                 <button
                   onClick={() => {
-                    setRolePerusahaan(true);
-                    setRolePelamar(false);
                     setHandleRole("perusahaan");
                   }}
-                  className={`role-button ${rolePerusahaan ? "role-on" : ""}`}
+                  className={`role-button ${
+                    handleRole === "perusahaan" ? "role-on" : ""
+                  }`}
                 >
                   <img
-                    height={"40%"}
+                    height="40%"
                     src={
-                      rolePerusahaan ? "/company-on.svg" : "/company-off.svg"
+                      handleRole === "perusahaan"
+                        ? "/company-on.svg"
+                        : "/company-off.svg"
                     }
                     alt="icon role perusahaan"
                   />
                   <p>Perusahaan</p>
                 </button>
               </div>
-              <br />
-              <br />
-              <br />
               <button
                 className="button-main a-b-role-button"
                 onClick={() => {
-                  if (handleRole !== null) {
-                    setNextButton(!nextButton);
-                  }
+                  if (handleRole) setNextButton(!nextButton);
                 }}
               >
                 Lanjut <img src="/right-arrow.svg" alt="right arrow icon" />
