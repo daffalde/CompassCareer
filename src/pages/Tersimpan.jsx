@@ -4,8 +4,6 @@ import Header from "../components/Header";
 import "../styles/tersimpan.css";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import usePagination from "../components/Pagination";
-import { lowongan, perusahaan } from "../data/Data";
 import { supabase } from "../data/supabaseClient";
 import { LoadingPage } from "../components/Loading";
 
@@ -50,23 +48,39 @@ export default function Tersimpan() {
     getDataPerusahaan();
   }, []);
 
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const totalPages = Math.ceil(
-    dataLowongan ? dataLowongan.length : null / itemsPerPage
+  // pagination lowongan
+  const itemsPerPage = 6;
+  const data = Array.from(
+    { length: dataLowongan ? dataLowongan.length : null },
+    (_, i) => `Item ${i + 1}`
   );
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
 
-  const currentItems =
-    halaman === "lowongan"
-      ? dataLowongan
-        ? dataLowongan.slice(startIndex, endIndex)
-        : null
-      : dataPerusahaan
-      ? dataPerusahaan.slice(startIndex, endIndex)
-      : null;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const visibleItems = dataLowongan
+    ? dataLowongan.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      )
+    : null;
+
+  // pagination perusahaan
+  const itemsPerPagee = 6;
+  const dataa = Array.from(
+    { length: dataPerusahaan ? dataPerusahaan.length : null },
+    (_, i) => `Item ${i + 1}`
+  );
+
+  const [currentPagee, setCurrentPagee] = useState(1);
+  const totalPagess = Math.ceil(dataa.length / itemsPerPagee);
+
+  const visibleItemss = dataPerusahaan
+    ? dataPerusahaan.slice(
+        (currentPagee - 1) * itemsPerPagee,
+        currentPagee * itemsPerPagee
+      )
+    : null;
 
   //tombol hapus simpan lowongan
   async function hapusSimpanLowongan(e) {
@@ -126,9 +140,9 @@ export default function Tersimpan() {
                   <h4>Lowongan Tersimpan</h4>
                   <br />
                   <div className="t-b-lowongan-wrap">
-                    {currentItems ? (
-                      currentItems.length !== 0 ? (
-                        currentItems.map((e) => (
+                    {visibleItems ? (
+                      visibleItems.length !== 0 ? (
+                        visibleItems.map((e) => (
                           <div
                             onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
                             className="lowongan-card"
@@ -241,9 +255,9 @@ export default function Tersimpan() {
                   <h4>Perusahaan Tersimpan</h4>
                   <br />
                   <div className="t-b-perushaan-wrap">
-                    {currentItems ? (
-                      currentItems.length !== 0 ? (
-                        currentItems.map((e) => (
+                    {visibleItemss ? (
+                      visibleItemss.length !== 0 ? (
+                        visibleItemss.map((e) => (
                           <div
                             className="p-b-list"
                             onClick={() =>
@@ -300,7 +314,7 @@ export default function Tersimpan() {
                   <div className="pagination">
                     <div
                       onClick={() =>
-                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                        setCurrentPagee((prev) => Math.max(prev - 1, 1))
                       }
                       className="p-arrow"
                     >
@@ -309,20 +323,22 @@ export default function Tersimpan() {
                         alt="tanda panah pagination"
                       />
                     </div>
-                    {Array.from({ length: totalPages }, (_, i) => (
+                    {Array.from({ length: totalPagess }, (_, i) => (
                       <div
                         key={i}
                         className={`p-item ${
-                          currentPage === i + 1 ? "pagig-on" : ""
+                          currentPagee === i + 1 ? "pagig-on" : ""
                         }`}
-                        onClick={() => setCurrentPage(i + 1)}
+                        onClick={() => setCurrentPagee(i + 1)}
                       >
                         <p>{i + 1}</p>
                       </div>
                     ))}
                     <div
                       onClick={() =>
-                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                        setCurrentPagee((prev) =>
+                          Math.min(prev + 1, totalPages)
+                        )
                       }
                       className="p-arrow"
                     >
