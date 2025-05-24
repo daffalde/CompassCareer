@@ -7,7 +7,8 @@ import { useState } from "react";
 import { lowongan } from "../data/Data";
 
 export default function Profilperusahaan() {
-  const data = JSON.parse(localStorage.getItem("auth"));
+  const data = JSON.parse(sessionStorage.getItem("data"));
+  console.log(data);
   const nav = useNavigate();
 
   //   change picture
@@ -246,7 +247,14 @@ export default function Profilperusahaan() {
         <Header />
         <div className="template-head">
           <div className="t-h-top">
-            <img src={data.profil} alt="gambar profil user" />
+            <img
+              src={
+                data.data_perusahaan.picture
+                  ? data.data_perusahaan.picture
+                  : "/profil.svg"
+              }
+              alt="gambar profil user"
+            />
             <div onClick={() => setHandleImage(true)} className="t-h-t-edit">
               <img src="/pencil.svg" alt="pencil icon" />
             </div>
@@ -259,10 +267,10 @@ export default function Profilperusahaan() {
             <div className="t-h-b-desc">
               <span>
                 <p>
-                  {data.lokasi},{data.provinsi}
+                  {data.data_perusahaan.lokasi},{data.data_perusahaan.provinsi}
                 </p>
                 <img src="/dot1.svg" alt="dot gap" />
-                <p>{data.karyawan} Karyawan</p>
+                <p>{data.data_perusahaan.karyawan} Karyawan</p>
               </span>
               <span>
                 <button
@@ -283,21 +291,29 @@ export default function Profilperusahaan() {
                 <label for="b-f-web">Situs web</label>
                 <input
                   placeholder={
-                    data.situs ? data.situs : "https://www.industry.com"
+                    data.data_perusahaan.situs
+                      ? data.data_perusahaan.situs
+                      : "https://www.industry.com"
                   }
                   type="text"
                   id="b-f-web"
                 />
                 <label for="b-f-tahun">Tahun didirikan</label>
                 <input
-                  placeholder={data.didirikan ? data.didirikan : "1990"}
+                  placeholder={
+                    data.data_perusahaan.didirikan
+                      ? data.data_perusahaan.didirikan
+                      : "1990"
+                  }
                   type="text"
                   id="b-f-tahun"
                 />
                 <label for="b-f-industri">Industri</label>
                 <input
                   placeholder={
-                    data.bidang ? data.bidang : "Banking & Financial"
+                    data.data_perusahaan.bidang
+                      ? data.data_perusahaan.bidang
+                      : "Banking & Financial"
                   }
                   type="text"
                   id="b-f-industri"
@@ -316,7 +332,11 @@ export default function Profilperusahaan() {
                     alt="pencil icon"
                   />
                 </span>
-                <p>{data.tentang ? data.tentang : "Belum ada data"}</p>
+                <p>
+                  {data.data_perusahaan.tentang
+                    ? data.data_perusahaan.tentang
+                    : "Belum ada data"}
+                </p>
               </div>
               <div className="paragraph">
                 <span className="t-f-l-b-title">
@@ -327,8 +347,8 @@ export default function Profilperusahaan() {
                     alt="pencil icon"
                   />
                 </span>
-                {data.visi ? (
-                  data.visi.split("\n").map((e, i) => (
+                {data.data_perusahaan.visi ? (
+                  data.data_perusahaan.visi.split("\n").map((e, i) => (
                     <span className="numbering-item" key={i}>
                       <p>{i + 1}.</p>
                       <p>{e}</p>
@@ -347,8 +367,8 @@ export default function Profilperusahaan() {
                     alt="pencil icon"
                   />
                 </span>
-                {data.misi ? (
-                  data.misi.split("\n").map((e, i) => (
+                {data.data_perusahaan.misi ? (
+                  data.data_perusahaan.misi.split("\n").map((e, i) => (
                     <span className="numbering-item" key={i}>
                       <p>{i + 1}.</p>
                       <p>{e}</p>

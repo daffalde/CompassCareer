@@ -87,6 +87,18 @@ h6 {
   animation: loading 1s infinite linear;
 }
 
+#loading-page {
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#loading-page img {
+  width: 70px;
+  animation: loading 1s infinite linear;
+}
+
 @keyframes loading {
   0% {
     transform: rotate(0);

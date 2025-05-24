@@ -7,3 +7,13 @@ export function LoadingButton() {
     </>
   );
 }
+
+export function LoadingPage() {
+  return (
+    <>
+      <div id="loading-page">
+        <img src="/loading2.svg" alt="loading icon" />
+      </div>
+    </>
+  );
+}

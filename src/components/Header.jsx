@@ -22,6 +22,7 @@ export default function Header() {
   function handleLogout() {
     localStorage.removeItem("auth"); //tester
     Cookies.remove("token");
+    sessionStorage.removeItem("data");
     window.location.reload();
   }
 
@@ -29,8 +30,6 @@ export default function Header() {
   // cek user
   const [cekUser, setCekUser] = useState(false);
   const [userData, setUserData] = useState({});
-
-  console.log(userData);
 
   function authCek() {
     const cookie = Cookies.get("token");
@@ -62,7 +61,7 @@ export default function Header() {
                     backgroundImage: `url("${
                       userData.data_pelamar.picture
                         ? userData.data_pelamar.picture
-                        : "/profil.svg"
+                        : "/profil-pelamar.svg"
                     }")`,
                   }}
                   id="user-profil"
@@ -88,7 +87,7 @@ export default function Header() {
                     backgroundImage: `url("${
                       userData.data_perusahaan.picture
                         ? userData.data_perusahaan.picture
-                        : "/profil.svg"
+                        : "/profil-perusahaan.svg"
                     }")`,
                   }}
                   id="user-profil"
@@ -140,7 +139,7 @@ export default function Header() {
                       backgroundImage: `url("${
                         userData.data_pelamar.picture
                           ? userData.data_pelamar.picture
-                          : "/profil.svg"
+                          : "/profil-pelamar.svg"
                       }")`,
                     }}
                     className="hlm-u-img"
@@ -253,7 +252,7 @@ export default function Header() {
                       backgroundImage: `url("${
                         userData.data_perusahaan.picture
                           ? userData.data_perusahaan.picture
-                          : "/profil.svg"
+                          : "/profil-perusahaan.svg"
                       }")`,
                     }}
                     className="hlm-u-img"

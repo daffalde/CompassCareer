@@ -1,13 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { kategori } from "../data/Data";
 import "../styles/posting.css";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
+import { supabase } from "../data/supabaseClient";
+import { LoadingButton } from "../components/Loading";
 
 export default function Posting() {
   const nav = useNavigate();
+  const [loading, setLoading] = useState(false);
 
+  const inputPosisi = useRef(null);
+  const inputGajiMin = useRef(null);
+  const inputGajiMax = useRef(null);
+  const inputKategori = useRef(null);
+  const inputJenis = useRef(null);
+  const inputTingkat = useRef(null);
+  const inputTentang = useRef(null);
+  const inputSyarat = useRef(null);
   const [inputSkill, setInputSkill] = useState("");
   const [skill, setSkill] = useState([]);
 
@@ -22,6 +33,32 @@ export default function Posting() {
   }
 
   //   buat function untuk kirim semua data
+  // data dummy backend______________________________________________________
+  const data = JSON.parse(sessionStorage.getItem("data"));
+  async function handleSend(e) {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await supabase.from("lowongan").insert([
+        {
+          id_perusahaan: data.id_perusahaan,
+          posisi: inputPosisi.current.value,
+          gaji_min: inputGajiMin.current.value,
+          gaji_max: inputGajiMax.current.value,
+          kategori: inputKategori.current.value,
+          jenis: inputJenis.current.value,
+          tingkatan: inputTingkat.current.value,
+          tentang: inputTentang.current.value,
+          syarat: inputSyarat.current.value,
+          skill: JSON.stringify(skill),
+        },
+      ]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      console.log("data berhasil di unggah");
+    }
+  }
 
   return (
     <>
@@ -36,13 +73,24 @@ export default function Posting() {
           </div>
           <form>
             <label for="posting-nama">Posisi pekerjaan</label>
-            <input id="posting-nama" type="text" placeholder="Administrasi" />
+            <input
+              ref={inputPosisi}
+              id="posting-nama"
+              type="text"
+              placeholder="Administrasi"
+            />
 
             <label for="posting-gajimin">Range gaji</label>
             <span>
-              <input id="posting-gajimin" type="number" placeholder="Minimal" />
+              <input
+                ref={inputGajiMin}
+                id="posting-gajimin"
+                type="number"
+                placeholder="Minimal"
+              />
               <p>-</p>
               <input
+                ref={inputGajiMax}
                 id="posting-gajimax"
                 type="number"
                 placeholder="Maksimal"
@@ -50,7 +98,7 @@ export default function Posting() {
             </span>
 
             <label for="posting-kategori">Kategori</label>
-            <select id="posting-kategori">
+            <select ref={inputKategori} id="posting-kategori">
               <option value="" selected hidden>
                 Pilih
               </option>
@@ -64,7 +112,7 @@ export default function Posting() {
             </select>
 
             <label for="posting-jenis">Jenis</label>
-            <select id="posting-jenis">
+            <select ref={inputJenis} id="posting-jenis">
               <option value="" selected hidden>
                 Pilih
               </option>
@@ -75,7 +123,7 @@ export default function Posting() {
             </select>
 
             <label for="posting-tingkat">Tingkatan</label>
-            <select id="posting-tingkat">
+            <select ref={inputTingkat} id="posting-tingkat">
               <option value="" selected hidden>
                 Pilih
               </option>
@@ -94,12 +142,14 @@ export default function Posting() {
           <form>
             <label for="posting-tentang">Tentang pekerjaan</label>
             <textarea
+              ref={inputTentang}
               id="posting-tentang"
               placeholder={`Tekan "enter" untuk ke list selanjutnya`}
             ></textarea>
 
             <label for="posting-syarat">Persyaratan</label>
             <textarea
+              ref={inputSyarat}
               id="posting-syarat"
               placeholder={`Tekan "enter" untuk ke list selanjutnya`}
             ></textarea>
@@ -126,6 +176,11 @@ export default function Posting() {
                 id="posting-keahlian"
                 type="text"
                 placeholder="Komputer,Manajemen,dll...."
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSkill();
+                  }
+                }}
               />
               <button onClick={handleSkill} className="button-main">
                 Tambah
@@ -155,7 +210,9 @@ export default function Posting() {
           <button onClick={() => nav(-1)} className="button-second">
             Batal
           </button>
-          <button className="button-main">Posting</button>
+          <button onClick={handleSend} className="button-main">
+            Posting {loading ? <LoadingButton /> : null}
+          </button>
         </div>
       </div>
       <br />
