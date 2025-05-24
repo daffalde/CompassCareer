@@ -24,6 +24,7 @@ export default function Header() {
     Cookies.remove("token");
     sessionStorage.removeItem("data");
     window.location.reload();
+    nav("/");
   }
 
   // function data dummy____________________________________________________________

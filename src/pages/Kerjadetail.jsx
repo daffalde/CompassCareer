@@ -15,6 +15,7 @@ export default function Kerjadetail() {
   const data = lowongan.filter((e) => e.id === Number(urlId));
 
   const [dataLowongan, setDataLowongan] = useState(null);
+  const [otherLowongan, setOtherLowongan] = useState(null);
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +26,11 @@ export default function Kerjadetail() {
         .from("lowongan")
         .select("*,data_perusahaan(*)")
         .eq("id_lowongan", Number(urlId)); // filtering data dari uid disini
+
+      const another = await supabase
+        .from("lowongan")
+        .select("*,data_perusahaan(*)");
+      setOtherLowongan(another.data);
       setDataLowongan(lowonganData.data);
     } catch (e) {
       console.log(e);
@@ -50,7 +56,7 @@ export default function Kerjadetail() {
         ) : (
           <>
             {dataLowongan.map((e) => (
-              <div className="template" key={e.id}>
+              <div className="template" key={e.id_lowongan}>
                 <div className="template-head">
                   <div className="t-h-top">
                     <img
@@ -179,31 +185,36 @@ export default function Kerjadetail() {
                     <div className="t-f-l-body">
                       <div className="lowongan-lain-wrap">
                         <h6>Lowongan lain</h6>
-                        {lowongan
+                        {otherLowongan
+                          .sort(() => Math.random() - 0.5)
                           .slice(0, 7)
                           .filter(
                             (job) =>
                               job.kategori === e.kategori &&
-                              job.id != e.id_lowongan
+                              job.id_lowongan != e.id_lowongan
                           )
                           .map((list) => (
                             <div
                               className="lowongan-lain"
                               onClick={() => {
                                 window.scrollTo({ top: 0 });
-                                nav(`/lowongan/${list.id}`);
+                                nav(`/lowongan/${list.id_lowongan}`);
                               }}
-                              key={list.id}
+                              key={list.id_lowongan}
                             >
-                              <h6>{list.nama}</h6>
+                              <h6>{list.posisi}</h6>
                               <span>
                                 <img
-                                  src={list.perusahaan.profil}
+                                  src={
+                                    list.data_perusahaan.picture
+                                      ? list.data_perusahaan.picture
+                                      : "/profil-perusahaan.svg"
+                                  }
                                   alt="profil perusahaan"
                                 />
-                                <p>{list.perusahaan.nama}</p>
+                                <p>{list.data_perusahaan.nama}</p>
                                 <img src="/dot1.svg" alt="dot" />
-                                <p>{list.perusahaan.provinsi}</p>
+                                <p>{list.data_perusahaan.provinsi}</p>
                               </span>
                             </div>
                           ))}

@@ -47,7 +47,7 @@ export default function Perusahaandetail() {
           <LoadingPage />
         ) : (
           data.map((e) => (
-            <div className="template" key={e.id}>
+            <div className="template" key={e.id_perusahaan}>
               <div className="template-head">
                 <div className="t-h-top">
                   <img
@@ -130,28 +130,31 @@ export default function Perusahaandetail() {
                   <div className="t-f-l-body">
                     <div className="lowongan-lain-wrap">
                       <h6>Lowongan lain </h6>
-                      {e.data_perusahaan.lowongan.slice(0, 7).map((list) => (
-                        <div
-                          onClick={() => nav(`/lowongan/${list.id_lowongan}`)}
-                          className="lowongan-lain"
-                          key={list.id_lowongan}
-                        >
-                          <h6>{list.posisi}</h6>
-                          <span>
-                            <img
-                              src={
-                                e.data_perusahaan.picture
-                                  ? e.data_perusahaan.picture
-                                  : "/profil-perusahaan.svg"
-                              }
-                              alt="profil perusahaan"
-                            />
-                            <p>{e.data_perusahaan.nama}</p>
-                            <img src="/dot1.svg" alt="dot" />
-                            <p>{e.data_perusahaan.provinsi}</p>
-                          </span>
-                        </div>
-                      ))}
+                      {e.data_perusahaan.lowongan
+                        .sort(() => Math.random() - 0.5)
+                        .slice(0, 7)
+                        .map((list) => (
+                          <div
+                            onClick={() => nav(`/lowongan/${list.id_lowongan}`)}
+                            className="lowongan-lain"
+                            key={list.id_lowongan}
+                          >
+                            <h6>{list.posisi}</h6>
+                            <span>
+                              <img
+                                src={
+                                  e.data_perusahaan.picture
+                                    ? e.data_perusahaan.picture
+                                    : "/profil-perusahaan.svg"
+                                }
+                                alt="profil perusahaan"
+                              />
+                              <p>{e.data_perusahaan.nama}</p>
+                              <img src="/dot1.svg" alt="dot" />
+                              <p>{e.data_perusahaan.provinsi}</p>
+                            </span>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>
