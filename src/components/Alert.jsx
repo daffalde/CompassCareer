@@ -25,3 +25,17 @@ export function AlertFailed({ message }) {
     </>
   );
 }
+
+export function AlertWarning({ message }) {
+  return (
+    <>
+      <div className="alert-container">
+        <div className="alert-warning"></div>
+        <span>
+          <h6 className="alert-font-warning">Peringatan</h6>
+          <p>{message}</p>
+        </span>
+      </div>
+    </>
+  );
+}

@@ -51,7 +51,7 @@ export default function Header() {
   // fungsi header
   function loginUser() {
     if (cekUser) {
-      if (userData.role === "pelamar") {
+      if (userData ? userData.role === "pelamar" : null) {
         return (
           <>
             <div className="h-action">
@@ -72,7 +72,7 @@ export default function Header() {
           </>
         );
       }
-      if (userData.role === "perusahaan") {
+      if (userData ? userData.role === "perusahaan" : null) {
         return (
           <>
             <div className="h-action">

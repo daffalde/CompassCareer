@@ -86,7 +86,6 @@ export default function Test() {
   return (
     <>
       <div className="container">
-        <Header />
         <p>{lebar}</p>
         <h1>ini halaman tester</h1>
         <p>apakah Cookies ada = {kuki}</p>

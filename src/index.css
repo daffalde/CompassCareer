@@ -990,3 +990,13 @@ input[list]::-webkit-calendar-picker-indicator {
 .alert-font-failed {
   color: #f45050;
 }
+
+.alert-warning {
+  width: 5px;
+  height: 100%;
+  background-color: #fdca20;
+  border-radius: 10px;
+}
+.alert-font-warning {
+  color: #fdca20;
+}
