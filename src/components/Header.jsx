@@ -131,7 +131,10 @@ export default function Header() {
       if (userData.role === "pelamar") {
         return (
           <>
-            <div className="header-list-mobile">
+            <div
+              onClick={(event) => event.stopPropagation()}
+              className="header-list-mobile"
+            >
               <ul>
                 {/* user_____________ */}
                 <div className="hlm-user">
