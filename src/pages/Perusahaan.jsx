@@ -144,26 +144,38 @@ export default function Perusahaan() {
                     onClick={() => nav(`/perusahaan/${e.id_perusahaan}`)}
                     key={e.id_perusahaan}
                   >
-                    {e.data_perusahaan.perusahaan_tersimpan.length !== 0 ? (
-                      <button
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          hapusSimpanPerusahaan(
-                            e.data_perusahaan.perusahaan_tersimpan.find(
-                              (element) =>
-                                element.id_pelamar === user.id_pelamar
-                            ).id_perusahaan_tersimpan
-                          );
-                        }}
-                        className="p-b-l-save"
-                      >
-                        <img src="/save2.svg" alt="save icon" />
-                      </button>
+                    {user !== null ? (
+                      e.data_perusahaan.perusahaan_tersimpan.length !== 0 ? (
+                        <button
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            hapusSimpanPerusahaan(
+                              e.data_perusahaan.perusahaan_tersimpan.find(
+                                (element) =>
+                                  element.id_pelamar === user.id_pelamar
+                              ).id_perusahaan_tersimpan
+                            );
+                          }}
+                          className="p-b-l-save"
+                        >
+                          <img src="/save2.svg" alt="save icon" />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            simpanPerusahaan(e.id_perusahaan);
+                          }}
+                          className="p-b-l-save"
+                        >
+                          <img src="/save1.svg" alt="save icon" />
+                        </button>
+                      )
                     ) : (
                       <button
                         onClick={(event) => {
                           event.stopPropagation();
-                          simpanPerusahaan(e.id_perusahaan);
+                          nav("/login");
                         }}
                         className="p-b-l-save"
                       >

@@ -45,3 +45,220 @@
   justify-content: start;
   align-items: center;
 }
+
+/* apply section */
+.apply-page {
+  width: 900px;
+}
+.apply-p-head {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+.apply-p-head img {
+  padding: 5px;
+  border-radius: 100%;
+  border: 2px solid transparent;
+  height: 40px;
+  transition: 0.1s;
+}
+.apply-p-head img:hover {
+  border: 2px solid var(--black-50);
+  transition: 0.1s;
+}
+.apply-p-head img:active {
+  padding: 5px;
+  background-color: var(--black-50);
+}
+
+.apply-body {
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+}
+
+.apply-b-c-profil {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding-right: 20px;
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.05);
+}
+.apply-b-c-profil:hover {
+  transform: scale(1.02);
+  transition: 0.3s;
+  padding-right: 10px;
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.1);
+}
+.apply-b-c-profil span {
+  width: 100%;
+}
+.apply-b-c-profil img:first-child {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 100%;
+}
+
+.apply-b-c-cv {
+  width: 100%;
+  height: fit-content;
+  padding: 15px;
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+.apply-b-c-cv-alert {
+  border: 2px solid #ff2c2c;
+  animation: alert 0.4s ease;
+}
+@keyframes alert {
+  0% {
+    transform: translateX(-1%);
+  }
+  30% {
+    transform: translateX(1%);
+  }
+  60% {
+    transform: translateX(-1%);
+  }
+  90% {
+    transform: translateX(1%);
+  }
+  100% {
+    transform: translateX(-1%);
+  }
+}
+.apply-b-c-cv-wrap {
+  width: 100%;
+  height: 200px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 5px;
+  margin-top: 10px;
+  border-bottom: 2px solid var(--black-10);
+}
+.apply-b-c-cv-item {
+  height: 80px;
+  border: 3px solid var(--black-10);
+  width: 100%;
+  display: flex;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  transition: 0.3s;
+}
+.apply-b-c-cv-item:hover {
+  border: 3px solid var(--black-50);
+  transition: 0.3s;
+}
+.apply-b-c-cv-item-on {
+  border: 3px solid var(--blue);
+  background-color: #edf8ff;
+  cursor: default;
+}
+.apply-b-c-cv-item-on:hover {
+  border: 3px solid var(--blue);
+}
+.apply-b-c-cv-item p {
+  display: block;
+  width: 75%;
+}
+
+.apply-b-c-cv-item img {
+  height: 70%;
+}
+.apply-b-c-cv-i-plus {
+  width: 20px;
+  height: 20px;
+  background-size: cover;
+}
+
+.apply-b-c-lowongan {
+  width: 100%;
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  gap: 20px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s;
+}
+.apply-b-c-lowongan:hover {
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  transform: scale(1.02);
+}
+.apply-b-c-lowongan img {
+  height: 70px;
+  border-radius: 100%;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.apply-b-c-lowongan span p {
+  color: var(--black-50);
+  font-size: 14px;
+}
+.apply-b-c-l-arrow {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-image: url("/up-right.png");
+  background-size: 28px;
+  background-position-x: 100%;
+  border-radius: 2px;
+  background-repeat: no-repeat;
+  right: 5px;
+  top: 5px;
+}
+
+.apply-b-c-button {
+  width: 100%;
+}
+
+.apply-b-c-text {
+  width: 100%;
+  height: calc(100% - 120px);
+  padding: 10px;
+  font-size: 16px;
+  overflow: auto;
+  resize: none;
+  border: 2px solid var(--black-10);
+  border-radius: 5px;
+}
+.apply-b-c-text:focus {
+  outline: 2px solid var(--black-50);
+}
+
+@media screen and (width <= 1000px) {
+  .apply-body {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  .apply-b-c-text {
+    height: 400px;
+  }
+  .apply-page {
+    width: 100%;
+  }
+}

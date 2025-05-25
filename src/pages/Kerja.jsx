@@ -204,25 +204,37 @@ export default function Kerja() {
                                   "YYYYMMDD"
                                 ).fromNow()}
                               </p>
-                              {e.lowongan_tersimpan.length !== 0 ? (
-                                <button
-                                  onClick={(event) => {
-                                    event.stopPropagation();
-                                    hapusSimpanLowongan(
-                                      e.lowongan_tersimpan.find(
-                                        (element) =>
-                                          element.id_pelamar === user.id_pelamar
-                                      ).id_lowongan_tersimpan
-                                    );
-                                  }}
-                                >
-                                  <img src="/save2.svg" alt="save-logo" />
-                                </button>
+                              {user !== null ? (
+                                e.lowongan_tersimpan.length !== 0 ? (
+                                  <button
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      hapusSimpanLowongan(
+                                        e.lowongan_tersimpan.find(
+                                          (element) =>
+                                            element.id_pelamar ===
+                                            user.id_pelamar
+                                        ).id_lowongan_tersimpan
+                                      );
+                                    }}
+                                  >
+                                    <img src="/save2.svg" alt="save-logo" />
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      simpanLowongan(e.id_lowongan);
+                                    }}
+                                  >
+                                    <img src="/save1.svg" alt="save-logo" />
+                                  </button>
+                                )
                               ) : (
                                 <button
                                   onClick={(event) => {
                                     event.stopPropagation();
-                                    simpanLowongan(e.id_lowongan);
+                                    nav("/login");
                                   }}
                                 >
                                   <img src="/save1.svg" alt="save-logo" />

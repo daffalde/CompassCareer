@@ -5,19 +5,21 @@ import { lowongan } from "../data/Data";
 import "../styles/lowongandetail.css";
 import "../styles/template.css";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "../data/supabaseClient";
-import { LoadingPage } from "../components/Loading";
+import { LoadingButton, LoadingPage } from "../components/Loading";
+import axios from "axios";
+import { AlertFailed, AlertSucceed } from "../components/Alert";
 
 export default function Kerjadetail() {
   const url = window.location.pathname;
   const urlId = url.split("/").pop();
-  const user = JSON.parse(sessionStorage.getItem("data"));
 
   const [dataLowongan, setDataLowongan] = useState(null);
   const [otherLowongan, setOtherLowongan] = useState(null);
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   // data dummy_____________________________________________________
   async function getLowongan() {
@@ -30,6 +32,7 @@ export default function Kerjadetail() {
       const another = await supabase
         .from("lowongan")
         .select("*,data_perusahaan(*)");
+      setUser(JSON.parse(sessionStorage.getItem("data")));
       setOtherLowongan(another.data);
       setDataLowongan(lowonganData.data);
     } catch (e) {
@@ -47,14 +50,15 @@ export default function Kerjadetail() {
     getLowongan();
   }, []);
 
-  // logic simpan_______________________________________________
+  // logic simpan________________________________________________________________________
   const [simpanButton, setSimpanButton] = useState(true);
   const [idTersimpan, setIdTersimpan] = useState(null);
   async function cekSimpan() {
+    const userId = JSON.parse(sessionStorage.getItem("data"));
     const ceking = await supabase
       .from("lowongan_tersimpan")
       .select("*")
-      .eq("id_pelamar", user.id_pelamar);
+      .eq("id_pelamar", userId.id_pelamar);
     const dataCek = ceking.data.filter((e) => e.id_lowongan === Number(urlId));
     if (dataCek[0]) {
       setIdTersimpan(dataCek[0].id_lowongan_tersimpan);
@@ -87,10 +91,204 @@ export default function Kerjadetail() {
     }
   }
 
+  // APPLY MENU________________________________________________________________
+  const [showPopup, setShowPopup] = useState(false);
+  const [takeIdCv, setTakeIdCv] = useState(null);
+  const [alertCv, setAlertCv] = useState(false);
+  const inputSurat = useRef("");
+  const [loadingButton, setLoadingButton] = useState(false);
+  const [alertPesan, setAlertPesan] = useState(null);
+  const [alertPesanShow, setAlertPesanShow] = useState(false);
+
+  async function handleSendApply(e) {
+    e.preventDefault();
+    setLoadingButton(true);
+    if (takeIdCv) {
+      try {
+        await axios.post(
+          "https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/application",
+          {
+            id_lowongan: Number(urlId),
+            id_cv: takeIdCv,
+            id_pelamar: user.id_pelamar,
+            surat: inputSurat.current.value,
+            status: "Ditinjau",
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              apikey:
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
+            },
+          }
+        );
+        setAlertPesan("Lamaran berhasil terkirim!");
+        setAlertPesanShow(true);
+        setShowPopup(false);
+      } catch (e) {
+        setAlertPesan("Lamaran gagal terkirim!", e);
+        setAlertPesanShow(true);
+      }
+    } else {
+      setAlertCv(true);
+      setLoadingButton(false);
+    }
+  }
   return (
     <>
       <div className="container">
         <Header />
+        {alertPesanShow ? (
+          alertPesan === "Lamaran berhasil terkirim!" ? (
+            <AlertSucceed message={alertPesan} />
+          ) : (
+            <AlertFailed message={alertPesan} />
+          )
+        ) : null}
+        {/* pop up____________________________________ */}
+        <div
+          onClick={() => setShowPopup(false)}
+          className={`popup-wrap ${showPopup ? "" : "popup-wrap-off"}`}
+        >
+          {dataLowongan ? (
+            <div
+              onClick={(event) => event.stopPropagation()}
+              className={`popup-content ${
+                showPopup ? "popup-content-off" : ""
+              }`}
+            >
+              <div className="apply-page">
+                <div className="apply-p-head">
+                  <img
+                    onClick={() => setShowPopup(false)}
+                    src="/left-arrow.png"
+                    alt="back icon"
+                  />
+                  <h5>Formulir Lamaran</h5>
+                </div>
+                <div className="apply-body">
+                  <div className="apply-b-content">
+                    <div
+                      onClick={() => nav("/profil")}
+                      className="apply-b-c-profil"
+                    >
+                      <img
+                        src={
+                          user
+                            ? user.data_pelamar.picture
+                            : "/profil-pelamar.svg"
+                        }
+                        alt="foto profil pelamar"
+                      />
+                      <span>
+                        <p>{user ? user.data_pelamar.spesialis : null}</p>
+                        <h5>{user ? user.nama : null}</h5>
+                        <p>{user ? user.email : null}</p>
+                      </span>
+                      <img height={"20px"} src="/right.png" alt="arrow icon" />
+                    </div>
+                    <br />
+                    <textarea
+                      ref={inputSurat}
+                      placeholder="Tulis pesan singkat untuk perusahaan..."
+                      className="apply-b-c-text"
+                    ></textarea>
+                  </div>
+                  <div className="apply-b-content">
+                    <div
+                      className={`apply-b-c-cv ${
+                        alertCv ? "apply-b-c-cv-alert" : ""
+                      }`}
+                    >
+                      <h6>Tambahkan CV</h6>
+                      {alertCv ? (
+                        <p className="caution">
+                          Pilih atau upload CV terlebih dahulu
+                        </p>
+                      ) : null}
+                      <div className="apply-b-c-cv-wrap">
+                        {user
+                          ? user.data_pelamar.cv
+                            ? user.data_pelamar.cv.map((e) => (
+                                <div
+                                  onClick={() => setTakeIdCv(e.id_cv)}
+                                  className={`apply-b-c-cv-item ${
+                                    takeIdCv === e.id_cv
+                                      ? "apply-b-c-cv-item-on"
+                                      : ""
+                                  }`}
+                                  key={e.id_cv}
+                                >
+                                  <img src="/pdf.svg" alt="png icon" />
+                                  <p>{e.nama}</p>
+                                  <div
+                                    style={{
+                                      backgroundImage: `url(${
+                                        takeIdCv === e.id_cv
+                                          ? "/check1.svg"
+                                          : "/plus1.png"
+                                      })`,
+                                    }}
+                                    className="apply-b-c-cv-i-plus"
+                                  ></div>
+                                </div>
+                              ))
+                            : null
+                          : null}{" "}
+                        {/* buat function buat nambah cv________________________________________ */}
+                      </div>
+                    </div>
+                    <br />
+                    <div
+                      onClick={() => setShowPopup(false)}
+                      className="apply-b-c-lowongan"
+                    >
+                      <div className="apply-b-c-l-arrow"></div>
+                      <img
+                        src={
+                          dataLowongan[0].data_perusahaan.picture
+                            ? dataLowongan[0].data_perusahaan.picture
+                            : "/profil-perusahaan.svg"
+                        }
+                        alt="profil perusahaan"
+                      />
+                      <span>
+                        <p>{dataLowongan[0].data_perusahaan.nama}</p>
+                        <h6>{dataLowongan[0].posisi}</h6>
+                        <p>
+                          {dataLowongan[0].data_perusahaan.lokasi}{" "}
+                          {dataLowongan[0].data_perusahaan.provinsi}
+                        </p>
+                        <br />
+                        <h6>
+                          Rp{" "}
+                          {dataLowongan[0].gaji_min > 1000000
+                            ? `${dataLowongan[0].gaji_min / 1000000}Jt`
+                            : `${dataLowongan[0].gaji_min / 1000}Rb`}
+                          -
+                          {dataLowongan[0].gaji_max > 1000000
+                            ? `${dataLowongan[0].gaji_max / 1000000}Jt`
+                            : `${dataLowongan[0].gaji_max / 1000}Rb`}
+                        </h6>
+                      </span>
+                    </div>
+                    <br />
+                    <button
+                      onClick={handleSendApply}
+                      className="button-main apply-b-c-button"
+                    >
+                      Kirim Lamaran {loadingButton ? <LoadingButton /> : null}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <LoadingPage />
+          )}
+        </div>
+        {/* __________________________________________ */}
+
         {loading ? (
           <LoadingPage />
         ) : (
@@ -143,7 +341,12 @@ export default function Kerjadetail() {
                             Disimpan
                           </button>
                         )}
-                        <button className="button-main">Lamar</button>
+                        <button
+                          onClick={() => setShowPopup(true)}
+                          className="button-main"
+                        >
+                          Lamar
+                        </button>
                       </span>
                     </div>
                   </div>

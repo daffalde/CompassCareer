@@ -1,4 +1,1 @@
-<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M240 202H556V617L396.646 517.011L240 617V202Z" fill="#393E46"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M225 200L250 175H550L575 200V643.873L400 540.17L225 643.873V200ZM275 225V556.127L400 482.05L525 556.127V225H275Z" fill="#393E46"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="144px" height="144px" fill-rule="nonzero"><g fill="#393e46" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M36.5,43c-0.309,0 -0.616,-0.095 -0.876,-0.283l-11.624,-8.369l-11.624,8.369c-0.458,0.329 -1.06,0.375 -1.561,0.118c-0.5,-0.256 -0.815,-0.772 -0.815,-1.335v-30c0,-3.584 2.916,-6.5 6.5,-6.5h15c3.584,0 6.5,2.916 6.5,6.5v30c0,0.563 -0.315,1.079 -0.816,1.335c-0.216,0.11 -0.45,0.165 -0.684,0.165z"></path></g></g></svg>

@@ -73,7 +73,7 @@ h6 {
 
 .caution {
   text-align: start;
-  font-size: 16px;
+  font-size: 14px;
   color: #ff2c2c;
 }
 
@@ -768,13 +768,14 @@ input[list]::-webkit-calendar-picker-indicator {
   align-items: center;
 }
 .l-c-tanggal button {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   padding: 1px;
   border: transparent;
   background-color: var(--white);
   cursor: default;
+  padding: 7px;
 }
 .l-c-tanggal button:hover {
   background-color: var(--white-dark);
@@ -888,4 +889,104 @@ input[list]::-webkit-calendar-picker-indicator {
   display: flex;
   gap: 5px;
   color: grey;
+}
+
+/* pop up */
+.popup-wrap {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  left: 0;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  transition: 0.3s;
+}
+.popup-wrap-off {
+  opacity: 0%;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.popup-content {
+  padding: 30px;
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--white);
+  place-self: center;
+  border-radius: 20px;
+  transform: translateY(100px);
+  opacity: 0%;
+  transition: 0.5s;
+}
+.popup-content-off {
+  transform: translateY(0);
+  transition: 0.5s;
+  opacity: 100%;
+}
+
+@media screen and (width <= 1000px) {
+  .popup-content {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    border-radius: 0;
+  }
+}
+/* message_________________________ */
+@keyframes fadeInOut {
+  0% {
+    transform: translateX(500px);
+  }
+  8% {
+    transform: translateX(-10px);
+  }
+  10% {
+    transform: translateX(0);
+  }
+  88% {
+    transform: translateX(0);
+  }
+  90% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+.alert-container {
+  background-color: white;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  right: 10px;
+  top: 30px;
+  width: 300px;
+  height: 100px;
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+  animation: fadeInOut 7s ease-in-out forwards;
+}
+.alert-succeed {
+  width: 5px;
+  height: 100%;
+  background-color: #9eca6d;
+  border-radius: 10px;
+}
+.alert-font-succeed {
+  color: #9eca6d;
+}
+
+.alert-failed {
+  width: 5px;
+  height: 100%;
+  background-color: #f45050;
+  border-radius: 10px;
+}
+.alert-font-failed {
+  color: #f45050;
 }
