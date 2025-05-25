@@ -125,6 +125,9 @@ export default function Kerjadetail() {
         setAlertPesan("Lamaran berhasil terkirim!");
         setAlertPesanShow(true);
         setShowPopup(false);
+        setLoadingButton(false);
+        setTakeIdCv(null);
+        inputSurat.current.value = "";
       } catch (e) {
         setAlertPesan("Lamaran gagal terkirim!", e);
         setAlertPesanShow(true);
@@ -166,6 +169,7 @@ export default function Kerjadetail() {
                   />
                   <h5>Formulir Lamaran</h5>
                 </div>
+                <br />
                 <div className="apply-body">
                   <div className="apply-b-content">
                     <div
@@ -190,7 +194,7 @@ export default function Kerjadetail() {
                     <br />
                     <textarea
                       ref={inputSurat}
-                      placeholder="Tulis pesan singkat untuk perusahaan..."
+                      placeholder="Tulis pesan untuk perusahaan..."
                       className="apply-b-c-text"
                     ></textarea>
                   </div>
