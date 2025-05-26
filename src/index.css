@@ -750,10 +750,31 @@ input[list]::-webkit-calendar-picker-indicator {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 .lowongan-card:hover {
   border: 2px solid var(--black-50);
   transition: 0.3s;
+}
+.l-c-action span:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.button-delete {
+  height: 45px;
+  width: 45px;
+  padding: 12px;
+  border: transparent;
+  background-color: #ff5757;
+  cursor: pointer;
+}
+.button-delete:hover {
+  background-color: #f50000;
+}
+.button-delete img {
+  width: 100%;
 }
 .l-c-wrap {
   padding: 15px;
@@ -1041,4 +1062,48 @@ input[list]::-webkit-calendar-picker-indicator {
   border-radius: 20px;
   color: var(--white);
   font-weight: 500;
+}
+
+/* delete confirmation */
+.lowongan-list-delete {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  color: var(--black);
+  text-align: center;
+}
+
+.lowongan-list-delete img {
+  background-color: #fff0f0;
+  width: 70px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.lowongan-list-delete span {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.lowongan-list-delete span button {
+  border-radius: 10px;
+  border: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 10px;
+  transition: 0.3s;
+}
+.lowongan-list-delete span button:hover {
+  filter: brightness(80%);
+  transition: 0.3s;
+}
+.button-cancel {
+  background-color: var(--white-dark);
+}
+.button-deleting {
+  background-color: #ff5757;
+  color: var(--white);
 }

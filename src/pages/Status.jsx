@@ -76,7 +76,9 @@ export default function Status() {
             {/* popup */}
             <div
               onClick={() => setPopup(false)}
-              className={`popup-wrap ${popup ? "" : "popup-wrap-off"}`}
+              className={`popup-wrap popup-wrap-status ${
+                popup ? "" : "popup-wrap-off"
+              }`}
             >
               <div
                 onClick={(event) => event.stopPropagation()}
