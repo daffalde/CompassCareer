@@ -5,7 +5,7 @@ import "../styles/status.css";
 import { user } from "../data/Data";
 import moment from "moment";
 import usePagination from "../components/Pagination";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../data/supabaseClient";
 import axios from "axios";
 import { LoadingPage } from "../components/Loading";
@@ -62,6 +62,9 @@ export default function Status() {
       )
     : null;
 
+  // detail
+  const [showCoverLetter, setShowCoverLetter] = useState(false);
+
   return (
     <>
       <div className="container">
@@ -71,8 +74,122 @@ export default function Status() {
         ) : (
           <>
             {/* popup */}
+            <div
+              onClick={() => setPopup(false)}
+              className={`popup-wrap ${popup ? "" : "popup-wrap-off"}`}
+            >
+              <div
+                onClick={(event) => event.stopPropagation()}
+                className={`popup-content ${popup ? "popup-content-off" : ""}`}
+              >
+                <div className="status-popup">
+                  <div className="popup-navigation">
+                    <img
+                      onClick={() => setPopup(false)}
+                      src="/left-arrow.png"
+                      alt="icon back"
+                    />
+                    <h5>Detail Lamaran</h5>
+                  </div>
+
+                  <div className="status-b-detail-pop">
+                    {popupId ? (
+                      dataApplication
+                        .filter((id) => id.id_application === popupId)
+                        .map((e) => (
+                          <div
+                            className="status-b-d-content"
+                            key={e.id_application}
+                          >
+                            <div className="status-b-d-head">
+                              <div className="status-b-d-h-left">
+                                <img
+                                  src={
+                                    e.lowongan.data_perusahaan.picture
+                                      ? e.lowongan.data_perusahaan.picture
+                                      : "/profil-perusahaan.svg"
+                                  }
+                                  alt="perusahaan profil image"
+                                />
+                                <div>
+                                  <p>{e.lowongan.data_perusahaan.nama}</p>
+                                  <h6>{e.lowongan.posisi}</h6>
+                                  <span>
+                                    <img src="/link.png" alt="link icon" />
+                                    <Link to={`/lowongan/${e.id_lowongan}`}>
+                                      Lihat
+                                    </Link>
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="status-b-d-h-right">
+                                <p
+                                  style={{
+                                    backgroundColor: `${
+                                      e.status === "Ditinjau"
+                                        ? "#fde9bc"
+                                        : e.status === "Diterima"
+                                        ? "#c8f2da"
+                                        : "#ffc3ce"
+                                    }`,
+                                  }}
+                                >
+                                  {e.status}
+                                </p>
+                                <p>
+                                  {moment(e.created_at, "YYYYMMDD").fromNow()}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="status-b-d-cv">
+                              <img src="/pdf.svg" alt="pdf icon" />
+                              <Link to={e.cv.link}>{e.cv.nama}</Link>
+                            </div>
+                            {e.surat ? (
+                              <div
+                                onClick={() =>
+                                  setShowCoverLetter(!showCoverLetter)
+                                }
+                                className={`status-b-d-surat ${
+                                  showCoverLetter ? "status-b-d-surat-on" : ""
+                                }`}
+                              >
+                                <h6 style={{ marginBottom: "10px" }}>
+                                  Cover letter
+                                </h6>
+                                <p>{e.surat}</p>
+                              </div>
+                            ) : null}
+                            <div className="status-b-d-notes">
+                              <h6 style={{ marginBottom: "10px" }}>
+                                Informasi dari perusahaan
+                              </h6>
+                              {e.notes ? (
+                                <p>{e.notes}</p>
+                              ) : (
+                                <p>Belum ada pesan.</p>
+                              )}
+                            </div>
+                          </div>
+                        ))
+                    ) : (
+                      <>
+                        <div className="status-b-d-idnull">
+                          <img src="/left-arrow.png" alt="arrow icon" />
+                          <span>
+                            <h4>Pilih Lamaran yang Dikirim </h4>
+                            <p>Tampilkan detail di sini</p>
+                          </span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* ______________________________ */}
-            <h4>Status Lamaran</h4>
+            <h3 className="heading-page">Status Lamaran</h3>
             <br />
             <div className="status-head">
               <form className="status-search">
@@ -121,12 +238,6 @@ export default function Status() {
             </div>
             <br />
             <div className="status-body">
-              <div className="status-b-header">
-                <h6>Lowongan</h6>
-                <h6>Tanggal Dikirim</h6>
-                <h6>Status</h6>
-                <h6></h6>
-              </div>
               <div className="status-b-wrap">
                 {visibleItems
                   .filter(
@@ -137,7 +248,14 @@ export default function Status() {
                         .includes(cari.toLowerCase())
                   )
                   .map((e) => (
-                    <div className="status-b-item" key={e.id_application}>
+                    <button
+                      onClick={() => {
+                        setPopup(true);
+                        setPopupId(e.id_application);
+                      }}
+                      className="status-b-item"
+                      key={e.id_application}
+                    >
                       <div className="status-b-i-info">
                         <img
                           src={
@@ -156,9 +274,6 @@ export default function Status() {
                           </p>
                         </span>
                       </div>
-                      <div className="status-b-i-date">
-                        <p>{moment(e.created_at).format("LL")}</p>
-                      </div>
                       <div className="status-b-i-status">
                         <p
                           style={{
@@ -173,40 +288,127 @@ export default function Status() {
                         >
                           {e.status}
                         </p>
+                        <p>{moment(e.created_at).format("LL")}</p>
                       </div>
-                      <div className="status-b-i-action">
-                        <img src="/right.png" alt="arrow right icon" />
-                      </div>
+                    </button>
+                  ))}
+                {/* pagination */}
+                <div className="pagination">
+                  <div
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    className="p-arrow"
+                  >
+                    <img
+                      src="./pagig-arrow2.svg"
+                      alt="tanda panah pagination"
+                    />
+                  </div>
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <div
+                      key={i}
+                      className={`p-item ${
+                        currentPage === i + 1 ? "pagig-on" : ""
+                      }`}
+                      onClick={() => setCurrentPage(i + 1)}
+                    >
+                      <p>{i + 1}</p>
                     </div>
                   ))}
-              </div>
-            </div>
-            {/* pagination */}
-            <div className="pagination">
-              <div
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                className="p-arrow"
-              >
-                <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
-              </div>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <div
-                  key={i}
-                  className={`p-item ${
-                    currentPage === i + 1 ? "pagig-on" : ""
-                  }`}
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  <p>{i + 1}</p>
+                  <div
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    className="p-arrow"
+                  >
+                    <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
+                  </div>
                 </div>
-              ))}
-              <div
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                className="p-arrow"
-              >
-                <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
+              </div>
+              <div className="status-b-detail">
+                {popupId ? (
+                  dataApplication
+                    .filter((id) => id.id_application === popupId)
+                    .map((e) => (
+                      <div
+                        className="status-b-d-content"
+                        key={e.id_application}
+                      >
+                        <div className="status-b-d-head">
+                          <div className="status-b-d-h-left">
+                            <img
+                              src={
+                                e.lowongan.data_perusahaan.picture
+                                  ? e.lowongan.data_perusahaan.picture
+                                  : "/profil-perusahaan.svg"
+                              }
+                              alt="perusahaan profil image"
+                            />
+                            <div>
+                              <p>{e.lowongan.data_perusahaan.nama}</p>
+                              <h6>{e.lowongan.posisi}</h6>
+                              <span>
+                                <img src="/link.png" alt="link icon" />
+                                <Link to={`/lowongan/${e.id_lowongan}`}>
+                                  Lihat
+                                </Link>
+                              </span>
+                            </div>
+                          </div>
+                          <div className="status-b-d-h-right">
+                            <p
+                              style={{
+                                backgroundColor: `${
+                                  e.status === "Ditinjau"
+                                    ? "#fde9bc"
+                                    : e.status === "Diterima"
+                                    ? "#c8f2da"
+                                    : "#ffc3ce"
+                                }`,
+                              }}
+                            >
+                              {e.status}
+                            </p>
+                            <p>{moment(e.created_at, "YYYYMMDD").fromNow()}</p>
+                          </div>
+                        </div>
+                        <div className="status-b-d-cv">
+                          <img src="/pdf.svg" alt="pdf icon" />
+                          <Link to={e.cv.link}>{e.cv.nama}</Link>
+                        </div>
+                        {e.surat ? (
+                          <div
+                            onClick={() => setShowCoverLetter(!showCoverLetter)}
+                            className={`status-b-d-surat ${
+                              showCoverLetter ? "status-b-d-surat-on" : ""
+                            }`}
+                          >
+                            <h6 style={{ marginBottom: "10px" }}>
+                              Cover letter
+                            </h6>
+                            <p>{e.surat}</p>
+                          </div>
+                        ) : null}
+                        <div className="status-b-d-notes">
+                          <h6 style={{ marginBottom: "10px" }}>
+                            Informasi dari perusahaan
+                          </h6>
+                          {e.notes ? <p>{e.notes}</p> : <p>Belum ada pesan.</p>}
+                        </div>
+                      </div>
+                    ))
+                ) : (
+                  <>
+                    <div className="status-b-d-idnull">
+                      <img src="/left-arrow.png" alt="arrow icon" />
+                      <span>
+                        <h4>Pilih Lamaran yang Dikirim </h4>
+                        <p>Tampilkan detail di sini</p>
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </>

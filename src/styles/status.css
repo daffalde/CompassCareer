@@ -48,21 +48,10 @@
 
 /* body */
 .status-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  margin-bottom: 50px;
-}
-
-.status-b-header {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 0.2fr;
-  width: 100%;
-  padding: 5px 10px;
-  color: var(--black);
-  border-bottom: 1px solid var(--black-10);
-  margin-bottom: 5px;
+  grid-template-columns: 1fr 1.3fr;
+  margin-bottom: 50px;
+  gap: 20px;
 }
 
 .status-b-wrap {
@@ -72,37 +61,49 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  gap: 10px;
 }
 .status-b-item {
-  height: 100px;
+  height: fit-content;
   width: 100%;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 0.2fr;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   transition: 0.3s;
   padding-right: 20px;
   cursor: pointer;
   border-radius: 5px;
+  border: 2px solid var(--black-10);
+  background-color: var(--white);
 }
 .status-b-item:hover {
   background-color: #edf8ff;
-  grid-template-columns: 1.5fr 1fr 1.1fr 0.1fr;
   transition: 0.3s;
+  border: 2px solid var(--blue);
+}
+.status-b-item:focus {
+  background-color: #edf8ff;
+  transition: 0.3s;
+  border: 2px solid var(--blue);
 }
 .status-b-i-info {
   width: 100%;
-  height: 100%;
+  height: 100px;
   display: flex;
   justify-content: start;
   align-items: center;
-  gap: 15px;
+  gap: 30px;
+}
+.status-b-i-info span {
+  text-align: start;
 }
 .status-b-i-info p {
   font-size: 14px;
   color: var(--black-50);
 }
 .status-b-i-info img {
-  height: 70px;
+  height: 100%;
   border-radius: 10px;
   border: 2px solid var(--white);
 }
@@ -115,8 +116,10 @@
 
 .status-b-i-status {
   display: flex;
-  justify-content: start;
-  align-items: center;
+  justify-content: center;
+  align-items: end;
+  flex-direction: column;
+  width: 250px;
 }
 .status-b-i-status p {
   display: block;
@@ -125,6 +128,9 @@
   border-radius: 100px;
   font-weight: 500;
   color: var(--black);
+}
+.status-b-i-status p:last-child {
+  font-size: 14px;
 }
 
 .status-b-i-action {
@@ -136,6 +142,195 @@
   height: 20px;
 }
 
+/* ___________________________ */
+.status-b-detail {
+  border-radius: 10px;
+  height: calc(100vh - 20px);
+  position: sticky;
+  top: 10px;
+  padding: 40px;
+  overflow: auto;
+  border: 2px solid var(--black-10);
+}
+
+.status-b-d-idnull {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  gap: 10px;
+  color: var(--black-50);
+}
+.status-b-d-idnull h4 {
+  font-weight: 500;
+}
+.status-b-d-idnull img {
+  height: 35px;
+  opacity: 50%;
+}
+
+.status-b-d-content {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20px;
+}
+
+/* detail */
+.status-b-d-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.status-b-d-h-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  gap: 15px;
+}
+.status-b-d-h-left p {
+  font-size: 14px;
+  color: var(--black-50);
+}
+.status-b-d-h-left img {
+  height: 70px;
+  width: 70px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+  border: 1px solid var(--white);
+}
+.status-b-d-h-left div span {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  gap: 2px;
+}
+.status-b-d-h-left div span a {
+  color: var(--black);
+  font-weight: 400;
+  text-decoration: none;
+}
+.status-b-d-h-left div span a:hover {
+  text-decoration: underline;
+}
+.status-b-d-h-left div span img {
+  height: 20px;
+  width: 20px;
+  border: transparent;
+  opacity: 50%;
+  cursor: pointer;
+}
+.status-b-d-h-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+}
+.status-b-d-h-right p {
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 100px;
+}
+.status-b-d-h-right p:last-child {
+  color: var(--black-50);
+  font-size: 14px;
+}
+
+.status-b-d-surat {
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid var(--black-10);
+  padding: 10px;
+  border-radius: 5px;
+}
+.status-b-d-surat:hover {
+  border: 2px solid var(--black-50);
+}
+.status-b-d-surat::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  background: #ffffff;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(72, 185, 255, 0) 100%
+  );
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  padding-bottom: 5px;
+}
+.status-b-d-surat-on {
+  height: fit-content;
+}
+.status-b-d-surat-on::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  background: transparent;
+}
+
+.status-b-d-notes {
+  border-top: 2px solid var(--black-10);
+  padding-top: 10px;
+  width: 100%;
+}
+.status-b-d-notes p {
+  white-space: pre-line;
+}
+
+.status-b-d-surat p {
+  white-space: pre-line;
+}
+
+.status-b-d-cv {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.status-b-d-cv a {
+  color: var(--black);
+  text-decoration: none;
+}
+.status-b-d-cv a:hover {
+  text-decoration: underline;
+}
+.status-b-d-cv img {
+  height: 20px;
+}
+
+.popup-wrap {
+  display: none;
+}
+.status-popup {
+}
+.status-b-detail-pop {
+  width: 100%;
+}
+@media screen and (width <= 1000px) {
+  .status-body {
+    grid-template-columns: 1fr;
+  }
+  .status-b-detail {
+    display: none;
+  }
+  .popup-wrap {
+    display: flex;
+  }
+}
 @media screen and (width <= 800px) {
   .status-head {
     flex-wrap: wrap;
@@ -146,31 +341,17 @@
   .status-search input {
     width: 100%;
   }
-  .status-b-header {
-    display: none;
-  }
   .status-b-item {
-    grid-template-columns: 1.5fr 1fr 0.2fr;
-  }
-  .status-b-i-date {
-    display: none;
-  }
-  .status-b-item:hover {
-    grid-template-columns: 1.5fr 1.1fr 0.1fr;
-  }
-}
-
-@media screen and (width <= 500px) {
-  .status-b-item {
-    grid-template-columns: 3fr 1fr;
-  }
-  .status-b-item:hover {
-    grid-template-columns: 3fr 1fr;
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
   }
   .status-b-i-status {
-    justify-content: end;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
   }
-  .status-b-i-action {
-    display: none;
+  .status-filter {
+    flex-wrap: wrap;
   }
 }

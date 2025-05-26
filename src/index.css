@@ -924,6 +924,29 @@ input[list]::-webkit-calendar-picker-indicator {
   transition: 0.5s;
   opacity: 100%;
 }
+.popup-navigation {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.popup-navigation img {
+  border: 2px solid transparent;
+  padding: 3px;
+  border-radius: 100%;
+  height: 35px;
+  transition: 0.3s;
+}
+.popup-navigation img:hover {
+  border: 2px solid var(--black-10);
+  transition: 0.3s;
+}
+.popup-navigation img:active {
+  border: 2px solid var(--black-50);
+  transition: 0.3s;
+}
 
 @media screen and (width <= 1000px) {
   .popup-content {
@@ -931,6 +954,7 @@ input[list]::-webkit-calendar-picker-indicator {
     height: 100vh;
     overflow: auto;
     border-radius: 0;
+    padding: 20px;
   }
 }
 /* message_________________________ */
@@ -999,4 +1023,19 @@ input[list]::-webkit-calendar-picker-indicator {
 }
 .alert-font-warning {
   color: #fdca20;
+}
+
+/* heading page */
+.heading-page {
+  display: block;
+  padding: 20px;
+  background: #48b9ff;
+  background: linear-gradient(
+    269deg,
+    rgba(72, 185, 255, 1) 0%,
+    rgba(0, 93, 244, 1) 100%
+  );
+  border-radius: 20px;
+  color: var(--white);
+  font-weight: 500;
 }

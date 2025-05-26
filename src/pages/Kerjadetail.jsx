@@ -194,7 +194,7 @@ export default function Kerjadetail() {
                     <br />
                     <textarea
                       ref={inputSurat}
-                      placeholder="Tulis pesan untuk perusahaan..."
+                      placeholder="Tulis cover letter..."
                       className="apply-b-c-text"
                     ></textarea>
                   </div>
