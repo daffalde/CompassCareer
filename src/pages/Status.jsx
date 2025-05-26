@@ -403,7 +403,7 @@ export default function Status() {
                     <div className="status-b-d-idnull">
                       <img src="/left-arrow.png" alt="arrow icon" />
                       <span>
-                        <h4>Pilih Lamaran yang Dikirim </h4>
+                        <h4>Pilih Lamaran </h4>
                         <p>Tampilkan detail di sini</p>
                       </span>
                     </div>

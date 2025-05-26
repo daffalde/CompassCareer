@@ -747,6 +747,9 @@ input[list]::-webkit-calendar-picker-indicator {
   color: var(--black);
   transition: 0.3s;
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .lowongan-card:hover {
   border: 2px solid var(--black-50);
