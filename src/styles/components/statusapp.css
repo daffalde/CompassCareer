@@ -1,0 +1,23 @@
+.status-application {
+  display: block;
+  width: fit-content;
+  height: fit-content;
+  padding: 5px 10px;
+  border-radius: 100px;
+  font-weight: 500;
+}
+
+.status-application-yellow {
+  background-color: #fff7c2;
+  color: #ecae06;
+}
+
+.status-application-red {
+  background-color: #ffcac7;
+  color: #e5271d;
+}
+
+.status-application-green {
+  background-color: #ddfcdc;
+  color: #21c622;
+}

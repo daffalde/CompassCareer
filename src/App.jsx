@@ -15,6 +15,7 @@ import Profilperusahaan from "./pages/Profilperusahaan.jsx";
 import Lowonganlist from "./pages/Lowonganlist.jsx";
 import Posting from "./pages/Posting.jsx";
 import Editpost from "./pages/Editpost.jsx";
+import DaftarPelamar from "./pages/Daftarpelamar.jsx";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/lowongan-post" Component={Lowonganlist} />
           <Route path="/posting" Component={Posting} />
           <Route path="/edit-lowongan/:id" Component={Editpost} />
+          <Route path="/pelamar" Component={DaftarPelamar} />
 
           <Route path="/test" Component={Test} />
         </Routes>

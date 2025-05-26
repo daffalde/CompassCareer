@@ -1,0 +1,45 @@
+.daftar-wrap {
+  width: 100%;
+  height: fit-content;
+}
+
+.daftar-w-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 0.3fr;
+  transition: 0.3s;
+  cursor: pointer;
+  border-bottom: 2px solid var(--black-10);
+}
+.daftar-w-content:hover {
+  background-color: #edf8ff;
+  transition: 0.3s;
+  grid-template-columns: 1.5fr 1fr 1fr 1.1fr 0.2fr;
+}
+.daftar-w-content div {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.daftar-w-c-pelamar {
+  height: 100px;
+  gap: 10px;
+  padding: 10px;
+}
+.daftar-w-c-pelamar img {
+  height: 100%;
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.daftar-w-c-cv img {
+  height: 20px;
+}
+.daftar-w-c-cv {
+  gap: 10px;
+}
+.daftar-w-c-cv a {
+  color: var(--black);
+}
