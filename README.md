@@ -1,12 +1,24 @@
-# React + Vite
+# Career Compass
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Job Portal dengan Rekomendasi Pekerjaan Berbasis Machine Learning
 
-Currently, two official plugins are available:
+## Deskripsi Proyek
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Job Portal ini dirancang untuk membantu pencari kerja menemukan pekerjaan yang sesuai dengan keterampilan dan pengalaman mereka. Pengguna dapat mengunggah CV mereka, dan sistem akan menggunakan model machine learning untuk menganalisis isi CV serta memberikan rekomendasi pekerjaan yang paling relevan.
 
-## Expanding the ESLint configuration
+## Fitur Utama
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Upload CV**: Pengguna dapat mengunggah CV dalam format PDF atau DOCX untuk dianalisis.
+- **Rekomendasi Pekerjaan**: Sistem akan memberikan rekomendasi pekerjaan berdasarkan isi CV menggunakan model machine learning.
+- **Pencarian dan Filter Pekerjaan**: Pengguna dapat mencari pekerjaan berdasarkan kategori, lokasi, dan perusahaan.
+- **Autentikasi Pengguna**: Sistem mendukung registrasi dan login menggunakan email/password atau OAuth.
+- **Dashboard Perusahaan**: Perusahaan dapat melihat daftar pelamar dan mencari kandidat berdasarkan keterampilan tertentu.
+
+## Teknologi yang Digunakan
+
+- **Frontend**: React.js dengan Tailwind CSS untuk tampilan antarmuka yang responsif.
+- **Backend**: Node.js dengan Express untuk API dan pengelolaan data.
+- **Database**: Supabase (PostgreSQL) untuk menyimpan data pelamar dan lowongan pekerjaan.
+- **Machine Learning**: Model berbasis NLP untuk analisis CV dan rekomendasi pekerjaan.
+- **Authentication**: Supabase Auth untuk login dan registrasi pengguna.
+- **Storage**: Supabase Storage untuk menyimpan CV yang diunggah oleh pengguna.
