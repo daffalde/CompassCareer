@@ -1,0 +1,150 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  width: 100%;
+  height: 100vh;
+}
+
+/* sidebar______________________________ */
+.dashboard-sidebar {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dashboard-s-buttnav {
+  width: 100%;
+  margin-top: 20px;
+}
+.button-sidebar {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 45px;
+  padding: 9px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: transparent;
+  border: transparent;
+  transition: 0.2s;
+}
+.button-sidebar-on {
+  background-color: var(--black-10);
+  pointer-events: none;
+}
+.button-sidebar:hover {
+  background-color: var(--white-dark);
+  transition: 0.2s;
+}
+.button-sidebar:active {
+  background-color: var(--black-10);
+}
+.button-sidebar img {
+  height: 100%;
+}
+.dashboard-sidebar-logo2 {
+  display: none;
+}
+
+@media screen and (width <= 1000px) {
+  .dashboard-container {
+    grid-template-columns: 65px 1fr;
+  }
+  .dashboard-sidebar {
+    padding: 20px 10px;
+  }
+  .dashboard-sidebar span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .button-sidebar {
+    width: 100%;
+    padding: 10px;
+  }
+  .button-sidebar p {
+    display: none;
+  }
+  .dashboard-sidebar-logo1 {
+    display: none;
+  }
+  .dashboard-sidebar-logo2 {
+    display: block;
+  }
+}
+
+/* content-header_______________________ */
+.dashboard-header {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.dashboard-h-profil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.dashboard-h-profil:hover {
+  background-color: var(--white);
+}
+.dashboard-h-profil img {
+  height: 40px;
+  width: 40px;
+  border: 2px solid var(--black-10);
+  border-radius: 100%;
+}
+.dashboard-header input {
+  font-size: 16px;
+  padding: 10px 15px;
+  width: 400px;
+  border-radius: 100px;
+  border: 2px solid var(--black-10);
+}
+
+@media screen and (width <= 800px) {
+  .dashboard-h-profil {
+    display: none;
+  }
+}
+/* content______________________________ */
+.dashboard-content {
+  background-color: var(--white-dark);
+  height: 100vh;
+  padding: 20px;
+  overflow: auto;
+}
+
+/* pelamar___________________________ */
+.dashboard-pelamar-wrap {
+  width: 100%;
+  height: fit-content;
+}
+.dashboard-pelamar-w-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.dashboard-pelamar-w-i-nama {
+  height: fit-content;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+.dashboard-pelamar-w-i-nama img {
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  object-position: center;
+}
