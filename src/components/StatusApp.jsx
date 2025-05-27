@@ -12,7 +12,7 @@ export function StatusApp({ variable }) {
             : "status-application-green"
         }`}
       >
-        <p>{variable}</p>
+        <h6>{variable}</h6>
       </div>
     </>
   );
