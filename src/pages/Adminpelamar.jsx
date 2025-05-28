@@ -41,7 +41,7 @@ export default function Adminpelamar() {
   const dataPagination = data ? data.slice(firstIndex, lastIndex) : null;
 
   // pop up
-  const [popup, setPopup] = useState(true);
+  const [popup, setPopup] = useState(false);
 
   // input
   const [file, setFile] = useState(null);
@@ -58,6 +58,7 @@ export default function Adminpelamar() {
     if (file) {
       setFile(URL.createObjectURL(file));
       setImage(file);
+      console.log(file);
     }
   }
 
@@ -85,6 +86,8 @@ export default function Adminpelamar() {
       console.log(file);
     }
   }
+
+  // function input data
 
   // input data
   function handleTambah(e) {
@@ -288,7 +291,12 @@ export default function Adminpelamar() {
                       ))}
                     </select>
                   </div>
-                  <button className="button-main">Tambah</button>
+                  <button
+                    onClick={() => setPopup(true)}
+                    className="button-main"
+                  >
+                    Tambah
+                  </button>
                 </div>
                 <div className="dashboard-pelamar-header">
                   <h6>Profil</h6>
