@@ -5,9 +5,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { LoadingButton } from "../components/Loading";
 import { AlertFailed, AlertSucceed } from "../components/Alert";
+import Cookies from "js-cookie";
 
 export default function Logout() {
   const nav = useNavigate();
+  if (Cookies.get("token")) {
+    nav("/");
+  }
+
   const [seePass, setSeePass] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
