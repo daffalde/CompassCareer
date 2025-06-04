@@ -7,11 +7,14 @@ import { data, useNavigate } from "react-router-dom";
 import { supabase } from "../data/supabaseClient";
 import { LoadingButton, LoadingPage } from "../components/Loading";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Editpost() {
   const nav = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loadingPage, setLoadingPage] = useState(true);
+  const token = Cookies.get("token");
+  const getId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
 
   const [skill, setSkill] = useState([]);
 
@@ -20,28 +23,20 @@ export default function Editpost() {
   const getUrlId = window.location.pathname;
   async function getDataLowongan() {
     try {
-      const inputDataLowongan = await axios.get(
-        "https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/lowongan?select=*",
-        {
-          headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
-          },
-        }
+      const resp = await axios.get(
+        "https://careercompass-backend.vercel.app/data/lowongan"
       );
       setDataLowongan(
-        inputDataLowongan.data.find(
-          (find) => find.id_lowongan === Number(getUrlId.split("/")[2])
-        )
+        resp.data.filter(
+          (e) => e.id_lowongan === Number(getUrlId.split("/")[2])
+        )[0]
+      );
+      console.log(
+        resp.data.filter(
+          (e) => e.id_lowongan === Number(getUrlId.split("/")[2])
+        )[0]
       );
       setLoadingPage(false);
-      setSkill(
-        JSON.parse(
-          inputDataLowongan.data.find(
-            (find) => find.id_lowongan === Number(getUrlId.split("/")[2])
-          ).skill
-        )
-      );
     } catch (e) {
       console.log(e);
     }
@@ -72,39 +67,36 @@ export default function Editpost() {
   }
 
   //   buat function untuk kirim semua data
-
-  const data = JSON.parse(sessionStorage.getItem("data"));
   async function handleSend(e) {
     e.preventDefault();
     setLoading(true);
     try {
       await axios.patch(
-        `https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/lowongan?id_lowongan=eq.${
+        `https://careercompass-backend.vercel.app/data/lowongan/${
           getUrlId.split("/")[2]
         }`,
         {
-          id_perusahaan: data.id_perusahaan,
           posisi: inputPosisi.current.value,
-          gaji_min: inputGajiMin.current.value,
-          gaji_max: inputGajiMax.current.value,
+          gajiMin: inputGajiMin.current.value,
+          gajiMax: inputGajiMax.current.value,
           kategori: inputKategori.current.value,
           jenis: inputJenis.current.value,
           tingkatan: inputTingkat.current.value,
           tentang: inputTentang.current.value,
           syarat: inputSyarat.current.value,
           skill: JSON.stringify(skill),
+          id: getId.id_perusahaan,
         },
         {
           headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
+      setLoading(false);
+      nav("/lowongan-post");
     } catch (e) {
       console.log(e);
-    } finally {
-      console.log("data berhasil di unggah");
     }
   }
 
@@ -196,7 +188,7 @@ export default function Editpost() {
                 <textarea
                   ref={inputTentang}
                   id="posting-tentang"
-                  placeholder={dataLowongan.tentang}
+                  placeholder={dataLowongan.tentang_lowongan}
                 ></textarea>
 
                 <label for="posting-syarat">Persyaratan</label>
