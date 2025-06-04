@@ -3,12 +3,16 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { kategori } from "../data/Data";
 import "../styles/posting.css";
-import { data, useNavigate } from "react-router-dom";
-import { supabase } from "../data/supabaseClient";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import { LoadingButton } from "../components/Loading";
+import axios from "axios";
+import { AlertFailed, AlertSucceed } from "../components/Alert";
 
 export default function Posting() {
   const nav = useNavigate();
+  const token = Cookies.get("token");
+  const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [loading, setLoading] = useState(false);
 
   const inputPosisi = useRef(null);
@@ -22,6 +26,8 @@ export default function Posting() {
   const [inputSkill, setInputSkill] = useState("");
   const [skill, setSkill] = useState([]);
 
+  const [alert, setAlert] = useState(null);
+
   function handleSkill(e) {
     e.preventDefault();
     setSkill((prevSkills) => [...prevSkills, inputSkill]);
@@ -32,36 +38,55 @@ export default function Posting() {
     setSkill((prevSkills) => prevSkills.filter((_, i) => i !== index));
   }
 
-  //   buat function untuk kirim semua data
-  // data dummy backend______________________________________________________
-  const data = JSON.parse(sessionStorage.getItem("data"));
   async function handleSend(e) {
     e.preventDefault();
     setLoading(true);
     try {
-      await supabase.from("lowongan").insert([
+      await axios.post(
+        "https://careercompass-backend.vercel.app/data/lowongan",
         {
-          id_perusahaan: data.id_perusahaan,
           posisi: inputPosisi.current.value,
-          gaji_min: inputGajiMin.current.value,
-          gaji_max: inputGajiMax.current.value,
+          gajiMin: inputGajiMin.current.value,
+          gajiMax: inputGajiMax.current.value,
           kategori: inputKategori.current.value,
           jenis: inputJenis.current.value,
           tingkatan: inputTingkat.current.value,
           tentang: inputTentang.current.value,
           syarat: inputSyarat.current.value,
           skill: JSON.stringify(skill),
+          perusahaan: user.id_perusahaan,
         },
-      ]);
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setAlert("Lowongan disposting");
     } catch (e) {
-      console.log(e);
-    } finally {
-      console.log("data berhasil di unggah");
+      setAlert(e.response.data.message);
+      setLoading(false);
     }
   }
 
+  useEffect(() => {
+    if (alert === "Lowongan disposting") {
+      const timeout = setTimeout(() => {
+        nav("/lowongan-post");
+      }, 2500);
+      return () => clearTimeout(timeout);
+    }
+  }, alert);
+
   return (
     <>
+      {alert !== null ? (
+        alert === "Lowongan disposting" ? (
+          <AlertSucceed message={alert} />
+        ) : (
+          <AlertFailed message={alert} />
+        )
+      ) : null}
       <div className="container">
         <Header />
         <h4>Buat lowongan pekerjaan</h4>
@@ -72,7 +97,7 @@ export default function Posting() {
             <p>Gambaran singkat tentang posisi yang tersedia</p>
           </div>
           <form>
-            <label for="posting-nama">Posisi pekerjaan</label>
+            <label htmlFor="posting-nama">Posisi pekerjaan</label>
             <input
               ref={inputPosisi}
               id="posting-nama"
@@ -80,7 +105,7 @@ export default function Posting() {
               placeholder="Administrasi"
             />
 
-            <label for="posting-gajimin">Range gaji</label>
+            <label htmlFor="posting-gajimin">Range gaji</label>
             <span>
               <input
                 ref={inputGajiMin}
@@ -97,7 +122,7 @@ export default function Posting() {
               />
             </span>
 
-            <label for="posting-kategori">Kategori</label>
+            <label htmlFor="posting-kategori">Kategori</label>
             <select ref={inputKategori} id="posting-kategori">
               <option value="" selected hidden>
                 Pilih
@@ -111,7 +136,7 @@ export default function Posting() {
                 ))}
             </select>
 
-            <label for="posting-jenis">Jenis</label>
+            <label htmlFor="posting-jenis">Jenis</label>
             <select ref={inputJenis} id="posting-jenis">
               <option value="" selected hidden>
                 Pilih
@@ -122,7 +147,7 @@ export default function Posting() {
               <option value="shift work">Shift Work</option>
             </select>
 
-            <label for="posting-tingkat">Tingkatan</label>
+            <label htmlFor="posting-tingkat">Tingkatan</label>
             <select ref={inputTingkat} id="posting-tingkat">
               <option value="" selected hidden>
                 Pilih
@@ -140,14 +165,14 @@ export default function Posting() {
             <p>Penjelasan mengenai tugas utama dan persyaratan</p>
           </div>
           <form>
-            <label for="posting-tentang">Tentang pekerjaan</label>
+            <label htmlFor="posting-tentang">Tentang pekerjaan</label>
             <textarea
               ref={inputTentang}
               id="posting-tentang"
               placeholder={`Tekan "enter" untuk ke list selanjutnya`}
             ></textarea>
 
-            <label for="posting-syarat">Persyaratan</label>
+            <label htmlFor="posting-syarat">Persyaratan</label>
             <textarea
               ref={inputSyarat}
               id="posting-syarat"
@@ -168,7 +193,7 @@ export default function Posting() {
             </p>
           </div>
           <form>
-            <label for="posting-keahlian">Keahlian</label>
+            <label htmlFor="posting-keahlian">Keahlian</label>
             <span>
               <input
                 value={inputSkill}
