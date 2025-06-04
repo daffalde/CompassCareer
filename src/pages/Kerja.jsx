@@ -4,12 +4,12 @@ import Header from "../components/Header";
 import Lowongan from "../components/Lowongan";
 import { kategori, lowongan } from "../data/Data";
 import "../styles/lowongan.css";
-import usePagination from "../components/Pagination";
-import { Titik } from "../components/Bullet";
+import Cookies from "js-cookie";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../data/supabaseClient";
 import { LoadingPage } from "../components/Loading";
+import axios from "axios";
 
 export default function Kerja() {
   const nav = useNavigate();
@@ -17,21 +17,19 @@ export default function Kerja() {
   const [data, setData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Jumlah item per halaman
-  const [user, setUser] = useState(null);
+  const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
 
   // get data dummy_______________________________________________________
   async function getLowongan() {
     try {
-      const dataLowongan = await supabase
-        .from("lowongan")
-        .select("*,data_perusahaan(*),lowongan_tersimpan(*)");
-      console.log(dataLowongan.data);
-      setUser(JSON.parse(sessionStorage.getItem("data")));
-      setData(dataLowongan.data);
+      const resp = await axios.get(
+        "https://careercompass-backend.vercel.app/data/lowongan"
+      );
+      console.log(resp.data);
+      setData(resp.data);
+      setLoading(false);
     } catch (e) {
       console.log(e);
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -166,30 +164,30 @@ export default function Kerja() {
               <div className="k-list">
                 {currentItems
                   ? currentItems
-                      .filter(
-                        (job) =>
-                          job.posisi
-                            .toLowerCase()
-                            .includes(searchResult.toLowerCase()) &&
-                          job.data_perusahaan.provinsi
-                            .toLowerCase()
-                            .includes(lokasiResult.toLowerCase()) &&
-                          job.jenis
-                            .toLowerCase()
-                            .includes(jenisResult.toLowerCase()) &&
-                          moment(
-                            job.created_at.split("T")[0],
-                            "YYYYMMDD"
-                          ).isBetween(startDate, endDate, "day", "[]") &&
-                          job.gaji_min >= gajiMinResult &&
-                          job.gaji_max <= gajiMaxResult &&
-                          job.kategori
-                            .toLowerCase()
-                            .includes(kategoriResult.toLowerCase()) &&
-                          job.data_perusahaan.provinsi
-                            .toLowerCase()
-                            .includes(lokasiFilterResult.toLocaleLowerCase())
-                      )
+                      // .filter(
+                      //   (job) =>
+                      //     job.posisi
+                      //       .toLowerCase()
+                      //       .includes(searchResult.toLowerCase()) &&
+                      //     job.provinsi
+                      //       .toLowerCase()
+                      //       .includes(lokasiResult.toLowerCase()) &&
+                      //     job.jenis
+                      //       .toLowerCase()
+                      //       .includes(jenisResult.toLowerCase()) &&
+                      //     moment(
+                      //       job.created_at.split("T")[0],
+                      //       "YYYYMMDD"
+                      //     ).isBetween(startDate, endDate, "day", "[]") &&
+                      //     job.gaji_min >= gajiMinResult &&
+                      //     job.gaji_max <= gajiMaxResult &&
+                      //     job.kategori
+                      //       .toLowerCase()
+                      //       .includes(kategoriResult.toLowerCase()) &&
+                      //     job.data_perusahaan.provinsi
+                      //       .toLowerCase()
+                      //       .includes(lokasiFilterResult.toLocaleLowerCase())
+                      // )
                       .map((e) => (
                         <div
                           onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
@@ -200,11 +198,11 @@ export default function Kerja() {
                             <div className="l-c-tanggal">
                               <p>
                                 {moment(
-                                  e.created_at.split("T")[0],
+                                  e.lowongan_created_at.split("T")[0],
                                   "YYYYMMDD"
                                 ).fromNow()}
                               </p>
-                              {user !== null ? (
+                              {user !== null && user.role === "pelamar" ? (
                                 e.lowongan_tersimpan.length !== 0 ? (
                                   <button
                                     onClick={(event) => {
@@ -230,26 +228,17 @@ export default function Kerja() {
                                     <img src="/save1.svg" alt="save-logo" />
                                   </button>
                                 )
-                              ) : (
-                                <button
-                                  onClick={(event) => {
-                                    event.stopPropagation();
-                                    nav("/login");
-                                  }}
-                                >
-                                  <img src="/save1.svg" alt="save-logo" />
-                                </button>
-                              )}
+                              ) : null}
                             </div>
                             <div className="l-c-title">
                               <span>
-                                <p>{e.data_perusahaan.nama}</p>
+                                <p>{e.nama_perusahaan}</p>
                                 <h5>{e.posisi}</h5>
                               </span>
                               <img
                                 src={
-                                  e.data_perusahaan.picture
-                                    ? e.data_perusahaan.picture
+                                  e.picture
+                                    ? e.picture
                                     : "/profil-perusahaan.svg"
                                 }
                                 alt="gambar profil perusahaan"
@@ -277,7 +266,7 @@ export default function Kerja() {
                                   ? `${e.gaji_max / 1000000}Jt`
                                   : `${e.gaji_max / 1000}Rb`}
                               </h6>
-                              <p>{e.data_perusahaan.provinsi}</p>
+                              <p>{e.provinsi}</p>
                             </span>
                             <button className="button-main">Lihat</button>
                           </div>
