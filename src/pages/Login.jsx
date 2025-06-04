@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../data/supabaseClient";
 import { LoadingButton } from "../components/Loading";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function Login() {
   const nav = useNavigate();
@@ -23,64 +24,26 @@ export default function Login() {
   const [handleRole, setHandleRole] = useState(null);
   const [nextButton, setNextButton] = useState(false);
 
-  // Function to fetch user data
-  async function getData() {
-    if (!inputEmail || !inputPass) {
-      console.log("Harap isi email dan password!");
-      setCaution(true);
-      return;
-    }
-
-    try {
-      let roleData;
-      if (handleRole === "pelamar") {
-        const { data, error } = await supabase
-          .from("pelamar")
-          .select(
-            "*,data_pelamar(*,cv(*),application(*),lowongan_tersimpan(*,lowongan(*)),perusahaan_tersimpan(*,data_perusahaan(*)))"
-          );
-
-        if (error) throw error;
-        roleData = data;
-      } else if (handleRole === "perusahaan") {
-        const { data, error } = await supabase
-          .from("perusahaan")
-          .select("*,data_perusahaan(*,lowongan(*,application(*)))");
-        if (error) throw error;
-        roleData = data;
-      } else {
-        console.log("Role tidak valid");
-        setCaution(true);
-        return;
-      }
-
-      // Filter user by email and password
-      const filterEmail = roleData.filter(
-        (e) => e.email === inputEmail && e.password === inputPass
-      );
-
-      if (filterEmail.length > 0) {
-        const { password, ...dataUser } = filterEmail[0];
-        console.log("Berhasil masuk", dataUser);
-        Cookies.set("token", "your_secure_token_here");
-        sessionStorage.setItem("data", JSON.stringify(dataUser));
-        nav("/");
-      } else {
-        console.log("Gagal masuk: Email atau password salah.");
-        setLoading(false);
-        setCaution(true);
-      }
-    } catch (error) {
-      console.error("Terjadi kesalahan dalam proses login:", error.message);
-      setLoading(false);
-      setCaution(true);
-    }
-  }
-
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
     setLoading(true);
-    getData();
+    try {
+      const resp = await axios.post(
+        `https://careercompass-backend.vercel.app/auth/${
+          handleRole === "pelamar" ? "pelamar" : "perusahaan"
+        }/login`,
+        {
+          email: inputEmail,
+          password: inputPass,
+        }
+      );
+      Cookies.set("token", resp.data.token);
+      nav("/");
+    } catch (e) {
+      console.log(e);
+      setCaution(true);
+      setLoading(false);
+    }
   }
 
   return (
@@ -148,7 +111,6 @@ export default function Login() {
                 Masuk {loading && <LoadingButton />}
               </button>
             </form>
-            <a href="#">Lupa password?</a>
             <p>
               Belum punya akun? <a href="/signup">Sign Up</a>
             </p>
