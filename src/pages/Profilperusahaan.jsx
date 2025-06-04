@@ -5,11 +5,29 @@ import "../styles/profil.css";
 import "../styles/template.css";
 import { useState } from "react";
 import { lowongan } from "../data/Data";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function Profilperusahaan() {
-  const data = JSON.parse(sessionStorage.getItem("data"));
-  console.log(data);
   const nav = useNavigate();
+  const token = Cookies.get("token");
+  if (!token) {
+    nav("/login");
+  }
+  const [loadingPage, setLoadingPage] = useState(true);
+
+  const [data, setData] = useState(false);
+  // get data
+  async function getData() {
+    try {
+      const resp = await axios.get(
+        `https://careercompass-backend.vercel.app/auth/perusahaan/${4}`
+      );
+      console.log(resp.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   //   change picture
   const [handleImage, setHandleImage] = useState(false);

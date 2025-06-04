@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import "../styles/auth.css";
 import { useEffect, useState } from "react";
-import { supabase } from "../data/supabaseClient";
 import { LoadingButton } from "../components/Loading";
 import Cookies from "js-cookie";
 import axios from "axios";

@@ -1,12 +1,31 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function Header() {
   const token = Cookies.get("token");
-  const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const nav = useNavigate();
   const [ham, setHam] = useState(false);
+
+  const [user, setUser] = useState(null);
+
+  // get user
+  async function getUser() {
+    try {
+      const resp = await axios.get(
+        `https://careercompass-backend.vercel.app/auth/perusahaan/${userId.id_perusahaan}`
+      );
+      setUser(resp.data[0]);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   // get lebar window
   const [lebar, setLebar] = useState(window.innerWidth);
