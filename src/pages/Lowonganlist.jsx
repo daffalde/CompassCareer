@@ -1,35 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { lowongan } from "../data/Data";
-import usePagination from "../components/Pagination";
 import moment from "moment";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { LoadingPage } from "../components/Loading";
 import { AlertFailed, AlertSucceed } from "../components/Alert";
+import Cookies from "js-cookie";
 
 export default function Lowonganlist() {
   const nav = useNavigate();
+  const token = Cookies.get("token");
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
   const [data, setData] = useState(null);
 
   async function getData() {
     try {
-      const dataUser = JSON.parse(sessionStorage.getItem("data"));
-      const dataLowongan = await axios.get(
-        `https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/lowongan?select=*,data_perusahaan(*)`,
-        {
-          headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
-          },
-        }
+      const resp = await axios.get(
+        "https://careercompass-backend.vercel.app/data/lowongan"
       );
-      console.log(dataLowongan.data);
-      setUser(dataUser);
-      setData(dataLowongan.data);
+      console.log(
+        resp.data.filter((e) => e.perusahaan_id === userId.id_perusahaan)
+      );
+      setData(
+        resp.data.filter((e) => e.perusahaan_id === userId.id_perusahaan)
+      );
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -61,11 +57,10 @@ export default function Lowonganlist() {
   async function handleDeleteLowongan() {
     try {
       await axios.delete(
-        `https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/lowongan?id_lowongan=eq.${getIdDelete}`,
+        `https://careercompass-backend.vercel.app/data/lowongan/${getIdDelete}`,
         {
           headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -140,68 +135,72 @@ export default function Lowonganlist() {
             <h4 className="heading-page">Daftar Lowongan</h4>
             <br />
             <div className="t-b-lowongan-wrap">
-              {visibleItems.map((e) => (
-                <div
-                  onClick={() => nav(`/edit-lowongan/${e.id_lowongan}`)}
-                  className="lowongan-card"
-                  key={e.id_lowongan}
-                >
-                  <div className="l-c-wrap">
-                    <div className="l-c-tanggal">
-                      <p>{moment(e.created_at, "YYYYMMDD").fromNow()}</p>
+              {visibleItems
+                .sort(
+                  (a, b) =>
+                    new Date(b.lowongan_created_at) -
+                    new Date(a.lowongan_created_at)
+                )
+                .map((e) => (
+                  <div
+                    onClick={() => nav(`/edit-lowongan/${e.id_lowongan}`)}
+                    className="lowongan-card"
+                    key={e.id_lowongan}
+                  >
+                    <div className="l-c-wrap">
+                      <div className="l-c-tanggal">
+                        <p>
+                          {moment(e.lowongan_created_at, "YYYYMMDD").fromNow()}
+                        </p>
+                      </div>
+                      <div className="l-c-title">
+                        <span>
+                          <p>{e.nama_perusahaan}</p>
+                          <h5>{e.posisi}</h5>
+                        </span>
+                        <img
+                          src={e.picture ? e.picture : "/profil-perusahaan.svg"}
+                          alt="gambar profil perusahaan"
+                        />
+                      </div>
+                      <div className="l-c-skill">
+                        {e.skill
+                          ? JSON.parse(e.skill)
+                              .slice(0, 5)
+                              .map((skill, index) => <p key={index}>{skill}</p>)
+                          : null}
+                      </div>
                     </div>
-                    <div className="l-c-title">
+                    <div className="l-c-action">
                       <span>
-                        <p>{e.data_perusahaan.nama}</p>
-                        <h5>{e.posisi}</h5>
+                        <h6>
+                          Rp{" "}
+                          {e.gaji_min / 1000000 >= 1
+                            ? `${e.gaji_min / 1000000}Jt`
+                            : `${e.gaji_min / 1000}Rb`}
+                          -
+                          {e.gaji_max / 1000000 >= 1
+                            ? `${e.gaji_max / 1000000}Jt`
+                            : `${e.gaji_max / 1000}Rb`}
+                        </h6>
+                        <p>{e.provinsi}</p>
                       </span>
-                      <img
-                        src={
-                          e.data_perusahaan.picture
-                            ? e.data_perusahaan.picture
-                            : "/profil-perusahaan.svg"
-                        }
-                        alt="gambar profil perusahaan"
-                      />
-                    </div>
-                    <div className="l-c-skill">
-                      {e.skill
-                        ? JSON.parse(e.skill)
-                            .slice(0, 5)
-                            .map((skill, index) => <p key={index}>{skill}</p>)
-                        : null}
+                      <span>
+                        <button className="button-main">Edit</button>
+                        <button
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setGetIdDelete(e.id_lowongan);
+                            setPopup(true);
+                          }}
+                          className="button-delete"
+                        >
+                          <img src="/trash.svg" alt="trash icon" />
+                        </button>
+                      </span>
                     </div>
                   </div>
-                  <div className="l-c-action">
-                    <span>
-                      <h6>
-                        Rp{" "}
-                        {e.gaji_min / 1000000 >= 1
-                          ? `${e.gaji_min / 1000000}Jt`
-                          : `${e.gaji_min / 1000}Rb`}
-                        -
-                        {e.gaji_max / 1000000 >= 1
-                          ? `${e.gaji_max / 1000000}Jt`
-                          : `${e.gaji_max / 1000}Rb`}
-                      </h6>
-                      <p>{e.data_perusahaan.provinsi}</p>
-                    </span>
-                    <span>
-                      <button className="button-main">Edit</button>
-                      <button
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          setGetIdDelete(e.id_lowongan);
-                          setPopup(true);
-                        }}
-                        className="button-delete"
-                      >
-                        <img src="/trash.svg" alt="trash icon" />
-                      </button>
-                    </span>
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
             <br />
             {/* pagination */}
