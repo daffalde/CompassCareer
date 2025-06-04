@@ -178,6 +178,11 @@ h6 {
   pointer-events: none;
 }
 
+.warning {
+  color: #ff2323;
+  text-align: start;
+  width: 100%;
+}
 /* components_________________________________________ */
 
 /* header_________________________________________ */

@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import "../styles/auth.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { LoadingButton } from "../components/Loading";
+import { AlertFailed, AlertSucceed } from "../components/Alert";
 
 export default function Logout() {
   const nav = useNavigate();
@@ -9,13 +12,73 @@ export default function Logout() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState(null);
+  const [warning, setWarning] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   function handleShowPass(e) {
     e.preventDefault();
     setSeePass(!seePass);
   }
+
+  // register
+  async function handleReg(e) {
+    setLoading(true);
+    if ((!role && name == "", email == "", password == "")) {
+      setLoading(false);
+      return setWarning(true);
+    }
+    if (role === "pelamar") {
+      try {
+        const resp = await axios.post(
+          "https://careercompass-backend.vercel.app/auth/pelamar/register",
+          {
+            name: name,
+            email: email,
+            password: password,
+          }
+        );
+        setAlert("success");
+      } catch (e) {
+        setLoading(false);
+        setAlert(e.response.data.message);
+      }
+    } else {
+      try {
+        const resp = await axios.post(
+          "https://careercompass-backend.vercel.app/auth/perusahaan/register",
+          {
+            name: name,
+            email: email,
+            password: password,
+          }
+        );
+        setAlert("success");
+      } catch (e) {
+        setLoading(false);
+        setAlert(e.response.data.message);
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (alert === "success") {
+      const timeout = setTimeout(() => {
+        nav("/login");
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [alert]);
   return (
     <>
+      {alert ? (
+        alert === "success" ? (
+          <AlertSucceed message={"Berhasil,silahkan login"} />
+        ) : (
+          <AlertFailed message={alert} />
+        )
+      ) : null}
       <div className="container">
         <div className="auth-head">
           <img
@@ -32,7 +95,7 @@ export default function Logout() {
             </span>
             <form>
               <span>
-                <label for="name">Name</label>
+                <label htmlFor="name">Name</label>
                 <input
                   type="text"
                   id="name"
@@ -42,7 +105,7 @@ export default function Logout() {
                 />
               </span>
               <span>
-                <label for="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="text"
                   id="email"
@@ -52,7 +115,7 @@ export default function Logout() {
                 />
               </span>
               <span className="pass-input">
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   type={seePass ? "text" : "password"}
                   id="password"
@@ -68,8 +131,8 @@ export default function Logout() {
                 </button>
               </span>
               <span id="role">
-                <label for="role">Role</label>
-                <select id="role">
+                <label htmlFor="role">Role</label>
+                <select onChange={(e) => setRole(e.target.value)} id="role">
                   <option value="" hidden selected>
                     Pelamar/Perusahaan
                   </option>
@@ -77,19 +140,17 @@ export default function Logout() {
                   <option value="perusahaan">Perusahaan</option>
                 </select>
               </span>
-              <button className="button-main button-auth">Daftar</button>
             </form>
-            <div className="auth-gap"></div>
-            <span className="oauth">
-              <button>
-                <img src="/gl-auth.svg" alt="google icon" />
-                <p>Daftar dengan Google</p>
-              </button>
-              <button>
-                <img src="/fb-auth.svg" alt="facebook icon" />
-                <p>Daftar dengan Facebook</p>
-              </button>
-            </span>
+            {warning ? (
+              <p className="warning">*Silahkan isi kredensial dengan lengkap</p>
+            ) : null}
+            <button
+              onClick={() => handleReg()}
+              className="button-main button-auth"
+            >
+              Daftar
+              {loading ? <LoadingButton /> : null}
+            </button>
             <p>
               Sudah punya akun? <a href="/login">Sign In</a>
             </p>
