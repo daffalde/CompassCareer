@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 export default function Header() {
   const token = Cookies.get("token");
-  const user = JSON.parse(Cookies.get("data"));
+  const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const nav = useNavigate();
   const [ham, setHam] = useState(false);
 
@@ -62,9 +62,7 @@ export default function Header() {
                   onClick={() => setHam(true)}
                   style={{
                     backgroundImage: `url("${
-                      user.data_perusahaan.picture
-                        ? user.data_perusahaan.picture
-                        : "/profil-perusahaan.svg"
+                      user.picture ? user.picture : "/profil-perusahaan.svg"
                     }")`,
                   }}
                   id="user-profil"
@@ -228,9 +226,7 @@ export default function Header() {
                   <div
                     style={{
                       backgroundImage: `url("${
-                        user.data_perusahaan.picture
-                          ? user.data_perusahaan.picture
-                          : "/profil-perusahaan.svg"
+                        user.picture ? user.picture : "/profil-perusahaan.svg"
                       }")`,
                     }}
                     className="hlm-u-img"
