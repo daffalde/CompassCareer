@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { supabase } from "../data/supabaseClient";
 
 export default function Header() {
+  const token = Cookies.get("token");
+  const user = JSON.parse(Cookies.get("data"));
   const nav = useNavigate();
   const [ham, setHam] = useState(false);
 
@@ -20,38 +21,15 @@ export default function Header() {
 
   // logout
   function handleLogout() {
-    localStorage.removeItem("auth"); //tester
     Cookies.remove("token");
-    sessionStorage.removeItem("data");
+    Cookies.remove("data");
     window.location.reload();
-    nav("/");
   }
-
-  // function data dummy____________________________________________________________
-  // cek user
-  const [cekUser, setCekUser] = useState(false);
-  const [userData, setUserData] = useState({});
-
-  function authCek() {
-    const cookie = Cookies.get("token");
-    if (cookie) {
-      setCekUser(true);
-      setUserData(JSON.parse(sessionStorage.getItem("data")));
-    } else {
-      setCekUser(false);
-    }
-  }
-
-  useEffect(() => {
-    authCek();
-  }, []);
-
-  // _______________________________________________________________________________
 
   // fungsi header
   function loginUser() {
-    if (cekUser) {
-      if (userData ? userData.role === "pelamar" : null) {
+    if (token && user) {
+      if (user ? user.role === "pelamar" : null) {
         return (
           <>
             <div className="h-action">
@@ -60,9 +38,7 @@ export default function Header() {
                   onClick={() => setHam(true)}
                   style={{
                     backgroundImage: `url("${
-                      userData.data_pelamar.picture
-                        ? userData.data_pelamar.picture
-                        : "/profil-pelamar.svg"
+                      user.profil ? user.profil : "/profil-pelamar.svg"
                     }")`,
                   }}
                   id="user-profil"
@@ -72,7 +48,7 @@ export default function Header() {
           </>
         );
       }
-      if (userData ? userData.role === "perusahaan" : null) {
+      if (user ? user.role === "perusahaan" : null) {
         return (
           <>
             <div className="h-action">
@@ -86,8 +62,8 @@ export default function Header() {
                   onClick={() => setHam(true)}
                   style={{
                     backgroundImage: `url("${
-                      userData.data_perusahaan.picture
-                        ? userData.data_perusahaan.picture
+                      user.data_perusahaan.picture
+                        ? user.data_perusahaan.picture
                         : "/profil-perusahaan.svg"
                     }")`,
                   }}
@@ -127,8 +103,8 @@ export default function Header() {
 
   // fungsi ham menu
   function loginUserHam() {
-    if (cekUser) {
-      if (userData.role === "pelamar") {
+    if (user && token) {
+      if (user.role === "pelamar") {
         return (
           <>
             <div
@@ -141,16 +117,14 @@ export default function Header() {
                   <div
                     style={{
                       backgroundImage: `url("${
-                        userData.data_pelamar.picture
-                          ? userData.data_pelamar.picture
-                          : "/profil-pelamar.svg"
+                        user.profil ? user.profil : "/profil-pelamar.svg"
                       }")`,
                     }}
                     className="hlm-u-img"
                   ></div>
                   <div className="hlm-u-desc">
-                    <h6>{userData.nama}</h6>
-                    <p>{userData.email}</p>
+                    <h6>{user.nama_pelamar}</h6>
+                    <p>{user.email}</p>
                   </div>
                 </div>
                 <div className="gap-ham"></div>
@@ -244,7 +218,7 @@ export default function Header() {
           </>
         );
       }
-      if (userData.role === "perusahaan") {
+      if (user.role === "perusahaan") {
         return (
           <>
             <div className="header-list-mobile">
@@ -254,16 +228,16 @@ export default function Header() {
                   <div
                     style={{
                       backgroundImage: `url("${
-                        userData.data_perusahaan.picture
-                          ? userData.data_perusahaan.picture
+                        user.data_perusahaan.picture
+                          ? user.data_perusahaan.picture
                           : "/profil-perusahaan.svg"
                       }")`,
                     }}
                     className="hlm-u-img"
                   ></div>
                   <div className="hlm-u-desc">
-                    <h6>{userData.nama}</h6>
-                    <p>{userData.email}</p>
+                    <h6>{user.nama_perusahaan}</h6>
+                    <p>{user.email}</p>
                   </div>
                 </div>
                 <div className="gap-ham"></div>

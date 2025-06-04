@@ -9,6 +9,9 @@ import axios from "axios";
 
 export default function Login() {
   const nav = useNavigate();
+  if (Cookies.get("token")) {
+    nav("/");
+  }
   const [seePass, setSeePass] = useState(false);
   const [inputEmail, setInputEmail] = useState("");
   const [inputPass, setInputPass] = useState("");
@@ -38,6 +41,7 @@ export default function Login() {
         }
       );
       Cookies.set("token", resp.data.token);
+      Cookies.set("data", JSON.stringify(resp.data.data[0]));
       nav("/");
     } catch (e) {
       console.log(e);
