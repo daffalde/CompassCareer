@@ -7,12 +7,18 @@ import "../styles/perusahaandetail.css";
 import Footer from "../components/Footer";
 import { supabase } from "../data/supabaseClient";
 import { LoadingPage } from "../components/Loading";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Perusahaandetail() {
+  const token = Cookies.get("token");
+  const userData = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const url = window.location.pathname;
   const urlId = url.split("/").pop();
   const nav = useNavigate();
   const [data, setData] = useState(null);
+  const [lowongan, setLowongan] = useState(null);
+  const [tersimpan, setTersimpan] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,10 +31,30 @@ export default function Perusahaandetail() {
   // data dummy_______________________________________________________
   async function getPerusahaan() {
     try {
-      const dataPerusahaan = await supabase
-        .from("perusahaan")
-        .select("*,data_perusahaan(*,lowongan(*))")
-        .eq("id_perusahaan", Number(urlId));
+      const dataPerusahaan = await axios.get(
+        `https://careercompass-backend.vercel.app/auth/perusahaan/${urlId}`
+      );
+      const dataLowongan = await axios.get(
+        `https://careercompass-backend.vercel.app/data/lowongan`
+      );
+      const dataTersimpan = await axios.get(
+        "https://careercompass-backend.vercel.app/data/perusahaan-tersimpan",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTersimpan(
+        dataTersimpan.data?.filter(
+          (e) =>
+            e.id_pelamar === userData.id_pelamar &&
+            e.id_perusahaan === Number(urlId)
+        )[0]
+      );
+      setLowongan(
+        dataLowongan.data.filter((e) => e.perusahaan_id === Number(urlId))
+      );
       setData(dataPerusahaan.data);
       setLoading(false);
     } catch (e) {
@@ -44,38 +70,40 @@ export default function Perusahaandetail() {
   // logic simpan_______________________________________________
   const [simpanButton, setSimpanButton] = useState(true);
   const [idTersimpan, setIdTersimpan] = useState(null);
-  async function cekSimpan() {
-    const ceking = await supabase
-      .from("perusahaan_tersimpan")
-      .select("*")
-      .eq("id_pelamar", user.id_pelamar);
-    const dataCek = ceking.data.filter((e) => e.id_pelamar === Number(urlId));
-    if (dataCek[0]) {
-      setIdTersimpan(dataCek[0].id_perusahaan_tersimpan);
-      setSimpanButton(false);
-    }
-  }
 
-  useEffect(() => {
-    cekSimpan();
-  }, []);
   // tombol simpan
-  async function simpanLowongan(e) {
-    await supabase.from("perusahaan_tersimpan").insert({
-      id_pelamar: user.id_pelamar,
-      id_perusahaan: e,
-    });
-    window.location.reload();
+  async function simpanLowongan() {
+    try {
+      await axios.post(
+        "https://careercompass-backend.vercel.app/data/perusahaan-tersimpan",
+        {
+          pelamar: userData.id_pelamar,
+          lowongan: Number(urlId),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      getPerusahaan();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   //tombol hapus simpan
   async function hapusSimpanLowongan() {
     try {
-      await supabase
-        .from("perusahaan_tersimpan")
-        .delete()
-        .eq("id_perusahaan_tersimpan", idTersimpan);
-      window.location.reload();
+      await axios.delete(
+        `https://careercompass-backend.vercel.app/data/perusahaan-tersimpan/${urlId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      getPerusahaan();
     } catch (e) {
       console.log(e);
     }
@@ -92,41 +120,37 @@ export default function Perusahaandetail() {
               <div className="template-head">
                 <div className="t-h-top">
                   <img
-                    src={
-                      e.data_perusahaan.picture
-                        ? e.data_perusahaan.picture
-                        : "/profil-perusahaan.svg"
-                    }
+                    src={e.picture ? e.picture : "/profil-perusahaan.svg"}
                     alt="logo perusahaan"
                   />
                 </div>
                 <div className="t-h-bottom">
                   <div className="t-h-b-title">
-                    <h4>{e.nama}</h4>
-                    <p>{e.data_perusahaan.bidang}</p>
+                    <h4>{e.nama_perusahaan}</h4>
+                    <p>{e.bidang}</p>
                   </div>
                   <div className="t-h-b-desc">
                     <span>
                       <p>
-                        {e.data_perusahaan.lokasi},{e.data_perusahaan.provinsi}
+                        {e.lokasi},{e.provinsi}
                       </p>
                       <img src="/dot1.svg" alt="dot gap" />
-                      <p>{e.data_perusahaan.karyawan} Karyawan</p>
+                      <p>{e.karyawan} Karyawan</p>
                     </span>
                     <span>
-                      {simpanButton ? (
-                        <button
-                          onClick={() => simpanLowongan(e.id_perusahaan)}
-                          className="button-second"
-                        >
-                          Simpan
-                        </button>
-                      ) : (
+                      {tersimpan?.id_perusahaan === Number(urlId) ? (
                         <button
                           onClick={() => hapusSimpanLowongan(e.id_perusahaan)}
                           className="button-second"
                         >
                           Disimpan
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => simpanLowongan(e.id_perusahaan)}
+                          className="button-second"
+                        >
+                          Simpan
                         </button>
                       )}
                     </span>
@@ -140,7 +164,7 @@ export default function Perusahaandetail() {
                       <h6>Informasi Perusahaan</h6>
                       <span>
                         <p>Situs Web</p>
-                        <p>{e.data_perusahaan.situs}</p>
+                        <p>{e.situs}</p>
                       </span>
                       <span>
                         <p>Email</p>
@@ -148,22 +172,22 @@ export default function Perusahaandetail() {
                       </span>
                       <span>
                         <p>Tahun didirikan</p>
-                        <p>{e.data_perusahaan.didirikan}</p>
+                        <p>{e.tahun_didirikan}</p>
                       </span>
                       <span>
                         <p>Industri</p>
-                        <p>{e.data_perusahaan.bidang}</p>
+                        <p>{e.bidang}</p>
                       </span>
                     </div>
                   </div>
                   <div className="t-f-l-body">
                     <div className="paragraph">
                       <h6>Tentang Kami</h6>
-                      <p>{e.data_perusahaan.tentang}</p>
+                      <p>{e.tentang}</p>
                     </div>
                     <div className="numbering">
                       <h6>Visi:</h6>
-                      {e.data_perusahaan.visi.split("\n").map((e, i) => (
+                      {e.visi.split("\n").map((e, i) => (
                         <div key={i} className="numbering-item">
                           <p>{i + 1}.</p>
                           <p>{e}</p>
@@ -172,7 +196,7 @@ export default function Perusahaandetail() {
                     </div>
                     <div className="numbering">
                       <h6>Misi:</h6>
-                      {e.data_perusahaan.misi.split("\n").map((e, i) => (
+                      {e.misi.split("\n").map((e, i) => (
                         <div key={i} className="numbering-item">
                           <p>{i + 1}.</p>
                           <p>{e}</p>
@@ -184,32 +208,27 @@ export default function Perusahaandetail() {
                 <div className="t-f-right">
                   <div className="t-f-l-body">
                     <div className="lowongan-lain-wrap">
-                      <h6>Lowongan lain </h6>
-                      {e.data_perusahaan.lowongan
-                        .sort(() => Math.random() - 0.5)
-                        .slice(0, 7)
-                        .map((list) => (
-                          <div
-                            onClick={() => nav(`/lowongan/${list.id_lowongan}`)}
-                            className="lowongan-lain"
-                            key={list.id_lowongan}
-                          >
-                            <h6>{list.posisi}</h6>
-                            <span>
-                              <img
-                                src={
-                                  e.data_perusahaan.picture
-                                    ? e.data_perusahaan.picture
-                                    : "/profil-perusahaan.svg"
-                                }
-                                alt="profil perusahaan"
-                              />
-                              <p>{e.data_perusahaan.nama}</p>
-                              <img src="/dot1.svg" alt="dot" />
-                              <p>{e.data_perusahaan.provinsi}</p>
-                            </span>
-                          </div>
-                        ))}
+                      <h6>Lowongan di perusahaan ini </h6>
+                      {lowongan.slice(0, 7).map((list) => (
+                        <div
+                          onClick={() => nav(`/lowongan/${list.id_lowongan}`)}
+                          className="lowongan-lain"
+                          key={list.id_lowongan}
+                        >
+                          <h6>{list.posisi}</h6>
+                          <span>
+                            <img
+                              src={
+                                e.picture ? e.picture : "/profil-perusahaan.svg"
+                              }
+                              alt="profil perusahaan"
+                            />
+                            <p>{e.nama}</p>
+                            <img src="/dot1.svg" alt="dot" />
+                            <p>{e.provinsi}</p>
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

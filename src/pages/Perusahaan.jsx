@@ -52,28 +52,6 @@ export default function Perusahaan() {
   const endIndex = startIndex + itemsPerPage;
   const currentItems = data.slice(startIndex, endIndex);
 
-  // tombol simpan
-  async function simpanPerusahaan(e) {
-    await supabase.from("perusahaan_tersimpan").insert({
-      id_pelamar: user.id_pelamar,
-      id_perusahaan: e,
-    });
-    getPerusahaan();
-  }
-
-  //tombol hapus simpan
-  async function hapusSimpanPerusahaan(e) {
-    try {
-      await supabase
-        .from("perusahaan_tersimpan")
-        .delete()
-        .eq("id_perusahaan_tersimpan", e);
-      getPerusahaan();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   return (
     <>
       <div className="container">
@@ -144,44 +122,6 @@ export default function Perusahaan() {
                     onClick={() => nav(`/perusahaan/${e.id_perusahaan}`)}
                     key={e.id_perusahaan}
                   >
-                    {userData.role === "pelamar" ? (
-                      e.data_perusahaan.perusahaan_tersimpan.length !== 0 ? (
-                        <button
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            hapusSimpanPerusahaan(
-                              e.data_perusahaan.perusahaan_tersimpan.find(
-                                (element) =>
-                                  element.id_pelamar === user.id_pelamar
-                              ).id_perusahaan_tersimpan
-                            );
-                          }}
-                          className="p-b-l-save"
-                        >
-                          <img src="/save2.svg" alt="save icon" />
-                        </button>
-                      ) : (
-                        <button
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            simpanPerusahaan(e.id_perusahaan);
-                          }}
-                          className="p-b-l-save"
-                        >
-                          <img src="/save1.svg" alt="save icon" />
-                        </button>
-                      )
-                    ) : (
-                      <button
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          nav("/login");
-                        }}
-                        className="p-b-l-save"
-                      >
-                        <img src="/save1.svg" alt="save icon" />
-                      </button>
-                    )}
                     <img
                       className="p-b-l-img"
                       src={e.picture ? e.picture : "/profil-perusahaan.svg"}
@@ -198,11 +138,6 @@ export default function Perusahaan() {
                           {e.lokasi}, {e.provinsi}
                         </p>
                       </div>
-                      {/* <p>
-                        {e.lowongan.length === 0
-                          ? `Belum ada lowongan yang tersedia`
-                          : `Ada ${e.lowongan.length} lowongan tersedia`}
-                      </p> */}
                     </div>
                   </div>
                 ))}
