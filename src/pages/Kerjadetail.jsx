@@ -10,8 +10,10 @@ import { supabase } from "../data/supabaseClient";
 import { LoadingButton, LoadingPage } from "../components/Loading";
 import axios from "axios";
 import { AlertFailed, AlertSucceed } from "../components/Alert";
+import Cookies from "js-cookie";
 
 export default function Kerjadetail() {
+  const getId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const url = window.location.pathname;
   const urlId = url.split("/").pop();
 
@@ -24,17 +26,15 @@ export default function Kerjadetail() {
   // data dummy_____________________________________________________
   async function getLowongan() {
     try {
-      const lowonganData = await supabase
-        .from("lowongan")
-        .select("*,data_perusahaan(*)")
-        .eq("id_lowongan", Number(urlId)); // filtering data dari uid disini
-
-      const another = await supabase
-        .from("lowongan")
-        .select("*,data_perusahaan(*)");
-      setUser(JSON.parse(sessionStorage.getItem("data")));
-      setOtherLowongan(another.data);
-      setDataLowongan(lowonganData.data);
+      const resp = await axios.get(
+        `https://careercompass-backend.vercel.app/data/lowongan/${urlId}`
+      );
+      const resp2 = await axios.get(
+        `https://careercompass-backend.vercel.app/data/lowongan`
+      );
+      setOtherLowongan(resp2.data);
+      setDataLowongan(resp.data);
+      console.log(resp.data);
     } catch (e) {
       console.log(e);
     } finally {
@@ -53,29 +53,32 @@ export default function Kerjadetail() {
   // logic simpan________________________________________________________________________
   const [simpanButton, setSimpanButton] = useState(true);
   const [idTersimpan, setIdTersimpan] = useState(null);
-  async function cekSimpan() {
-    const userId = JSON.parse(sessionStorage.getItem("data"));
-    const ceking = await supabase
-      .from("lowongan_tersimpan")
-      .select("*")
-      .eq("id_pelamar", userId.id_pelamar);
-    const dataCek = ceking.data.filter((e) => e.id_lowongan === Number(urlId));
-    if (dataCek[0]) {
-      setIdTersimpan(dataCek[0].id_lowongan_tersimpan);
-      setSimpanButton(false);
-    }
-  }
+  // async function cekSimpan() {
+  //   const userId = JSON.parse(sessionStorage.getItem("data"));
+  //   const ceking = await supabase
+  //     .from("lowongan_tersimpan")
+  //     .select("*")
+  //     .eq("id_pelamar", userId.id_pelamar);
+  //   const dataCek = ceking.data.filter((e) => e.id_lowongan === Number(urlId));
+  //   if (dataCek[0]) {
+  //     setIdTersimpan(dataCek[0].id_lowongan_tersimpan);
+  //     setSimpanButton(false);
+  //   }
+  // }
 
-  useEffect(() => {
-    cekSimpan();
-  }, []);
+  // useEffect(() => {
+  //   cekSimpan();
+  // }, []);
   // tombol simpan
   async function simpanLowongan(e) {
-    await supabase.from("lowongan_tersimpan").insert({
-      id_pelamar: user.id_pelamar,
-      id_lowongan: e,
-    });
-    window.location.reload();
+    try {
+      await axios.post("http://localhost:5000/data/lowongan-tersimpan", {
+        pelamar: getId.id_pelamar ? getId.id_pelamar : null,
+        lowongan: urlId,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   //tombol hapus simpan
@@ -250,18 +253,17 @@ export default function Kerjadetail() {
                       <div className="apply-b-c-l-arrow"></div>
                       <img
                         src={
-                          dataLowongan[0].data_perusahaan.picture
-                            ? dataLowongan[0].data_perusahaan.picture
+                          dataLowongan[0].picture
+                            ? dataLowongan[0].picture
                             : "/profil-perusahaan.svg"
                         }
                         alt="profil perusahaan"
                       />
                       <span>
-                        <p>{dataLowongan[0].data_perusahaan.nama}</p>
+                        <p>{dataLowongan[0].nama_perusahaan}</p>
                         <h6>{dataLowongan[0].posisi}</h6>
                         <p>
-                          {dataLowongan[0].data_perusahaan.lokasi}{" "}
-                          {dataLowongan[0].data_perusahaan.provinsi}
+                          {dataLowongan[0].lokasi} {dataLowongan[0].provinsi}
                         </p>
                         <br />
                         <h6>
@@ -302,56 +304,53 @@ export default function Kerjadetail() {
                 <div className="template-head">
                   <div className="t-h-top">
                     <img
-                      src={
-                        e.data_perusahaan.picture
-                          ? e.data_perusahaan.picture
-                          : "/profil-perusahaan.svg"
-                      }
+                      src={e.picture ? e.picture : "/profil-perusahaan.svg"}
                       alt="logo perusahaan"
                     />
                   </div>
                   <div className="t-h-bottom">
                     <div className="t-h-b-title">
                       <h4>{e.posisi}</h4>
-                      <p>{e.data_perusahaan.nama}</p>
+                      <p>{e.nama_perusahaan}</p>
                     </div>
                     <div className="t-h-b-desc">
                       <span>
                         <p>
-                          {e.data_perusahaan.lokasi},
-                          {e.data_perusahaan.provinsi}
+                          {e.lokasi},{e.provinsi}
                         </p>
                         <img src="/dot1.svg" alt="dot gap" />
                         <p>
                           {moment(
-                            e.created_at.split("T")[0],
+                            e.lowongan_created_at.split("T")[0],
                             "YYYYMMDD"
                           ).fromNow()}
                         </p>
                       </span>
-                      <span>
-                        {simpanButton ? (
+                      {getId.role === "pelamar" ? (
+                        <span>
+                          {simpanButton ? (
+                            <button
+                              onClick={() => simpanLowongan(e.id_lowongan)}
+                              className="button-second"
+                            >
+                              Simpan
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => hapusSimpanLowongan(e.id_lowongan)}
+                              className="button-second"
+                            >
+                              Disimpan
+                            </button>
+                          )}
                           <button
-                            onClick={() => simpanLowongan(e.id_lowongan)}
-                            className="button-second"
+                            onClick={() => setShowPopup(true)}
+                            className="button-main"
                           >
-                            Simpan
+                            Lamar
                           </button>
-                        ) : (
-                          <button
-                            onClick={() => hapusSimpanLowongan(e.id_lowongan)}
-                            className="button-second"
-                          >
-                            Disimpan
-                          </button>
-                        )}
-                        <button
-                          onClick={() => setShowPopup(true)}
-                          className="button-main"
-                        >
-                          Lamar
-                        </button>
-                      </span>
+                        </span>
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -360,7 +359,7 @@ export default function Kerjadetail() {
                     <div className="t-f-l-body">
                       <div className="numbering">
                         <h6>Tentang Pekerjaan:</h6>
-                        {e.tentang.split("\n").map((e, i) => (
+                        {e.tentang_lowongan.split("\n").map((e, i) => (
                           <div key={i} className="numbering-item">
                             <p>{i + 1}.</p>
                             <p>{e}</p>
@@ -391,19 +390,17 @@ export default function Kerjadetail() {
                       <div className="t-f-l-b-wrap">
                         <div className="body-left">
                           <h5>Tentang perusahaan</h5>
-                          <p>{e.data_perusahaan.tentang}</p>
+                          <p>{e.tentang_perusahaan}</p>
                         </div>
                         <div className="body-right">
                           <img
                             src={
-                              e.data_perusahaan.picture
-                                ? e.data_perusahaan.picture
-                                : "/profil-perusahaan.svg"
+                              e.picture ? e.picture : "/profil-perusahaan.svg"
                             }
                             alt="gambar profil perusahaan"
                           />
-                          <h6>{e.data_perusahaan.nama}</h6>
-                          <p>{e.data_perusahaan.bidang}</p>
+                          <h6>{e.nama}</h6>
+                          <p>{e.bidang}</p>
                         </div>
                       </div>
                     </div>
@@ -447,7 +444,6 @@ export default function Kerjadetail() {
                       <div className="lowongan-lain-wrap">
                         <h6>Lowongan lain</h6>
                         {otherLowongan
-                          .sort(() => Math.random() - 0.5)
                           .slice(0, 7)
                           .filter(
                             (job) =>
@@ -460,6 +456,7 @@ export default function Kerjadetail() {
                               onClick={() => {
                                 window.scrollTo({ top: 0 });
                                 nav(`/lowongan/${list.id_lowongan}`);
+                                window.location.reload();
                               }}
                               key={list.id_lowongan}
                             >
@@ -467,15 +464,15 @@ export default function Kerjadetail() {
                               <span>
                                 <img
                                   src={
-                                    list.data_perusahaan.picture
-                                      ? list.data_perusahaan.picture
+                                    list.picture
+                                      ? list.picture
                                       : "/profil-perusahaan.svg"
                                   }
                                   alt="profil perusahaan"
                                 />
-                                <p>{list.data_perusahaan.nama}</p>
+                                <p>{list.nama_Perusahaan}</p>
                                 <img src="/dot1.svg" alt="dot" />
-                                <p>{list.data_perusahaan.provinsi}</p>
+                                <p>{list.provinsi}</p>
                               </span>
                             </div>
                           ))}
