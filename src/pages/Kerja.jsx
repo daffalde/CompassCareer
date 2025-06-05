@@ -16,16 +16,14 @@ export default function Kerja() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Jumlah item per halaman
-  const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+  const itemsPerPage = 10;
 
-  // get data dummy_______________________________________________________
+  // get data _______________________________________________________
   async function getLowongan() {
     try {
       const resp = await axios.get(
         "https://careercompass-backend.vercel.app/data/lowongan"
       );
-      console.log(resp.data);
       setData(resp.data);
       setLoading(false);
     } catch (e) {
@@ -121,29 +119,6 @@ export default function Kerja() {
   function hanldeLokasi(data) {
     setLokasiFilterResult(data);
   }
-
-  // tombol simpan
-  async function simpanLowongan(e) {
-    await supabase.from("lowongan_tersimpan").insert({
-      id_pelamar: user.id_pelamar,
-      id_lowongan: e,
-    });
-    getLowongan();
-  }
-
-  //tombol hapus simpan
-  async function hapusSimpanLowongan(e) {
-    try {
-      await supabase
-        .from("lowongan_tersimpan")
-        .delete()
-        .eq("id_lowongan_tersimpan", e);
-      getLowongan();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   return (
     <>
       <div className="container">
@@ -202,33 +177,6 @@ export default function Kerja() {
                                   "YYYYMMDD"
                                 ).fromNow()}
                               </p>
-                              {user !== null && user.role === "pelamar" ? (
-                                e.lowongan_tersimpan.length !== 0 ? (
-                                  <button
-                                    onClick={(event) => {
-                                      event.stopPropagation();
-                                      hapusSimpanLowongan(
-                                        e.lowongan_tersimpan.find(
-                                          (element) =>
-                                            element.id_pelamar ===
-                                            user.id_pelamar
-                                        ).id_lowongan_tersimpan
-                                      );
-                                    }}
-                                  >
-                                    <img src="/save2.svg" alt="save-logo" />
-                                  </button>
-                                ) : (
-                                  <button
-                                    onClick={(event) => {
-                                      event.stopPropagation();
-                                      simpanLowongan(e.id_lowongan);
-                                    }}
-                                  >
-                                    <img src="/save1.svg" alt="save-logo" />
-                                  </button>
-                                )
-                              ) : null}
                             </div>
                             <div className="l-c-title">
                               <span>

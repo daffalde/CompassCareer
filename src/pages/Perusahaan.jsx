@@ -7,9 +7,12 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { LoadingPage } from "../components/Loading";
 import { supabase } from "../data/supabaseClient";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Perusahaan() {
   const nav = useNavigate();
+  const userData = Cookies.get("data") ? Cookies.get("data") : null;
   const inputCari = useRef("");
   const [inputLokasi, setInputLokasi] = useState("");
   const [lokasi, setLokasi] = useState("");
@@ -28,15 +31,10 @@ export default function Perusahaan() {
 
   async function getPerusahaan() {
     try {
-      setUser(JSON.parse(sessionStorage.getItem("data")));
-      const { data, error } = await supabase
-        .from("perusahaan")
-        .select("*, data_perusahaan(*,lowongan(*),perusahaan_tersimpan(*))");
-      if (error) {
-        console.error("Error fetching data:", error);
-      } else {
-        setData(data);
-      }
+      const resp = await axios.get(
+        "https://careercompass-backend.vercel.app/auth/perusahaan"
+      );
+      setData(resp.data);
     } catch (e) {
       console.log(e);
     } finally {
@@ -133,8 +131,10 @@ export default function Perusahaan() {
               {currentItems
                 .filter(
                   (filtering) =>
-                    filtering.nama.toLowerCase().includes(cari.toLowerCase()) &&
-                    filtering.data_perusahaan.provinsi
+                    filtering.nama_perusahaan
+                      .toLowerCase()
+                      .includes(cari.toLowerCase()) &&
+                    filtering.provinsi
                       .toLowerCase()
                       .includes(lokasi.toLowerCase())
                 )
@@ -144,7 +144,7 @@ export default function Perusahaan() {
                     onClick={() => nav(`/perusahaan/${e.id_perusahaan}`)}
                     key={e.id_perusahaan}
                   >
-                    {user !== null ? (
+                    {userData.role === "pelamar" ? (
                       e.data_perusahaan.perusahaan_tersimpan.length !== 0 ? (
                         <button
                           onClick={(event) => {
@@ -184,32 +184,25 @@ export default function Perusahaan() {
                     )}
                     <img
                       className="p-b-l-img"
-                      src={
-                        e.data_perusahaan.picture
-                          ? e.data_perusahaan.picture
-                          : "/profil-perusahaan.svg"
-                      }
+                      src={e.picture ? e.picture : "/profil-perusahaan.svg"}
                       alt="gambar profil perusahaan"
                     />
                     <div className="p-b-l-info">
                       <span>
-                        <p style={{ color: "grey" }}>
-                          {e.data_perusahaan.bidang}
-                        </p>
-                        <h5>{e.nama}</h5>
+                        <p style={{ color: "grey" }}>{e.bidang}</p>
+                        <h5>{e.nama_perusahaan}</h5>
                       </span>
                       <div>
                         <img src="/location1.svg" alt="icon lokasi" />
                         <p>
-                          {e.data_perusahaan.lokasi},{" "}
-                          {e.data_perusahaan.provinsi}
+                          {e.lokasi}, {e.provinsi}
                         </p>
                       </div>
-                      <p>
-                        {e.data_perusahaan.lowongan.length === 0
+                      {/* <p>
+                        {e.lowongan.length === 0
                           ? `Belum ada lowongan yang tersedia`
-                          : `Ada ${e.data_perusahaan.lowongan.length} lowongan tersedia`}
-                      </p>
+                          : `Ada ${e.lowongan.length} lowongan tersedia`}
+                      </p> */}
                     </div>
                   </div>
                 ))}

@@ -15,12 +15,14 @@ export default function Header() {
   async function getUser() {
     try {
       const resp = await axios.get(
-        `https://careercompass-backend.vercel.app/auth/perusahaan/${userId.id_perusahaan}`
+        `https://careercompass-backend.vercel.app/auth/${
+          userId.role === "pelamar" ? "pelamar" : "perusahaan"
+        }/${
+          userId.role === "pelamar" ? userId.id_pelamar : userId.id_perusahaan
+        }`
       );
       setUser(resp.data[0]);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   }
 
   useEffect(() => {
