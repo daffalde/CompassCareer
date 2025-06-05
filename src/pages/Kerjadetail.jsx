@@ -13,12 +13,14 @@ import { AlertFailed, AlertSucceed } from "../components/Alert";
 import Cookies from "js-cookie";
 
 export default function Kerjadetail() {
+  const token = Cookies.get("token");
   const getId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const url = window.location.pathname;
   const urlId = url.split("/").pop();
 
   const [dataLowongan, setDataLowongan] = useState(null);
   const [otherLowongan, setOtherLowongan] = useState(null);
+  const [tersimpan, setTersimpan] = useState(false);
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -32,6 +34,36 @@ export default function Kerjadetail() {
       const resp2 = await axios.get(
         `https://careercompass-backend.vercel.app/data/lowongan`
       );
+      if (token) {
+        const resp3 = await axios.get(
+          "https://careercompass-backend.vercel.app/data/lowongan-tersimpan",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(
+          resp3.data.filter(
+            (e) =>
+              e.id_pelamar === getId.id_pelamar &&
+              e.id_lowongan === Number(urlId)
+          )[0]
+        );
+        setTersimpan(
+          resp3.data.filter(
+            (e) =>
+              e.id_pelamar === getId.id_pelamar &&
+              e.id_lowongan === Number(urlId)
+          )[0]
+            ? resp3.data.filter(
+                (e) =>
+                  e.id_pelamar === getId.id_pelamar &&
+                  e.id_lowongan === Number(urlId)
+              )[0]
+            : null
+        );
+      }
       setOtherLowongan(resp2.data);
       setDataLowongan(resp.data);
       console.log(resp.data);
@@ -51,31 +83,23 @@ export default function Kerjadetail() {
   }, []);
 
   // logic simpan________________________________________________________________________
-  const [simpanButton, setSimpanButton] = useState(true);
-  const [idTersimpan, setIdTersimpan] = useState(null);
-  // async function cekSimpan() {
-  //   const userId = JSON.parse(sessionStorage.getItem("data"));
-  //   const ceking = await supabase
-  //     .from("lowongan_tersimpan")
-  //     .select("*")
-  //     .eq("id_pelamar", userId.id_pelamar);
-  //   const dataCek = ceking.data.filter((e) => e.id_lowongan === Number(urlId));
-  //   if (dataCek[0]) {
-  //     setIdTersimpan(dataCek[0].id_lowongan_tersimpan);
-  //     setSimpanButton(false);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   cekSimpan();
-  // }, []);
-  // tombol simpan
-  async function simpanLowongan(e) {
+  async function simpanLowongan() {
+    setLoadingButton(true);
     try {
-      await axios.post("http://localhost:5000/data/lowongan-tersimpan", {
-        pelamar: getId.id_pelamar ? getId.id_pelamar : null,
-        lowongan: urlId,
-      });
+      await axios.post(
+        "https://careercompass-backend.vercel.app/data/lowongan-tersimpan",
+        {
+          pelamar: getId.id_pelamar ? getId.id_pelamar : null,
+          lowongan: urlId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      getLowongan();
+      setLoadingButton(false);
     } catch (e) {
       console.log(e);
     }
@@ -83,12 +107,20 @@ export default function Kerjadetail() {
 
   //tombol hapus simpan
   async function hapusSimpanLowongan() {
+    setLoadingButton(true);
     try {
-      await supabase
-        .from("lowongan_tersimpan")
-        .delete()
-        .eq("id_lowongan_tersimpan", idTersimpan);
-      window.location.reload();
+      await axios.delete(
+        `https://careercompass-backend.vercel.app/data/lowongan-tersimpan/${
+          tersimpan ? tersimpan.id_lowongan_tersimpan : null
+        }`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      getLowongan();
+      setLoadingButton(false);
     } catch (e) {
       console.log(e);
     }
@@ -326,9 +358,9 @@ export default function Kerjadetail() {
                           ).fromNow()}
                         </p>
                       </span>
-                      {getId.role === "pelamar" ? (
+                      {getId?.role === "pelamar" ? (
                         <span>
-                          {simpanButton ? (
+                          {!tersimpan?.id_lowongan_tersimpan ? (
                             <button
                               onClick={() => simpanLowongan(e.id_lowongan)}
                               className="button-second"
