@@ -8,46 +8,94 @@ import { Link, useNavigate } from "react-router-dom";
 import { StatusApp } from "../components/StatusApp";
 import moment from "moment";
 import { AlertSucceed } from "../components/Alert";
+import Cookies from "js-cookie";
 
 export default function DaftarPelamar() {
   const nav = useNavigate();
+  const token = Cookies.get("token");
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [loadingPage, setLoadingPage] = useState(true);
 
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
 
-  async function getData() {
+  const [dataApplication, setDataApplication] = useState(null);
+
+  // pemanggilan data dummy_______________________________________________________
+  async function handleData() {
     try {
-      const getDataApplication = await axios.get(
-        "https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/application?select=*,lowongan(*,data_perusahaan(*)),cv(*),data_pelamar(*,pelamar(nama,email))",
+      const getData = await axios.get(
+        "https://careercompass-backend.vercel.app/data/app",
         {
           headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log(getDataApplication.data);
-      setData(getDataApplication.data);
-      setUser(JSON.parse(sessionStorage.getItem("data")));
+      const getLowongan = await axios.get(
+        `https://careercompass-backend.vercel.app/data/lowongan`
+      );
+      const getPelamar = await axios.get(
+        "https://careercompass-backend.vercel.app/auth/pelamar"
+      );
+      const getCv = await axios.get(
+        "https://careercompass-backend.vercel.app/data/cv",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const listDataLowongan = getLowongan.data.filter((e) =>
+        getData.data.map((item) => item.id_lowongan).includes(e.id_lowongan)
+      );
+
+      const listDataApp = getData.data;
+      const listDataCv = getCv.data;
+      const listPelamar = getPelamar.data;
+      setDataApplication(
+        listDataApp.map((e) => ({
+          ...e,
+          ...(listDataLowongan.find(
+            (find) => find.id_lowongan === e.id_lowongan
+          ) || {}),
+          ...(listDataCv.find((find) => find.id_cv === e.id_cv) || {}),
+          ...(listPelamar.find((find) => find.id_pelamar === e.id_pelamar) ||
+            {}),
+        }))
+      );
+      console.log(
+        listDataApp.map((e) => ({
+          ...e,
+          ...(listDataLowongan.find(
+            (find) => find.id_lowongan === e.id_lowongan
+          ) || {}),
+          ...(listDataCv.find((find) => find.id_cv === e.id_cv) || {}),
+          ...(listPelamar.find((find) => find.id_pelamar === e.id_pelamar) ||
+            {}),
+        }))
+      );
       setLoadingPage(false);
     } catch (e) {
       console.log(e);
     }
   }
-
   useEffect(() => {
-    getData();
+    handleData();
   }, []);
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const totalItem = 12;
 
-  const totalPages = Math.ceil(data ? data.length / totalItem : null);
+  const totalPages = Math.ceil(
+    dataApplication ? dataApplication.length / totalItem : null
+  );
   const firstIndex = (currentPage - 1) * totalItem;
   const lastIndex = firstIndex + totalItem;
-  const dataPagination = data ? data.slice(firstIndex, lastIndex) : null;
+  const dataPagination = dataApplication
+    ? dataApplication.slice(firstIndex, lastIndex)
+    : null;
 
   // pop up
   const [popup, setPopup] = useState(false);
@@ -61,21 +109,20 @@ export default function DaftarPelamar() {
   async function handleTolak(e) {
     try {
       await axios.patch(
-        `https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/application?id_application=eq.${e}`,
+        `https://careercompass-backend.vercel.app/data/app/${e}`,
         {
           notes: inputNotes.current.value,
           status: "Ditolak",
         },
         {
           headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       setAlertSuccess(true);
       setPopup(false);
-      getData();
+      handleData();
     } catch (e) {
       console.log(e);
       setAlertFailed(true);
@@ -85,21 +132,20 @@ export default function DaftarPelamar() {
   async function handleTerima(e) {
     try {
       await axios.patch(
-        `https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/application?id_application=eq.${e}`,
+        `https://careercompass-backend.vercel.app/data/app/${e}`,
         {
           notes: inputNotes.current.value,
           status: "Diterima",
         },
         {
           headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       setAlertSuccess(true);
       setPopup(false);
-      getData();
+      handleData();
     } catch (e) {
       console.log(e);
       setAlertFailed(true);
@@ -144,8 +190,8 @@ export default function DaftarPelamar() {
                   <img src="/left-arrow.png" alt="left arrow icon" />
                   <h5>Detail Lamaran</h5>
                 </div>
-                {data
-                  .filter((element) => element.id_application === getId)
+                {dataApplication
+                  .filter((element) => element.id_application === Number(getId))
                   .map((e) => (
                     <div key={e.id_application} className="daftar-popup">
                       <div className="daftar-p-content">
@@ -156,17 +202,13 @@ export default function DaftarPelamar() {
                         >
                           <span>
                             <img
-                              src={
-                                e.data_pelamar.picture
-                                  ? e.data_pelamar.picture
-                                  : "/profil-pelamar.svg"
-                              }
+                              src={e.profil ? e.profil : "/profil-pelamar.svg"}
                               alt="gambar profil pelamar"
                             />
                             <div>
-                              <p>{e.data_pelamar.spesialis}</p>
-                              <h5>{e.data_pelamar.pelamar.nama}</h5>
-                              <p>{e.data_pelamar.pelamar.email}</p>
+                              <p>{e.spesialis}</p>
+                              <h5>{e.nama_pelamar}</h5>
+                              <p>{e.email}</p>
                             </div>
                           </span>
                           <img src="/right.png" alt="arrow right icon" />
@@ -174,7 +216,7 @@ export default function DaftarPelamar() {
                         <br />
                         <div className="daftar-p-c-cv">
                           <img src="/pdf.svg" alt="pdf icon" />
-                          <Link to={e.cv.link}>{e.cv.nama}</Link>
+                          <Link to={e.link}>{e.nama}</Link>
                         </div>
                         <br />
                         <div className="daftar-p-c-coverletter">
@@ -195,7 +237,7 @@ export default function DaftarPelamar() {
                           <span>
                             <p>Lowongan</p>
                             <Link to={`/lowongan/${e.id_lowongan}`}>
-                              {e.lowongan.posisi}
+                              {e.posisi}
                               <img
                                 height={"20px"}
                                 src="/link.png"
@@ -253,9 +295,7 @@ export default function DaftarPelamar() {
             <div className="daftar-wrap">
               {dataPagination
                 .filter(
-                  (filter) =>
-                    filter.lowongan.data_perusahaan.id_perusahaan ===
-                    user.id_perusahaan
+                  (filter) => filter.perusahaan_id === userId.id_perusahaan
                 )
                 .map((e) => (
                   <div
@@ -268,28 +308,24 @@ export default function DaftarPelamar() {
                   >
                     <div className="daftar-w-c-pelamar">
                       <img
-                        src={
-                          e.data_pelamar.picture
-                            ? e.data_pelamar.picture
-                            : "profil-pelamar.svg"
-                        }
+                        src={e.profil ? e.profil : "profil-pelamar.svg"}
                         alt="gambar profil pelamar"
                       />
                       <span>
-                        <h6>{e.data_pelamar.pelamar.nama}</h6>
-                        <p>{e.data_pelamar.pelamar.email}</p>
+                        <h6>{e.nama_pelamar}</h6>
+                        <p>{e.email}</p>
                       </span>
                     </div>
                     <div className="daftar-w-c-lowongan">
-                      <p>{e.lowongan.posisi}</p>
+                      <p>{e.posisi}</p>
                     </div>
                     <div className="daftar-w-c-cv">
                       <img src="/pdf.svg" alt="pdf icon" />
                       <Link
                         onClick={(event) => event.stopPropagation()}
-                        to={e.cv.link}
+                        to={e.link}
                       >
-                        {e.cv.nama}
+                        {e.nama}
                       </Link>
                     </div>
                     <div className="daftar-w-c-status">
