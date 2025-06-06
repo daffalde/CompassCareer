@@ -18,6 +18,7 @@ import Editpost from "./pages/Editpost.jsx";
 import DaftarPelamar from "./pages/Daftarpelamar.jsx";
 import Admin from "./pages/Admin.jsx";
 import Adminpelamar from "./pages/Adminpelamar.jsx";
+import ProfilPelamar from "./pages/ProfilPelamar.jsx";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/posting" Component={Posting} />
           <Route path="/edit-lowongan/:id" Component={Editpost} />
           <Route path="/pelamar" Component={DaftarPelamar} />
+          <Route path="/profil-pelamar/:id" Component={ProfilPelamar} />
 
           {/* admin */}
           <Route path="/dashboard" Component={Admin} />
