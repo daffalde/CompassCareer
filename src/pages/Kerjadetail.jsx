@@ -1,12 +1,10 @@
 import moment from "moment";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { lowongan } from "../data/Data";
 import "../styles/lowongandetail.css";
 import "../styles/template.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { supabase } from "../data/supabaseClient";
 import { LoadingButton, LoadingPage } from "../components/Loading";
 import axios from "axios";
 import { AlertFailed, AlertSucceed } from "../components/Alert";

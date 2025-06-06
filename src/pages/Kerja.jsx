@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Lowongan from "../components/Lowongan";
-import { kategori, lowongan } from "../data/Data";
 import "../styles/lowongan.css";
 import Cookies from "js-cookie";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
-import { supabase } from "../data/supabaseClient";
 import { LoadingPage } from "../components/Loading";
 import axios from "axios";
 

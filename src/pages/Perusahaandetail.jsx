@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
-import { perusahaan } from "../data/Data";
 import "../styles/template.css";
 import "../styles/perusahaandetail.css";
 import Footer from "../components/Footer";
-import { supabase } from "../data/supabaseClient";
 import { LoadingPage } from "../components/Loading";
 import axios from "axios";
 import Cookies from "js-cookie";

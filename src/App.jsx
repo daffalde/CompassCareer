@@ -7,7 +7,6 @@ import Perusahaandetail from "./pages/Perusahaandetail.jsx";
 import Aboutus from "./pages/Aboutus.jsx";
 import Login from "./pages/Login.jsx";
 import Logout from "./pages/Logout.jsx";
-import Test from "./pages/Test.jsx";
 import Profil from "./pages/Profil.jsx";
 import Tersimpan from "./pages/Tersimpan.jsx";
 import Status from "./pages/Status.jsx";
@@ -46,8 +45,6 @@ function App() {
           {/* admin */}
           <Route path="/dashboard" Component={Admin} />
           <Route path="/dashboard/pelamar" Component={Adminpelamar} />
-
-          <Route path="/test" Component={Test} />
         </Routes>
       </BrowserRouter>
     </>

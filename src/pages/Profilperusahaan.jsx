@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import "../styles/profil.css";
 import "../styles/template.css";
 import { useEffect, useState } from "react";
-import { lowongan } from "../data/Data";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { LoadingButton, LoadingPage } from "../components/Loading";
