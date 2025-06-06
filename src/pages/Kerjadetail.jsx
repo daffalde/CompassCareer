@@ -21,6 +21,7 @@ export default function Kerjadetail() {
   const [dataLowongan, setDataLowongan] = useState(null);
   const [otherLowongan, setOtherLowongan] = useState(null);
   const [tersimpan, setTersimpan] = useState(false);
+  const [cvData, setCvData] = useState(null);
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -43,12 +44,16 @@ export default function Kerjadetail() {
             },
           }
         );
-        console.log(
-          resp3.data.filter(
-            (e) =>
-              e.id_pelamar === getId.id_pelamar &&
-              e.id_lowongan === Number(urlId)
-          )[0]
+        const resp4 = await axios.get(
+          "https://careercompass-backend.vercel.app/data/cv",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setCvData(
+          resp4.data.filter((e) => e.id_pelamar === Number(getId.id_pelamar))
         );
         setTersimpan(
           resp3.data.filter(
@@ -141,19 +146,17 @@ export default function Kerjadetail() {
     if (takeIdCv) {
       try {
         await axios.post(
-          "https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/application",
+          "https://careercompass-backend.vercel.app/data/app",
           {
-            id_lowongan: Number(urlId),
-            id_cv: takeIdCv,
-            id_pelamar: user.id_pelamar,
+            lowongan: Number(urlId),
+            cv: Number(takeIdCv),
+            pelamar: getId.id_pelamar,
             surat: inputSurat.current.value,
             status: "Ditinjau",
           },
           {
             headers: {
-              "Content-Type": "application/json",
-              apikey:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -164,6 +167,7 @@ export default function Kerjadetail() {
         setTakeIdCv(null);
         inputSurat.current.value = "";
       } catch (e) {
+        console.log(e);
         setAlertPesan("Lamaran gagal terkirim!", e);
         setAlertPesanShow(true);
       }
@@ -207,26 +211,6 @@ export default function Kerjadetail() {
                 <br />
                 <div className="apply-body">
                   <div className="apply-b-content">
-                    <div
-                      onClick={() => nav("/profil")}
-                      className="apply-b-c-profil"
-                    >
-                      <img
-                        src={
-                          user
-                            ? user.data_pelamar.picture
-                            : "/profil-pelamar.svg"
-                        }
-                        alt="foto profil pelamar"
-                      />
-                      <span>
-                        <p>{user ? user.data_pelamar.spesialis : null}</p>
-                        <h5>{user ? user.nama : null}</h5>
-                        <p>{user ? user.email : null}</p>
-                      </span>
-                      <img height={"20px"} src="/right.png" alt="arrow icon" />
-                    </div>
-                    <br />
                     <textarea
                       ref={inputSurat}
                       placeholder="Tulis cover letter..."
@@ -246,35 +230,32 @@ export default function Kerjadetail() {
                         </p>
                       ) : null}
                       <div className="apply-b-c-cv-wrap">
-                        {user
-                          ? user.data_pelamar.cv
-                            ? user.data_pelamar.cv.map((e) => (
+                        {cvData
+                          ? cvData.map((e) => (
+                              <div
+                                onClick={() => setTakeIdCv(e.id_cv)}
+                                className={`apply-b-c-cv-item ${
+                                  takeIdCv === e.id_cv
+                                    ? "apply-b-c-cv-item-on"
+                                    : ""
+                                }`}
+                                key={e.id_cv}
+                              >
+                                <img src="/pdf.svg" alt="png icon" />
+                                <p>{e.nama}</p>
                                 <div
-                                  onClick={() => setTakeIdCv(e.id_cv)}
-                                  className={`apply-b-c-cv-item ${
-                                    takeIdCv === e.id_cv
-                                      ? "apply-b-c-cv-item-on"
-                                      : ""
-                                  }`}
-                                  key={e.id_cv}
-                                >
-                                  <img src="/pdf.svg" alt="png icon" />
-                                  <p>{e.nama}</p>
-                                  <div
-                                    style={{
-                                      backgroundImage: `url(${
-                                        takeIdCv === e.id_cv
-                                          ? "/check1.svg"
-                                          : "/plus1.png"
-                                      })`,
-                                    }}
-                                    className="apply-b-c-cv-i-plus"
-                                  ></div>
-                                </div>
-                              ))
-                            : null
+                                  style={{
+                                    backgroundImage: `url(${
+                                      takeIdCv === e.id_cv
+                                        ? "/check1.svg"
+                                        : "/plus1.png"
+                                    })`,
+                                  }}
+                                  className="apply-b-c-cv-i-plus"
+                                ></div>
+                              </div>
+                            ))
                           : null}{" "}
-                        {/* buat function buat nambah cv________________________________________ */}
                       </div>
                     </div>
                     <br />
