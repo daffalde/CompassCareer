@@ -9,9 +9,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../data/supabaseClient";
 import axios from "axios";
 import { LoadingPage } from "../components/Loading";
+import Cookies from "js-cookie";
 
 export default function Status() {
   const nav = useNavigate();
+  const token = Cookies.get("token");
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [statusButton, setStatusButton] = useState("");
   const [cari, setCari] = useState("");
   const [popup, setPopup] = useState(false);
@@ -19,23 +22,48 @@ export default function Status() {
   const [loading, setLoading] = useState(true);
 
   const [dataApplication, setDataApplication] = useState(null);
-  const [user, setUser] = useState(null);
 
   // pemanggilan data dummy_______________________________________________________
   async function handleData() {
     try {
       const getData = await axios.get(
-        "https://cgwjkypgcahdksethmmh.supabase.co/rest/v1/application?select=*,data_pelamar(*),lowongan(*,data_perusahaan(*)),cv(*)",
+        "https://careercompass-backend.vercel.app/data/app",
         {
           headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2preXBnY2FoZGtzZXRobW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4ODYyMDUsImV4cCI6MjA2MzQ2MjIwNX0.r4hIKHMQOyVLWBGDqrrc7hxJL6pZ8M7Uxuf7qjjoKzI",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log(getData.data);
-      setDataApplication(getData.data);
-      setUser(JSON.parse(sessionStorage.getItem("data")));
+      const getLowongan = await axios.get(
+        `https://careercompass-backend.vercel.app/data/lowongan`
+      );
+      const getCv = await axios.get(
+        "https://careercompass-backend.vercel.app/data/cv",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const listDataLowongan = getLowongan.data.filter((e) =>
+        getData.data.map((item) => item.id_lowongan).includes(e.id_lowongan)
+      );
+
+      const listDataApp = getData.data.filter(
+        (e) => e.id_pelamar === userId.id_pelamar
+      );
+      const listDataCv = getCv.data.filter(
+        (e) => e.id_pelamar === userId.id_pelamar
+      );
+      setDataApplication(
+        listDataApp.map((e) => ({
+          ...e,
+          ...(listDataLowongan.find(
+            (find) => find.id_lowongan === e.id_lowongan
+          ) || {}),
+          ...(listDataCv.find((find) => find.id_cv === e.id_cv) || {}),
+        }))
+      );
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -107,15 +135,15 @@ export default function Status() {
                               <div className="status-b-d-h-left">
                                 <img
                                   src={
-                                    e.lowongan.data_perusahaan.picture
-                                      ? e.lowongan.data_perusahaan.picture
+                                    e.picture
+                                      ? e.picture
                                       : "/profil-perusahaan.svg"
                                   }
                                   alt="perusahaan profil image"
                                 />
                                 <div>
-                                  <p>{e.lowongan.data_perusahaan.nama}</p>
-                                  <h6>{e.lowongan.posisi}</h6>
+                                  <p>{e.nama}</p>
+                                  <h6>{e.posisi}</h6>
                                   <span>
                                     <img src="/link.png" alt="link icon" />
                                     <Link to={`/lowongan/${e.id_lowongan}`}>
@@ -145,7 +173,7 @@ export default function Status() {
                             </div>
                             <div className="status-b-d-cv">
                               <img src="/pdf.svg" alt="pdf icon" />
-                              <Link to={e.cv.link}>{e.cv.nama}</Link>
+                              <Link to={e.link}>{e.nama}</Link>
                             </div>
                             {e.surat ? (
                               <div
@@ -200,7 +228,7 @@ export default function Status() {
                   value={cari}
                   onChange={(e) => setCari(e.target.value)}
                   type="text"
-                  placeholder="Cari lowongan..."
+                  placeholder="Cari .."
                 />
               </form>
               <div className="status-filter">
@@ -245,9 +273,7 @@ export default function Status() {
                   .filter(
                     (filter) =>
                       filter.status.includes(statusButton) &&
-                      filter.lowongan.posisi
-                        .toLowerCase()
-                        .includes(cari.toLowerCase())
+                      filter.posisi.toLowerCase().includes(cari.toLowerCase())
                   )
                   .map((e) => (
                     <button
@@ -260,19 +286,14 @@ export default function Status() {
                     >
                       <div className="status-b-i-info">
                         <img
-                          src={
-                            e.lowongan.data_perusahaan.picture
-                              ? e.lowongan.data_perusahaan.picture
-                              : "/profil-perusahaan.svg"
-                          }
+                          src={e.picture ? e.picture : "/profil-perusahaan.svg"}
                           alt="gambar profil perusahaan"
                         />
                         <span>
-                          <p>{e.lowongan.data_perusahaan.nama}</p>
-                          <h6>{e.lowongan.posisi}</h6>
+                          <p>{e.nama}</p>
+                          <h6>{e.posisi}</h6>
                           <p>
-                            {e.lowongan.data_perusahaan.lokasi},{" "}
-                            {e.lowongan.data_perusahaan.provinsi}
+                            {e.lokasi}, {e.provinsi}
                           </p>
                         </span>
                       </div>
@@ -341,15 +362,13 @@ export default function Status() {
                           <div className="status-b-d-h-left">
                             <img
                               src={
-                                e.lowongan.data_perusahaan.picture
-                                  ? e.lowongan.data_perusahaan.picture
-                                  : "/profil-perusahaan.svg"
+                                e.picture ? e.picture : "/profil-perusahaan.svg"
                               }
                               alt="perusahaan profil image"
                             />
                             <div>
-                              <p>{e.lowongan.data_perusahaan.nama}</p>
-                              <h6>{e.lowongan.posisi}</h6>
+                              <p>{e.nama_perusahaan}</p>
+                              <h6>{e.posisi}</h6>
                               <span>
                                 <img src="/link.png" alt="link icon" />
                                 <Link to={`/lowongan/${e.id_lowongan}`}>
@@ -377,7 +396,7 @@ export default function Status() {
                         </div>
                         <div className="status-b-d-cv">
                           <img src="/pdf.svg" alt="pdf icon" />
-                          <Link to={e.cv.link}>{e.cv.nama}</Link>
+                          <Link to={e.link}>{e.nama}</Link>
                         </div>
                         {e.surat ? (
                           <div
