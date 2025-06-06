@@ -137,23 +137,25 @@ export default function Perusahaandetail() {
                       <img src="/dot1.svg" alt="dot gap" />
                       <p>{e.karyawan} Karyawan</p>
                     </span>
-                    <span>
-                      {tersimpan?.id_perusahaan === Number(urlId) ? (
-                        <button
-                          onClick={() => hapusSimpanLowongan(e.id_perusahaan)}
-                          className="button-second"
-                        >
-                          Disimpan
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => simpanLowongan(e.id_perusahaan)}
-                          className="button-second"
-                        >
-                          Simpan
-                        </button>
-                      )}
-                    </span>
+                    {userData?.role === "pelamar" ? (
+                      <span>
+                        {tersimpan?.id_perusahaan === Number(urlId) ? (
+                          <button
+                            onClick={() => hapusSimpanLowongan(e.id_perusahaan)}
+                            className="button-second"
+                          >
+                            Disimpan
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => simpanLowongan(e.id_perusahaan)}
+                            className="button-second"
+                          >
+                            Simpan
+                          </button>
+                        )}
+                      </span>
+                    ) : null}
                   </div>
                 </div>
               </div>
