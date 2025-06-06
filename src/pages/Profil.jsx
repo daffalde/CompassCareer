@@ -39,9 +39,6 @@ export default function Profil() {
       setCvData(
         resp3.data.filter((e) => e.id_pelamar === Number(user.id_pelamar))
       );
-      console.log(
-        resp3.data.filter((e) => e.id_pelamar === Number(user.id_pelamar))
-      );
       setLowongan(resp2.data);
       setData(resp.data[0]);
       setLoadingPage(false);
@@ -161,7 +158,6 @@ export default function Profil() {
     setLoadingButton(true);
     e.preventDefault();
     const updatedSkills = [...JSON.parse(data.skill), keahlian];
-    console.log(JSON.stringify(updatedSkills));
     try {
       await axios.patch(
         `https://careercompass-backend.vercel.app/auth/pelamar/${user.id_pelamar}`,
