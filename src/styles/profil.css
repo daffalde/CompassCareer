@@ -257,6 +257,10 @@
   display: none;
 }
 
+#input-profil {
+  display: none;
+}
+
 /* perushaan */
 @media screen and (width < 700px) {
   .cv-l-wrap {
