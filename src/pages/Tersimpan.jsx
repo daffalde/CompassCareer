@@ -6,46 +6,68 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../data/supabaseClient";
 import { LoadingPage } from "../components/Loading";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Tersimpan() {
   const nav = useNavigate();
+  const token = Cookies.get("token");
+  const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [halaman, setHalaman] = useState("lowongan");
   const [loading, setLoading] = useState(true);
 
   // dummy backend lowonan______________________________________________________________
   const [dataLowongan, setDataLowongan] = useState(null);
-  async function getDataPelamar() {
+  const [dataPerusahaan, setDataPerusahaan] = useState(null);
+  async function getAllData() {
+    setLoading(true);
     try {
-      const user = JSON.parse(sessionStorage.getItem("data"));
-      const dataTersimpanPick = await supabase
-        .from("lowongan_tersimpan")
-        .select("*,lowongan(*,data_perusahaan(*))")
-        .eq("id_pelamar", user.id_pelamar);
-      setDataLowongan(dataTersimpanPick.data);
+      const lowonganTersimpan = await axios.get(
+        `https://careercompass-backend.vercel.app/data/lowongan-tersimpan`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const lowongan = await axios.get(
+        `https://careercompass-backend.vercel.app/data/lowongan`
+      );
+      const perusahaanTersimpan = await axios.get(
+        `https://careercompass-backend.vercel.app/data/perusahaan-tersimpan`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const perusahaan = await axios.get(
+        `https://careercompass-backend.vercel.app/auth/perusahaan`
+      );
+      setDataLowongan(
+        lowongan.data.filter((e) =>
+          lowonganTersimpan.data
+            .map((item) => item.id_lowongan)
+            .includes(e.id_lowongan)
+        )
+      );
+
+      setDataPerusahaan(
+        perusahaan.data.filter((e) =>
+          perusahaanTersimpan.data
+            .map((item) => item.id_perusahaan)
+            .includes(e.id_perusahaan)
+        )
+      );
       setLoading(false);
     } catch (e) {
       console.log(e);
+      setLoading(false);
     }
   }
 
-  // dummy backend lowonan______________________________________________________________
-  const [dataPerusahaan, setDataPerusahaan] = useState(null);
-  async function getDataPerusahaan() {
-    try {
-      const user = JSON.parse(sessionStorage.getItem("data"));
-      const dataTersimpanPick = await supabase
-        .from("perusahaan_tersimpan")
-        .select("*,data_perusahaan(*)")
-        .eq("id_pelamar", user.id_pelamar);
-      setDataPerusahaan(dataTersimpanPick.data);
-      setLoading(false);
-    } catch (e) {
-      console.log(e);
-    }
-  }
   useEffect(() => {
-    getDataPelamar();
-    getDataPerusahaan();
+    getAllData();
   }, []);
 
   // pagination lowongan
@@ -81,32 +103,6 @@ export default function Tersimpan() {
         currentPagee * itemsPerPagee
       )
     : null;
-
-  //tombol hapus simpan lowongan
-  async function hapusSimpanLowongan(e) {
-    try {
-      await supabase
-        .from("lowongan_tersimpan")
-        .delete()
-        .eq("id_lowongan_tersimpan", e);
-      window.location.reload();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  //tombol hapus simpan perusahaan
-  async function hapusSimpanPerusahaan(e) {
-    try {
-      await supabase
-        .from("perusahaan_tersimpan")
-        .delete()
-        .eq("id_perusahaan_tersimpan", e);
-      window.location.reload();
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
   return (
     <>
@@ -152,37 +148,27 @@ export default function Tersimpan() {
                               <div className="l-c-tanggal">
                                 <p>
                                   {moment(
-                                    e.lowongan.created_at.split("T")[0],
+                                    e.lowongan_created_at.split("T")[0],
                                     "YYYYMMDD"
                                   ).fromNow()}
                                 </p>
-                                <button
-                                  onClick={(event) => {
-                                    event.stopPropagation();
-                                    hapusSimpanLowongan(
-                                      e.id_lowongan_tersimpan
-                                    );
-                                  }}
-                                >
-                                  <img src="/save2.svg" alt="save-logo" />
-                                </button>
                               </div>
                               <div className="l-c-title">
                                 <span>
-                                  <p>{e.lowongan.data_perusahaan.nama}</p>
-                                  <h5>{e.lowongan.posisi}</h5>
+                                  <p>{e.nama_perusahaan}</p>
+                                  <h5>{e.posisi}</h5>
                                 </span>
                                 <img
                                   src={
-                                    e.lowongan.data_perusahaan.picture
-                                      ? e.lowongan.data_perusahaan.picture
+                                    e.picture
+                                      ? e.picture
                                       : "/profil-perusahaan.svg"
                                   }
                                   alt="gambar profil perusahaan"
                                 />
                               </div>
                               <div className="l-c-skill">
-                                {JSON.parse(e.lowongan.skill)
+                                {JSON.parse(e.skill)
                                   .slice(0, 5)
                                   .map((skill, index) => (
                                     <p key={index}>{skill}</p>
@@ -193,15 +179,15 @@ export default function Tersimpan() {
                               <span>
                                 <h6>
                                   Rp{" "}
-                                  {e.lowongan.gaji_min / 1000000 >= 1
-                                    ? `${e.lowongan.gaji_min / 1000000}Jt`
-                                    : `${e.lowongan.gaji_min / 1000}Rb`}
+                                  {e.gaji_min / 1000000 >= 1
+                                    ? `${e.gaji_min / 1000000}Jt`
+                                    : `${e.gaji_min / 1000}Rb`}
                                   -
-                                  {e.lowongan.gaji_max / 1000000 >= 1
-                                    ? `${e.lowongan.gaji_max / 1000000}Jt`
-                                    : `${e.lowongan.gaji_max / 1000}Rb`}
+                                  {e.gaji_max / 1000000 >= 1
+                                    ? `${e.gaji_max / 1000000}Jt`
+                                    : `${e.gaji_max / 1000}Rb`}
                                 </h6>
-                                <p>{e.lowongan.data_perusahaan.provinsi}</p>
+                                <p>{e.provinsi}</p>
                               </span>
                               <button className="button-main">Lihat</button>
                             </div>
@@ -261,42 +247,26 @@ export default function Tersimpan() {
                           <div
                             className="p-b-list"
                             onClick={() =>
-                              nav(`/perusahaan/${e.id_perusahaan_tersimpan}`)
+                              nav(`/perusahaan/${e.id_perusahaan}`)
                             }
-                            key={e.id_perusahaan_tersimpan}
+                            key={e.id_perusahaan}
                           >
-                            <button
-                              className="p-b-l-save"
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                hapusSimpanPerusahaan(
-                                  e.id_perusahaan_tersimpan
-                                );
-                              }}
-                            >
-                              <img src="/save2.svg" alt="save-logo" />
-                            </button>
                             <img
                               className="p-b-l-img"
                               src={
-                                e.data_perusahaan.picture
-                                  ? e.data_perusahaan.picture
-                                  : "/profil-perusahaan.svg"
+                                e.picture ? e.picture : "/profil-perusahaan.svg"
                               }
                               alt="gambar profil perusahaan"
                             />
                             <div className="p-b-l-info">
                               <span>
-                                <p style={{ color: "grey" }}>
-                                  {e.data_perusahaan.bidang}
-                                </p>
-                                <h5>{e.data_perusahaan.nama}</h5>
+                                <p style={{ color: "grey" }}>{e.bidang}</p>
+                                <h5>{e.nama}</h5>
                               </span>
                               <div>
                                 <img src="/location1.svg" alt="icon lokasi" />
                                 <p>
-                                  {e.data_perusahaan.lokasi},{" "}
-                                  {e.data_perusahaan.provinsi}
+                                  {e.lokasi}, {e.provinsi}
                                 </p>
                               </div>
                             </div>
