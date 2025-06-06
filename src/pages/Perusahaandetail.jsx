@@ -37,21 +37,23 @@ export default function Perusahaandetail() {
       const dataLowongan = await axios.get(
         `https://careercompass-backend.vercel.app/data/lowongan`
       );
-      const dataTersimpan = await axios.get(
-        "https://careercompass-backend.vercel.app/data/perusahaan-tersimpan",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setTersimpan(
-        dataTersimpan.data?.filter(
-          (e) =>
-            e.id_pelamar === userData.id_pelamar &&
-            e.id_perusahaan === Number(urlId)
-        )[0]
-      );
+      if (token) {
+        const dataTersimpan = await axios.get(
+          "https://careercompass-backend.vercel.app/data/perusahaan-tersimpan",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setTersimpan(
+          dataTersimpan.data?.filter(
+            (e) =>
+              e.id_pelamar === userData.id_pelamar &&
+              e.id_perusahaan === Number(urlId)
+          )[0]
+        );
+      }
       setLowongan(
         dataLowongan.data.filter((e) => e.perusahaan_id === Number(urlId))
       );
