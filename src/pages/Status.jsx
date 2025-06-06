@@ -67,6 +67,9 @@ export default function Status() {
     }
   }
   useEffect(() => {
+    if (!token || userId?.role === "perusahaan") {
+      nav("/");
+    }
     handleData();
   }, []);
 

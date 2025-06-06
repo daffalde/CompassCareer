@@ -67,6 +67,9 @@ export default function Tersimpan() {
   }
 
   useEffect(() => {
+    if (!token || user?.role === "perusahaan") {
+      nav("/");
+    }
     getAllData();
   }, []);
 

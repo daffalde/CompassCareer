@@ -37,7 +37,6 @@ export default function Home() {
       behavior: "smooth",
     });
   };
-  console.log(kategori);
   return (
     <>
       <div className="container">

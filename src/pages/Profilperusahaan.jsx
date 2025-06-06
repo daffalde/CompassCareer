@@ -40,6 +40,9 @@ export default function Profilperusahaan() {
   }
 
   useEffect(() => {
+    if (!token || userId?.role === "pelamar") {
+      nav("/");
+    }
     getData();
   }, []);
 

@@ -12,7 +12,7 @@ import { LoadingButton, LoadingPage } from "../components/Loading";
 
 export default function ProfilPelamar() {
   const nav = useNavigate();
-  const user = JSON.parse(Cookies.get("data"));
+  const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const token = Cookies.get("token");
   const [loadingPage, setLoadingPage] = useState(true);
   const url = window.location.pathname;
@@ -47,6 +47,9 @@ export default function ProfilPelamar() {
   }
 
   useEffect(() => {
+    if (!token || user?.role === "pelamar") {
+      nav("/");
+    }
     getData();
   }, []);
 

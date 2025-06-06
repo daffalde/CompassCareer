@@ -43,6 +43,9 @@ export default function Editpost() {
   }
 
   useEffect(() => {
+    if (!token || getId?.role === "pelamar") {
+      nav("/");
+    }
     getDataLowongan();
   }, []);
 

@@ -14,6 +14,13 @@ export default function Posting() {
   const token = Cookies.get("token");
   const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [loading, setLoading] = useState(false);
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+
+  useEffect(() => {
+    if (!token || userId?.role === "pelamar") {
+      nav("/");
+    }
+  }, []);
 
   const inputPosisi = useRef(null);
   const inputGajiMin = useRef(null);

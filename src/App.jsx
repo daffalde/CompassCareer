@@ -18,8 +18,12 @@ import DaftarPelamar from "./pages/Daftarpelamar.jsx";
 import Admin from "./pages/Admin.jsx";
 import Adminpelamar from "./pages/Adminpelamar.jsx";
 import ProfilPelamar from "./pages/ProfilPelamar.jsx";
+import Cookies from "js-cookie";
+import NotFound from "./pages/NotFound.jsx";
 
 function App() {
+  const token = Cookies.get("token");
+  console.log(token);
   return (
     <>
       <BrowserRouter>
@@ -30,8 +34,10 @@ function App() {
           <Route path="/perusahaan" Component={Perusahaan} />
           <Route path="/perusahaan/:id" Component={Perusahaandetail} />
           <Route path="/tentang" Component={Aboutus} />
+
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={Logout} />
+
           <Route path="/profil" Component={Profil} />
           <Route path="/tersimpan" Component={Tersimpan} />
           <Route path="/status-lamaran" Component={Status} />
@@ -45,6 +51,8 @@ function App() {
           {/* admin */}
           <Route path="/dashboard" Component={Admin} />
           <Route path="/dashboard/pelamar" Component={Adminpelamar} />
+
+          <Route path="*" Component={NotFound} />
         </Routes>
       </BrowserRouter>
     </>

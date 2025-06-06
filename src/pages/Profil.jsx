@@ -12,7 +12,7 @@ import { LoadingButton, LoadingPage } from "../components/Loading";
 
 export default function Profil() {
   const nav = useNavigate();
-  const user = JSON.parse(Cookies.get("data"));
+  const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const token = Cookies.get("token");
   const [loadingPage, setLoadingPage] = useState(true);
   const [loadingButton, setLoadingButton] = useState(false);
@@ -48,6 +48,9 @@ export default function Profil() {
   }
 
   useEffect(() => {
+    if (!token || user?.role === "perusahaan") {
+      nav("/");
+    }
     getData();
   }, []);
 

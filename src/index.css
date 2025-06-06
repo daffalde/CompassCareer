@@ -77,6 +77,28 @@ h6 {
   color: #ff2c2c;
 }
 
+/* not found */
+.notfound-container {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.notfound {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.notfound h1 {
+  font-weight: 500;
+  font-size: 100px;
+  line-height: 80px;
+}
+
 /* loading */
 #loading-botton {
   height: 20px;
@@ -581,7 +603,7 @@ input[list]::-webkit-calendar-picker-indicator {
 }
 .f-top {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   margin: 50px 0;
   gap: 20px;
 }
@@ -626,13 +648,6 @@ input[list]::-webkit-calendar-picker-indicator {
   justify-content: center;
   align-items: top;
 }
-.f-t-item:last-child span {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
-}
 .f-t-item:nth-child(3) span {
   display: flex;
   gap: 10px;
@@ -659,6 +674,11 @@ input[list]::-webkit-calendar-picker-indicator {
   text-decoration: underline;
 }
 
+@media screen and (width < 1400px) {
+  .container-footer {
+    padding: 0 20px;
+  }
+}
 @media screen and (width < 1000px) {
   .f-top {
     grid-template-columns: 1fr 1fr 1fr;

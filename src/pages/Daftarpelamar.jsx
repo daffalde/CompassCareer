@@ -14,6 +14,7 @@ export default function DaftarPelamar() {
   const nav = useNavigate();
   const token = Cookies.get("token");
   const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+
   const [loadingPage, setLoadingPage] = useState(true);
 
   const [data, setData] = useState(null);
@@ -81,6 +82,9 @@ export default function DaftarPelamar() {
     }
   }
   useEffect(() => {
+    if (!token || userId?.role === "pelamar") {
+      nav("/");
+    }
     handleData();
   }, []);
 

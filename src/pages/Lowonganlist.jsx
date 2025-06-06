@@ -32,6 +32,9 @@ export default function Lowonganlist() {
     }
   }
   useEffect(() => {
+    if (!token || userId?.role === "pelamar") {
+      nav("/");
+    }
     getData();
   }, []);
 

@@ -70,13 +70,13 @@ export default function Footer() {
                 <li>
                   <span>
                     <img src="/mail1.svg" alt="logo mail hubungi kami" />
-                    <p>support@yourjobportal.com</p>
+                    <p>cchelp@compasscareer.com</p>
                   </span>
                 </li>
                 <li>
                   <span>
                     <img src="/phone1.svg" alt="logo telepon hubungi kami" />
-                    <p>+62 xxx-xxxx-xxxx</p>
+                    <p>+62 831-8129-1283</p>
                   </span>
                 </li>
                 <li>
@@ -86,22 +86,6 @@ export default function Footer() {
                   </span>
                 </li>
               </ul>
-            </div>
-            <div className="f-t-item">
-              <span>
-                <button
-                  onClick={() => (window.location.href = "/lowongan")}
-                  className="button-second"
-                >
-                  Mencari Pekerjaan?
-                </button>
-                <button
-                  onClick={() => (window.location.href = "/lowongan")}
-                  className="button-main"
-                >
-                  Pasang Lowongan
-                </button>
-              </span>
             </div>
           </div>
           <div className="f-bottom">
