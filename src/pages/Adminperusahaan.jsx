@@ -162,7 +162,7 @@ export default function Adminperusahaan() {
     setLoadingPage(true);
     try {
       await axios.delete(
-        `https://careercompass-backend.vercel.app/auth/pelamar/${e}`,
+        `https://careercompass-backend.vercel.app/auth/perusahaan/${e}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
