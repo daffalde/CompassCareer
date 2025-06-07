@@ -22,6 +22,7 @@ import Cookies from "js-cookie";
 import NotFound from "./pages/NotFound.jsx";
 import AdminLogin from "./pages/AdminLogin.jsx";
 import Adminperusahaan from "./pages/Adminperusahaan.jsx";
+import AdminLowongan from "./pages/AdminLowongan.jsx";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path="/dashboard" Component={Admin} />
           <Route path="/dashboard/pelamar" Component={Adminpelamar} />
           <Route path="/dashboard/perusahaan" Component={Adminperusahaan} />
+          <Route path="/dashboard/lowongan" Component={AdminLowongan} />
 
           <Route path="*" Component={NotFound} />
         </Routes>
