@@ -132,6 +132,31 @@
   align-items: center;
   padding: 10px;
 }
+.dashboard-filter-list {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+.dashboard-filter-list button {
+  background-color: var(--white);
+  border: transparent;
+  cursor: default;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+}
+.dashboard-filter-list button img {
+  height: 15px;
+}
+.dashboard-filter-list button:hover {
+  filter: brightness(90%);
+}
+.dashboard-filter-list button:active {
+  filter: brightness(60%);
+}
 .dashboard-filter select {
   font-size: 16px;
   height: 40px;
@@ -147,7 +172,8 @@
 }
 .dashboard-popup {
   width: 700px;
-  height: 80vh;
+  height: fit-content;
+  max-height: 80dvh;
   overflow: auto;
 }
 .dashboard-popup-profil label {
@@ -240,7 +266,7 @@
   display: grid;
   padding: 10px 20px;
   border-radius: 10px 10px 0 0;
-  grid-template-columns: 2fr 2fr 1.5fr 1fr 0.5fr;
+  grid-template-columns: 70px 2fr 1.5fr 1fr 0.5fr;
 }
 .dashboard-pelamar-wrap {
   width: 100%;
@@ -265,7 +291,7 @@
 }
 .dashboard-pelamar-w-item {
   display: grid;
-  grid-template-columns: 2fr 2fr 1.5fr 1fr 0.5fr;
+  grid-template-columns: 70px 2fr 1.5fr 1fr 0.5fr;
 }
 .dashboard-pelamar-w-item div:not(:first-child, :last-child) {
   display: flex;

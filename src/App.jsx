@@ -23,8 +23,6 @@ import NotFound from "./pages/NotFound.jsx";
 import AdminLogin from "./pages/AdminLogin.jsx";
 
 function App() {
-  const token = Cookies.get("token");
-  console.log(token);
   return (
     <>
       <BrowserRouter>
