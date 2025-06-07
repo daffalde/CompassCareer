@@ -20,6 +20,7 @@ import Adminpelamar from "./pages/Adminpelamar.jsx";
 import ProfilPelamar from "./pages/ProfilPelamar.jsx";
 import Cookies from "js-cookie";
 import NotFound from "./pages/NotFound.jsx";
+import AdminLogin from "./pages/AdminLogin.jsx";
 
 function App() {
   const token = Cookies.get("token");
@@ -49,6 +50,7 @@ function App() {
           <Route path="/profil-pelamar/:id" Component={ProfilPelamar} />
 
           {/* admin */}
+          <Route path="/admin-login" Component={AdminLogin} />
           <Route path="/dashboard" Component={Admin} />
           <Route path="/dashboard/pelamar" Component={Adminpelamar} />
 
