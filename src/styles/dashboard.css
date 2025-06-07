@@ -266,7 +266,7 @@
   display: grid;
   padding: 10px 20px;
   border-radius: 10px 10px 0 0;
-  grid-template-columns: 70px 2fr 1.5fr 1fr 0.5fr;
+  grid-template-columns: 2fr 2fr 1.5fr 1fr 0.5fr;
 }
 .dashboard-pelamar-wrap {
   width: 100%;
@@ -291,7 +291,7 @@
 }
 .dashboard-pelamar-w-item {
   display: grid;
-  grid-template-columns: 70px 2fr 1.5fr 1fr 0.5fr;
+  grid-template-columns: 2fr 2fr 1.5fr 1fr 0.5fr;
 }
 .dashboard-pelamar-w-item div:not(:first-child, :last-child) {
   display: flex;

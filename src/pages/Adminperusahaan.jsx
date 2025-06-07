@@ -5,7 +5,7 @@ import { LoadingButton, LoadingPage } from "../components/Loading";
 import { provinsi } from "../data/Provinsi";
 import Cookies from "js-cookie";
 
-export default function Adminpelamar() {
+export default function Adminperusahaan() {
   const token = Cookies.get("token");
   const user = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [data, setData] = useState(null);
@@ -15,7 +15,7 @@ export default function Adminpelamar() {
   async function getData() {
     try {
       const takeData = await axios.get(
-        "https://careercompass-backend.vercel.app/auth/pelamar"
+        "https://careercompass-backend.vercel.app/auth/perusahaan"
       );
       setData(takeData.data);
       setLoadingPage(false);
@@ -46,10 +46,15 @@ export default function Adminpelamar() {
   const inputNama = useRef(null);
   const inputEmail = useRef(null);
   const inputPassword = useRef(null);
+  const inputSitus = useRef(null);
+  const inputTahun = useRef(null);
+  const inputBidang = useRef(null);
+  const inputKaryawan = useRef(null);
   const inputLokasi = useRef(null);
   const [inputProvinsi, setInputProvinsi] = useState("");
-  const inputRingkasan = useRef(null);
-  const inputSpesialis = useRef(null);
+  const inputTentang = useRef(null);
+  const inputVisi = useRef(null);
+  const inputMisi = useRef(null);
 
   function handleImage(e) {
     const file = e.target.files[0];
@@ -59,29 +64,13 @@ export default function Adminpelamar() {
     }
   }
 
-  // skill
-  const [inputSkill, setInputSkill] = useState("");
-  const [skill, setSkill] = useState([]);
-
-  function handleSkill(e) {
-    e.preventDefault();
-    setSkill((prevSkills) => [...prevSkills, inputSkill]);
-    setInputSkill("");
-  }
-
-  function handleSkillDelete(index) {
-    setSkill((prevSkills) => prevSkills.filter((_, i) => i !== index));
-  }
-
-  // function input data
-
   // input data
   async function handleTambah(e) {
     e.preventDefault();
     setLoadingButton(true);
     try {
       await axios.post(
-        "https://careercompass-backend.vercel.app/auth/pelamar/register",
+        "https://careercompass-backend.vercel.app/auth/perusahaan/register",
         {
           name: inputNama.current.value,
           email: inputEmail.current.value,
@@ -107,7 +96,7 @@ export default function Adminpelamar() {
     try {
       if (image) {
         await axios.patch(
-          `https://careercompass-backend.vercel.app/auth/pelamar/profil/${e}`,
+          `https://careercompass-backend.vercel.app/auth/perusahaan/profil/${e}`,
           formData,
           {
             headers: {
@@ -118,26 +107,40 @@ export default function Adminpelamar() {
       }
 
       const resp = await axios.get(
-        `https://careercompass-backend.vercel.app/auth/pelamar/${e}`
+        `https://careercompass-backend.vercel.app/auth/perusahaan/${e}`
       );
 
       await axios.patch(
-        `https://careercompass-backend.vercel.app/auth/pelamar/${e}`,
+        `https://careercompass-backend.vercel.app/auth/perusahaan/${e}`,
         {
           nama: inputNama.current.value
             ? inputNama.current.value
-            : resp.data[0].nama_pelamar,
-          spesialis: inputSpesialis.current.value
-            ? inputSpesialis.current.value
-            : resp.data[0].spesialis,
+            : resp.data[0].nama_perusahaan,
+          situs: inputSitus.current.value
+            ? inputSitus.current.value
+            : resp.data[0].situs,
+          tahun: inputTahun.current.value
+            ? inputTahun.current.value
+            : resp.data[0].tahun_didirikan,
+          bidang: inputBidang.current.value
+            ? inputBidang.current.value
+            : resp.data[0].bidang,
+          karyawan: inputKaryawan.current.value
+            ? inputKaryawan.current.value
+            : resp.data[0].karyawan,
           lokasi: inputLokasi.current.value
             ? inputLokasi.current.value
             : resp.data[0].lokasi,
           provinsi: inputProvinsi ? inputProvinsi : resp.data[0].provinsi,
-          tentang: inputRingkasan.current.value
-            ? inputRingkasan.current.value
+          tentang: inputTentang.current.value
+            ? inputTentang.current.value
             : resp.data[0].tentang,
-          skill: JSON.stringify(skill),
+          visi: inputVisi.current.value
+            ? inputVisi.current.value
+            : resp.data[0].visi,
+          misi: inputMisi.current.value
+            ? inputMisi.current.value
+            : resp.data[0].misi,
         },
         {
           headers: {
@@ -184,7 +187,7 @@ export default function Adminpelamar() {
         <Sidebar />
         <div className="dashboard-content">
           <HeaderDashboard
-            content={"Pelamar"}
+            content={"Perusahaan"}
             search={pencarian}
             setSearch={setPencarian}
           />
@@ -207,7 +210,7 @@ export default function Adminpelamar() {
                     className="popup-navigation"
                   >
                     <img src="/left-arrow.png" alt="back icon" />
-                    <h5>Tambah user pelamar</h5>
+                    <h5>Tambah perusahaan</h5>
                   </div>
                   <div
                     onClick={(event) => event.stopPropagation()}
@@ -220,7 +223,7 @@ export default function Adminpelamar() {
                         ref={inputNama}
                         type="text"
                         id="dashboard-popup-nama"
-                        placeholder="e.g. John Dhoe"
+                        placeholder="e.g. Company corp"
                       />
                       <br />
                       <label htmlFor="dashboard-popup-email">Email</label>
@@ -229,7 +232,7 @@ export default function Adminpelamar() {
                         ref={inputEmail}
                         type="text"
                         id="dashboard-popup-email"
-                        placeholder="e.g. johndoe@example.com"
+                        placeholder="e.g. company@example.com"
                       />
                       <br />
                       <label htmlFor="dashboard-popup-password">Password</label>
@@ -266,7 +269,7 @@ export default function Adminpelamar() {
                   }`}
                 >
                   {data
-                    .filter((filter) => filter.id_pelamar === getId)
+                    .filter((filter) => filter.id_perusahaan === getId)
                     .map((e) => (
                       <>
                         <div
@@ -274,7 +277,7 @@ export default function Adminpelamar() {
                           className="popup-navigation"
                         >
                           <img src="/left-arrow.png" alt="back icon" />
-                          <h5>Edit user data</h5>
+                          <h5>Edit perusahaan</h5>
                         </div>
                         <div
                           onClick={(event) => event.stopPropagation()}
@@ -284,11 +287,11 @@ export default function Adminpelamar() {
                             <label
                               style={{
                                 backgroundImage: `url(${
-                                  e.profil
-                                    ? e.profil
+                                  e.picture
+                                    ? e.picture
                                     : file
                                     ? file
-                                    : "/profil-pelamar.svg"
+                                    : "/profil-perusahaan.svg"
                                 })`,
                               }}
                               htmlFor="dashboard-popup-profil"
@@ -308,22 +311,65 @@ export default function Adminpelamar() {
                               type="text"
                               id="dashboard-popup-nama"
                               placeholder={
-                                e.nama_pelamar
-                                  ? e.nama_pelamar
+                                e.nama_perusahaan
+                                  ? e.nama_perusahaan
                                   : "e.g. John Dhoe"
                               }
                             />
                             <br />
                             <label htmlFor="dashboard-popup-spesialis">
-                              Spesialis
+                              Situs
                             </label>
                             <br />
                             <input
-                              ref={inputSpesialis}
+                              ref={inputSitus}
                               type="text"
                               id="dashboard-popup-spesialis"
                               placeholder={
-                                e.spesialis ? e.spesialis : "e.g. Administrasi"
+                                e.situs
+                                  ? e.situs
+                                  : "e.g. https://www.Company.com/"
+                              }
+                            />
+                            <br />
+                            <label htmlFor="dashboard-popup-spesialis">
+                              Tahun didirikan
+                            </label>
+                            <br />
+                            <input
+                              ref={inputTahun}
+                              type="text"
+                              id="dashboard-popup-spesialis"
+                              placeholder={
+                                e.tahun_didirikan
+                                  ? e.tahun_didirikan
+                                  : "e.g. 1980"
+                              }
+                            />
+                            <br />
+                            <label htmlFor="dashboard-popup-spesialis">
+                              Karyawan
+                            </label>
+                            <br />
+                            <input
+                              ref={inputKaryawan}
+                              type="text"
+                              id="dashboard-popup-spesialis"
+                              placeholder={
+                                e.karyawan ? e.karyawan : "e.g. >20.000"
+                              }
+                            />
+                            <br />
+                            <label htmlFor="dashboard-popup-spesialis">
+                              Bidang
+                            </label>
+                            <br />
+                            <input
+                              ref={inputBidang}
+                              type="text"
+                              id="dashboard-popup-spesialis"
+                              placeholder={
+                                e.bidang ? e.bidang : "e.g. Manufaktur"
                               }
                             />
                             <br />
@@ -358,77 +404,44 @@ export default function Adminpelamar() {
                             </select>
                             <br />
                             <label htmlFor="dashboard-popup-provinsi">
-                              Ringkasan pribadi
+                              Tentang
                             </label>
                             <br />
                             <textarea
-                              ref={inputRingkasan}
+                              ref={inputTentang}
                               id="dashboard-popup-provinsi"
                               placeholder={
-                                e.tentang ? e.tentang : "Ceritakan diri user"
+                                e.tentang ? e.tentang : "Tentang perusahaan"
                               }
                             ></textarea>
                             <br />
-                            <label for="posting-keahlian">Keahlian</label>
-                            <span>
-                              <input
-                                value={inputSkill}
-                                onChange={(e) => setInputSkill(e.target.value)}
-                                id="posting-keahlian"
-                                type="text"
-                                placeholder="Komputer,Manajemen,dll...."
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter") {
-                                    handleSkill();
-                                  }
-                                }}
-                              />
-                              <button
-                                onClick={handleSkill}
-                                className="button-main"
-                              >
-                                Tambah
-                              </button>
-                            </span>
+                            <label htmlFor="dashboard-popup-provinsi">
+                              Visi
+                            </label>
                             <br />
-                            <div className="p-b-skill-wrap">
-                              {skill[0] ? (
-                                skill.map((e, i) => (
-                                  <>
-                                    <h6 className="s-item" key={i}>
-                                      {e}
-                                      <img
-                                        onClick={(remove) => {
-                                          remove.stopPropagation();
-                                          handleSkillDelete(i);
-                                        }}
-                                        src="/close.svg"
-                                        alt="close icon"
-                                      />
-                                    </h6>
-                                  </>
-                                ))
-                              ) : (
-                                <p style={{ color: "grey" }}>
-                                  Belum ada data keahlian.
-                                </p>
-                              )}
-                            </div>
+                            <textarea
+                              ref={inputVisi}
+                              id="dashboard-popup-provinsi"
+                              placeholder={
+                                e.visi ? e.visi : "Visi dari perusahaan"
+                              }
+                            ></textarea>
                             <br />
-                            <p>Skill saat ini:</p>
-                            <div className="p-b-skill-wrap">
-                              {e.skill
-                                ? JSON.parse(e.skill).map((e, i) => (
-                                    <h6 className="s-item" key={i}>
-                                      {e}
-                                    </h6>
-                                  ))
-                                : "Belum ada data"}
-                            </div>
+                            <label htmlFor="dashboard-popup-provinsi">
+                              Misi
+                            </label>
+                            <br />
+                            <textarea
+                              ref={inputMisi}
+                              id="dashboard-popup-provinsi"
+                              placeholder={
+                                e.misi ? e.misi : "Misi dari perusahaan"
+                              }
+                            ></textarea>
                             <br />
                             <div className="dashboard-popup-action">
                               <button
-                                onClick={() => handleEdit(e.id_pelamar)}
+                                onClick={() => handleEdit(e.id_perusahaan)}
                                 className="button-main"
                               >
                                 Edit {loadingButton ? <LoadingButton /> : null}
@@ -479,7 +492,7 @@ export default function Adminpelamar() {
                 <div className="dashboard-pelamar-wrap">
                   {dataPagination
                     .filter((filter) =>
-                      filter.nama_pelamar
+                      filter.nama_perusahaan
                         .toLowerCase()
                         .includes(pencarian.toLowerCase())
                     )
@@ -495,15 +508,17 @@ export default function Adminpelamar() {
                     )
                     .map((e) => (
                       <div
-                        key={e.id_pelamar}
+                        key={e.id_perusahaan}
                         className="dashboard-pelamar-w-item"
                       >
                         <div className="dashboard-pelamar-w-i-nama">
                           <img
-                            src={e?.profil ? e.profil : "/profil-pelamar.svg"}
+                            src={
+                              e?.picture ? e.picture : "/profil-perusahaan.svg"
+                            }
                             alt="profil pelamar"
                           />
-                          <h6>{e.nama_pelamar}</h6>
+                          <h6>{e.nama_perusahaan}</h6>
                         </div>
                         <div className="dashboard-pelamar-w-i-email">
                           <p>{e.email}</p>
@@ -520,10 +535,10 @@ export default function Adminpelamar() {
                         <div className="dashboard-pelamar-w-i-keahlian">
                           <p
                             style={{
-                              color: e.spesialis ? "black" : "grey",
+                              color: e.bidang ? "black" : "grey",
                             }}
                           >
-                            {e.spesialis ? e.spesialis : "Belum ada data."}
+                            {e.bidang ? e.bidang : "Belum ada data."}
                           </p>
                         </div>
                         <div className="dashboard-w-i-action">
@@ -531,7 +546,7 @@ export default function Adminpelamar() {
                             onClick={(event) => {
                               event.stopPropagation();
                               setPopupEdit(true);
-                              setGetId(e.id_pelamar);
+                              setGetId(e.id_perusahaan);
                             }}
                           >
                             <img src="/pencil2.svg" alt="edit icon" />
@@ -539,7 +554,7 @@ export default function Adminpelamar() {
                           <button
                             onClick={(event) => {
                               event.stopPropagation();
-                              handleDelete(e.id_pelamar);
+                              handleDelete(e.id_perusahaan);
                             }}
                           >
                             <img src="/trash.svg" alt="delete icon" />

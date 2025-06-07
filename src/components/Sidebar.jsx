@@ -74,12 +74,17 @@ export function Sidebar() {
   );
 }
 
-export function HeaderDashboard({ content }) {
+export function HeaderDashboard({ content, search, setSearch }) {
   return (
     <>
       <div className="dashboard-header">
         <h4>{content}</h4>
-        <input type="text" placeholder="Cari...." />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          type="text"
+          placeholder="Cari...."
+        />
         <div className="dashboard-h-profil">
           <p>admin</p>
           <img src="/profil-pelamar.svg" alt="profil pelamar" />

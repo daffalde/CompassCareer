@@ -21,6 +21,7 @@ import ProfilPelamar from "./pages/ProfilPelamar.jsx";
 import Cookies from "js-cookie";
 import NotFound from "./pages/NotFound.jsx";
 import AdminLogin from "./pages/AdminLogin.jsx";
+import Adminperusahaan from "./pages/Adminperusahaan.jsx";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route path="/admin-login" Component={AdminLogin} />
           <Route path="/dashboard" Component={Admin} />
           <Route path="/dashboard/pelamar" Component={Adminpelamar} />
+          <Route path="/dashboard/perusahaan" Component={Adminperusahaan} />
 
           <Route path="*" Component={NotFound} />
         </Routes>
