@@ -15,6 +15,12 @@ export function Sidebar() {
     }
   }, []);
 
+  function Signout() {
+    Cookies.remove("token");
+    Cookies.remove("data");
+    window.location.reload();
+  }
+
   return (
     <>
       <div className="dashboard-sidebar">
@@ -75,7 +81,7 @@ export function Sidebar() {
             </button>
           </div>
         </span>
-        <button className={`button-sidebar`}>
+        <button onClick={Signout} className={`button-sidebar`}>
           <img src="/logout-black.png" alt="logout icon" />
           <p>Sign out</p>
         </button>
