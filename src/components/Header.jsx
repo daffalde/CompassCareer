@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
+import pdfToText from "react-pdftotext";
+import { franc } from "franc-min";
+import { LoadingButton, LoadingPage } from "./Loading";
+import { AlertFailed } from "./Alert";
 
 export default function Header() {
   const token = Cookies.get("token");
@@ -112,11 +116,26 @@ export default function Header() {
 
   // get pdf file
   const [pdfFile, setPdfFile] = useState(null);
+  const [loadingButton, setLoadingButton] = useState(false);
+  const [warning, setWarning] = useState(false);
 
-  function handlePdf(e) {
+  async function handlePdf(e) {
     const file = e.target.files[0];
     if (file) {
-      setPdfFile(file);
+      setLoadingButton(true);
+      setWarning(false);
+      try {
+        const ekstrak = await pdfToText(file);
+        const bahasa = franc(ekstrak);
+        setLoadingButton(false);
+        if (bahasa !== "eng") {
+          setWarning(true);
+        } else {
+          setPdfFile(file);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 
@@ -205,6 +224,8 @@ export default function Header() {
                           <img src="/pdf.svg" alt="upload icon" />
                           <p>{pdfFile.name}</p>
                         </>
+                      ) : loadingButton ? (
+                        <LoadingPage />
                       ) : (
                         <img src="/upload.svg" alt="upload icon" />
                       )}
@@ -220,6 +241,11 @@ export default function Header() {
                     <div>
                       <h6>Unggah CV anda</h6>
                       <p style={{ color: "grey" }}>pdf.Max 10mb</p>
+                      {warning ? (
+                        <p className="caution">
+                          Harap masukan CV <br /> berbahasa inggris
+                        </p>
+                      ) : null}
                     </div>
                     <button className="button-main">Cari Pekerjaan</button>
                   </div>
