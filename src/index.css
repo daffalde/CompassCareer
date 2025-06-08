@@ -77,6 +77,10 @@ h6 {
   color: #ff2c2c;
 }
 
+.null {
+  color: var(--black-50);
+}
+
 /* not found */
 .notfound-container {
   width: 100%;

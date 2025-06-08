@@ -397,11 +397,16 @@ export default function Kerjadetail() {
                         </div>
                       </div>
                     </div>
-                    <div className="t-f-l-body">
+                    <div
+                      className="t-f-l-body  t-f-l-b-wrap-company"
+                      onClick={() => nav(`/perusahaan/${e.perusahaan_id}`)}
+                    >
                       <div className="t-f-l-b-wrap">
                         <div className="body-left">
                           <h5>Tentang perusahaan</h5>
-                          <p>{e.tentang_perusahaan}</p>
+                          <p className="body-left-wraping">
+                            {e.tentang_perusahaan}
+                          </p>
                         </div>
                         <div className="body-right">
                           <img

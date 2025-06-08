@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import { LoadingPage } from "../components/Loading";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { NoData } from "../components/NoData";
 
 export default function Perusahaandetail() {
   const token = Cookies.get("token");
@@ -108,6 +109,9 @@ export default function Perusahaandetail() {
       console.log(e);
     }
   }
+
+  // tentang button
+  const [lengkap, setLengkap] = useState(true);
   return (
     <>
       <div className="container">
@@ -127,15 +131,23 @@ export default function Perusahaandetail() {
                 <div className="t-h-bottom">
                   <div className="t-h-b-title">
                     <h4>{e.nama_perusahaan}</h4>
-                    <p>{e.bidang}</p>
+                    {e.bidang ? <p>{e.bidang}</p> : <NoData pesan={"-"} />}
                   </div>
                   <div className="t-h-b-desc">
                     <span>
-                      <p>
-                        {e.lokasi},{e.provinsi}
-                      </p>
+                      {e.lokasi && e.provinsi ? (
+                        <p>
+                          {e.lokasi},{e.provinsi}
+                        </p>
+                      ) : (
+                        <NoData pesan={"-"} />
+                      )}
                       <img src="/dot1.svg" alt="dot gap" />
-                      <p>{e.karyawan} Karyawan</p>
+                      {e.karyawan ? (
+                        <p>{e.karyawan} Karyawan</p>
+                      ) : (
+                        <NoData pesan={"-"} />
+                      )}
                     </span>
                     {userData?.role === "pelamar" ? (
                       <span>
@@ -166,44 +178,71 @@ export default function Perusahaandetail() {
                       <h6>Informasi Perusahaan</h6>
                       <span>
                         <p>Situs Web</p>
-                        <p>{e.situs}</p>
+                        {e.situs ? <p>{e.situs}</p> : <NoData pesan={"-"} />}
                       </span>
                       <span>
                         <p>Email</p>
-                        <p>{e.email}</p>
+                        {e.email ? <p>{e.email}</p> : <NoData pesan={"-"} />}
                       </span>
                       <span>
                         <p>Tahun didirikan</p>
-                        <p>{e.tahun_didirikan}</p>
+                        {e.tahun_didirikan ? (
+                          <p>{e.tahun_didirikan}</p>
+                        ) : (
+                          <NoData pesan={"-"} />
+                        )}
                       </span>
                       <span>
                         <p>Industri</p>
-                        <p>{e.bidang}</p>
+                        {e.bidang ? <p>{e.bidang}</p> : <NoData pesan={"-"} />}
                       </span>
                     </div>
                   </div>
                   <div className="t-f-l-body">
                     <div className="paragraph">
                       <h6>Tentang Kami</h6>
-                      <p>{e.tentang}</p>
+                      {e.tentang ? (
+                        <>
+                          <p className={lengkap ? "body-left-wraping" : ""}>
+                            {e.tentang}
+                          </p>
+                          {lengkap ? (
+                            <b onClick={() => setLengkap(false)}>
+                              Selengkapnya
+                            </b>
+                          ) : (
+                            <b onClick={() => setLengkap(true)}>Sembunyikan</b>
+                          )}
+                        </>
+                      ) : (
+                        <p className="null">Belum ada data</p>
+                      )}
                     </div>
                     <div className="numbering">
                       <h6>Visi:</h6>
-                      {e.visi.split("\n").map((e, i) => (
-                        <div key={i} className="numbering-item">
-                          <p>{i + 1}.</p>
-                          <p>{e}</p>
-                        </div>
-                      ))}
+                      {e.visi ? (
+                        e.visi.split("\n").map((e, i) => (
+                          <div key={i} className="numbering-item">
+                            <p>{i + 1}.</p>
+                            <p>{e}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="null">Belum ada data</p>
+                      )}
                     </div>
                     <div className="numbering">
                       <h6>Misi:</h6>
-                      {e.misi.split("\n").map((e, i) => (
-                        <div key={i} className="numbering-item">
-                          <p>{i + 1}.</p>
-                          <p>{e}</p>
-                        </div>
-                      ))}
+                      {e.misi ? (
+                        e.misi.split("\n").map((e, i) => (
+                          <div key={i} className="numbering-item">
+                            <p>{i + 1}.</p>
+                            <p>{e}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="null">Belum ada data</p>
+                      )}
                     </div>
                   </div>
                 </div>

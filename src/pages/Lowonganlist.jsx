@@ -146,7 +146,7 @@ export default function Lowonganlist() {
                 )
                 .map((e) => (
                   <div
-                    onClick={() => nav(`/edit-lowongan/${e.id_lowongan}`)}
+                    onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
                     className="lowongan-card"
                     key={e.id_lowongan}
                   >
@@ -189,7 +189,15 @@ export default function Lowonganlist() {
                         <p>{e.provinsi}</p>
                       </span>
                       <span>
-                        <button className="button-main">Edit</button>
+                        <button
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            nav(`/edit-lowongan/${e.id_lowongan}`);
+                          }}
+                          className="button-main"
+                        >
+                          Edit
+                        </button>
                         <button
                           onClick={(event) => {
                             event.stopPropagation();

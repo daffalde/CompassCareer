@@ -110,11 +110,11 @@ export default function Perusahaan() {
                 .filter(
                   (filtering) =>
                     filtering.nama_perusahaan
-                      .toLowerCase()
+                      ?.toLowerCase()
                       .includes(cari.toLowerCase()) &&
-                    filtering.provinsi
-                      .toLowerCase()
-                      .includes(lokasi.toLowerCase())
+                    (filtering.provinsi?.toLowerCase() || "").includes(
+                      lokasi.toLowerCase()
+                    )
                 )
                 .map((e) => (
                   <div
@@ -129,14 +129,20 @@ export default function Perusahaan() {
                     />
                     <div className="p-b-l-info">
                       <span>
-                        <p style={{ color: "grey" }}>{e.bidang}</p>
+                        <p style={{ color: "grey" }}>
+                          {e.bidang ? e.bidang : "-"}
+                        </p>
                         <h5>{e.nama_perusahaan}</h5>
                       </span>
                       <div>
                         <img src="/location1.svg" alt="icon lokasi" />
-                        <p>
-                          {e.lokasi}, {e.provinsi}
-                        </p>
+                        {e.lokasi && e.provinsi ? (
+                          <p>
+                            {e.lokasi}, {e.provinsi}
+                          </p>
+                        ) : (
+                          "-"
+                        )}
                       </div>
                     </div>
                   </div>

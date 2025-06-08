@@ -8,3 +8,20 @@
   display: block;
   width: 200px;
 }
+
+.body-left-wraping {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+b {
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  text-align: end;
+}
+b:hover {
+  text-decoration: underline;
+}

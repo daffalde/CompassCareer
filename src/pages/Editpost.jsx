@@ -79,14 +79,30 @@ export default function Editpost() {
           getUrlId.split("/")[2]
         }`,
         {
-          posisi: inputPosisi.current.value,
-          gajiMin: inputGajiMin.current.value,
-          gajiMax: inputGajiMax.current.value,
-          kategori: inputKategori.current.value,
-          jenis: inputJenis.current.value,
-          tingkatan: inputTingkat.current.value,
-          tentang: inputTentang.current.value,
-          syarat: inputSyarat.current.value,
+          posisi: inputPosisi.current.value
+            ? inputPosisi.current.value
+            : dataLowongan.posisi,
+          gajiMin: inputGajiMin.current.value
+            ? inputGajiMin.current.value
+            : dataLowongan.gaji_min,
+          gajiMax: inputGajiMax.current.value
+            ? inputGajiMax.current.value
+            : dataLowongan.gaji_max,
+          kategori: inputKategori.current.value
+            ? inputKategori.current.value
+            : dataLowongan.kategori,
+          jenis: inputJenis.current.value
+            ? inputJenis.current.value
+            : dataLowongan.jenis,
+          tingkatan: inputTingkat.current.value
+            ? inputTingkat.current.value
+            : dataLowongan.tingkatan,
+          tentang: inputTentang.current.value
+            ? inputTentang.current.value
+            : dataLowongan.tentang_lowongan,
+          syarat: inputSyarat.current.value
+            ? inputSyarat.current.value
+            : dataLowongan.syarat,
           skill: JSON.stringify(skill),
           id: getId.id_perusahaan,
         },

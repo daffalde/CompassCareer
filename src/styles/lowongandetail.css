@@ -6,8 +6,21 @@
   justify-content: space-between;
   align-items: start;
 }
+.t-f-l-b-wrap-company {
+  cursor: pointer;
+}
+.t-f-l-b-wrap-company:hover {
+  background-color: hsl(0, 0%, 95%);
+}
 .body-left {
   width: fit-content;
+}
+.body-left-wraping {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .body-right {
   width: 200px;
