@@ -1,9 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/dashboard.css";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 export function Sidebar() {
   const nav = useNavigate();
   const getPath = window.location.pathname.split("/")[2];
+  const token = Cookies.get("token");
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+
+  useEffect(() => {
+    if (!token && userId?.role !== "admin") {
+      nav("/");
+    }
+  }, []);
 
   return (
     <>
