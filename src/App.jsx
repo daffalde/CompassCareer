@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Kerja from "./pages/Kerja.jsx";
-import Home from "./pages/home.jsx";
+import Home from "./pages/Home.jsx";
 import Kerjadetail from "./pages/Kerjadetail.jsx";
 import Perusahaan from "./pages/Perusahaan.jsx";
 import Perusahaandetail from "./pages/Perusahaandetail.jsx";
@@ -18,12 +18,13 @@ import DaftarPelamar from "./pages/Daftarpelamar.jsx";
 import Admin from "./pages/Admin.jsx";
 import Adminpelamar from "./pages/Adminpelamar.jsx";
 import ProfilPelamar from "./pages/ProfilPelamar.jsx";
-import Cookies from "js-cookie";
 import NotFound from "./pages/NotFound.jsx";
 import AdminLogin from "./pages/AdminLogin.jsx";
 import Adminperusahaan from "./pages/Adminperusahaan.jsx";
 import AdminLowongan from "./pages/AdminLowongan.jsx";
 import AdminPengaturan from "./pages/AdminPengaturan.jsx";
+import Privasi from "./pages/Privasi.jsx";
+import Syarat from "./pages/Syarat.jsx";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
           <Route path="/perusahaan" Component={Perusahaan} />
           <Route path="/perusahaan/:id" Component={Perusahaandetail} />
           <Route path="/tentang" Component={Aboutus} />
+          <Route path="/kebijakan-privasi" Component={Privasi} />
+          <Route path="/syarat" Component={Syarat} />
 
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={Logout} />

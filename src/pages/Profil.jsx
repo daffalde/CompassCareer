@@ -544,14 +544,6 @@ export default function Profil() {
                                       <button
                                         onClick={(event) => {
                                           event.stopPropagation();
-                                          //logic
-                                        }}
-                                      >
-                                        Cari Lowongan
-                                      </button>
-                                      <button
-                                        onClick={(event) => {
-                                          event.stopPropagation();
                                           deleteCv(e.id_cv);
                                         }}
                                       >

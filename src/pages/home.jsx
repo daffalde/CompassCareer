@@ -145,7 +145,12 @@ export default function Home() {
                   untuk mendapatkan peluang terbaik dalam mengembangkan karier
                   Anda.
                 </p>
-                <button className="button-main">Lihat Lowongan</button>
+                <button
+                  onClick={() => nav("/lowongan")}
+                  className="button-main"
+                >
+                  Lihat Lowongan
+                </button>
               </div>
             </div>
             <br />

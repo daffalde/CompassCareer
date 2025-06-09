@@ -91,8 +91,8 @@ export default function Footer() {
           <div className="f-bottom">
             <p>© 2025 · CompassCareer </p>
             <span>
-              <Link to={"/privasi"}>Kebijakan Privasi</Link>
-              <Link to={"/ketentuan"}>Syarat & Ketentuan</Link>
+              <Link to={"/kebijakan-privasi"}>Kebijakan Privasi</Link>
+              <Link to={"/syarat"}>Syarat & Ketentuan</Link>
             </span>
           </div>
         </div>
