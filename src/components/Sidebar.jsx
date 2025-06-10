@@ -91,6 +91,7 @@ export function Sidebar() {
 }
 
 export function HeaderDashboard({ content, search, setSearch }) {
+  const nav = useNavigate();
   return (
     <>
       <div className="dashboard-header">
@@ -101,7 +102,10 @@ export function HeaderDashboard({ content, search, setSearch }) {
           type="text"
           placeholder="Cari...."
         />
-        <div className="dashboard-h-profil">
+        <div
+          onClick={() => nav("/dashboard/pengaturan")}
+          className="dashboard-h-profil"
+        >
           <p>admin</p>
           <img src="/profil-pelamar.svg" alt="profil pelamar" />
         </div>
