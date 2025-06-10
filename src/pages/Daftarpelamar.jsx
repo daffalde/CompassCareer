@@ -290,6 +290,7 @@ export default function DaftarPelamar() {
               </div>
             </div>
             {/* _____________________________________ */}
+            <h4 className="heading-page">Manajemen Pelamar</h4>
             <div className="daftar-header">
               <h6>Pelamar</h6>
               <h6>Lowongan</h6>
@@ -345,40 +346,35 @@ export default function DaftarPelamar() {
                   </div>
                 ))}
               {/* pagination */}
-              {data ? (
-                <div className="pagination">
-                  <div
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.max(prev - 1, 1))
-                    }
-                    className="p-arrow"
-                  >
-                    <img
-                      src="./pagig-arrow2.svg"
-                      alt="tanda panah pagination"
-                    />
-                  </div>
-                  {Array.from({ length: totalPages }, (_, i) => (
-                    <div
-                      key={i}
-                      className={`p-item ${
-                        currentPage === i + 1 ? "pagig-on" : ""
-                      }`}
-                      onClick={() => setCurrentPage(i + 1)}
-                    >
-                      <p>{i + 1}</p>
-                    </div>
-                  ))}
-                  <div
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                    }
-                    className="p-arrow"
-                  >
-                    <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
-                  </div>
+              <div className="pagination">
+                <div
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  className="p-arrow"
+                >
+                  <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
                 </div>
-              ) : null}
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <div
+                    key={i}
+                    className={`p-item ${
+                      currentPage === i + 1 ? "pagig-on" : ""
+                    }`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    <p>{i + 1}</p>
+                  </div>
+                ))}
+                <div
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  className="p-arrow"
+                >
+                  <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
+                </div>
+              </div>
             </div>
           </>
         )}
