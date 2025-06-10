@@ -127,7 +127,7 @@ export default function Editpost() {
           <LoadingPage />
         ) : (
           <>
-            <h4>Buat lowongan pekerjaan</h4>
+            <h4>Edit lowongan pekerjaan</h4>
             <br />
             <div className="posting-body">
               <div>
@@ -274,7 +274,7 @@ export default function Editpost() {
                 Batal
               </button>
               <button onClick={handleSend} className="button-main">
-                Posting {loading ? <LoadingButton /> : null}
+                Simpan {loading ? <LoadingButton /> : null}
               </button>
             </div>
           </>
