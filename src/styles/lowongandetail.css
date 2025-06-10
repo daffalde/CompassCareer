@@ -58,6 +58,10 @@
   gap: 10px;
   justify-content: start;
   align-items: center;
+  margin-bottom: 10px;
+}
+.b-g-detail span {
+  line-height: 20px;
 }
 
 /* apply section */
@@ -252,7 +256,7 @@
 
 .apply-b-c-text {
   width: 100%;
-  height: calc(100% - 120px);
+  height: 100%;
   padding: 10px;
   font-size: 16px;
   overflow: auto;

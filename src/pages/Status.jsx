@@ -61,6 +61,15 @@ export default function Status() {
           ...(listDataCv.find((find) => find.id_cv === e.id_cv) || {}),
         }))
       );
+      console.log(
+        listDataApp.map((e) => ({
+          ...e,
+          ...(listDataLowongan.find(
+            (find) => find.id_lowongan === e.id_lowongan
+          ) || {}),
+          ...(listDataCv.find((find) => find.id_cv === e.id_cv) || {}),
+        }))
+      );
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -167,7 +176,10 @@ export default function Status() {
                                   {e.status}
                                 </p>
                                 <p>
-                                  {moment(e.created_at, "YYYYMMDD").fromNow()}
+                                  {moment(
+                                    e.app_created_at,
+                                    "YYYYMMDD"
+                                  ).fromNow()}
                                 </p>
                               </div>
                             </div>
@@ -270,6 +282,10 @@ export default function Status() {
             <div className="status-body">
               <div className="status-b-wrap">
                 {visibleItems
+                  .sort(
+                    (a, b) =>
+                      new Date(b.app_created_at) - new Date(a.app_created_at)
+                  )
                   .filter(
                     (filter) =>
                       filter.status.includes(statusButton) &&
@@ -311,7 +327,7 @@ export default function Status() {
                         >
                           {e.status}
                         </p>
-                        <p>{moment(e.created_at).format("LL")}</p>
+                        <p>{moment(e.app_created_at).format("LL")}</p>
                       </div>
                     </button>
                   ))}
@@ -391,7 +407,9 @@ export default function Status() {
                             >
                               {e.status}
                             </p>
-                            <p>{moment(e.created_at, "YYYYMMDD").fromNow()}</p>
+                            <p>
+                              {moment(e.app_created_at, "YYYYMMDD").fromNow()}
+                            </p>
                           </div>
                         </div>
                         <div className="status-b-d-cv">
