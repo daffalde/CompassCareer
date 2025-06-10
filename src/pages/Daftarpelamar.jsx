@@ -232,7 +232,7 @@ export default function DaftarPelamar() {
                         <div className="daftar-p-c-info">
                           <span>
                             <p>Tanggal dikirim</p>
-                            <p>{moment(e.created_at).format("LL")}</p>
+                            <p>{moment(e.app_created_at).format("LL")}</p>
                           </span>
                           <span>
                             <p>Status</p>
@@ -299,6 +299,10 @@ export default function DaftarPelamar() {
             </div>
             <div className="daftar-wrap">
               {dataPagination
+                .sort(
+                  (a, b) =>
+                    new Date(b.app_created_at) - new Date(a.app_created_at)
+                )
                 .filter(
                   (filter) => filter.perusahaan_id === userId.id_perusahaan
                 )
