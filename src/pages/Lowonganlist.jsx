@@ -135,8 +135,16 @@ export default function Lowonganlist() {
               </div>
             </div>
             {/* _____________________________________________________________ */}
-            <h4 className="heading-page">Daftar Lowongan</h4>
-            <br />
+            <h4 style={{ marginBottom: "10px" }} className="heading-page">
+              Daftar Lowongan
+            </h4>
+            <button
+              style={{ marginBottom: "10px" }}
+              onClick={() => nav("/posting")}
+              className="button-main posting-button"
+            >
+              Posting
+            </button>
             <div className="t-b-lowongan-wrap">
               {visibleItems
                 .sort(

@@ -435,12 +435,18 @@ h6 {
   align-items: start;
   height: 140px;
 }
+.posting-button {
+  display: none;
+}
 @media screen and (width < 800px) {
   .ham-button {
     display: block;
   }
   .header-list {
     display: none;
+  }
+  .posting-button {
+    display: block;
   }
 }
 @media screen and (width < 450px) {
