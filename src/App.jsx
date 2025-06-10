@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Kerja from "./pages/Kerja.jsx";
-import Home from "./pages/Home.jsx";
 import Home from "./pages/home.jsx";
 import Kerjadetail from "./pages/Kerjadetail.jsx";
 import Perusahaan from "./pages/Perusahaan.jsx";
