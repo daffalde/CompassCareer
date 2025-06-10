@@ -103,9 +103,6 @@ export function HeaderDashboard({ content, search, setSearch }) {
         "https://careercompass-backend.vercel.app/auth/admin"
       );
       setData(resp.data.filter((e) => e.id_admin === Number(userId.id_admin)));
-      console.log(
-        resp.data.filter((e) => e.id_admin === Number(userId.id_admin))
-      );
       setLoading(false);
     } catch (e) {
       console.log(e);
