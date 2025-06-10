@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/dashboard.css";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export function Sidebar() {
   const nav = useNavigate();
@@ -92,6 +93,28 @@ export function Sidebar() {
 
 export function HeaderDashboard({ content, search, setSearch }) {
   const nav = useNavigate();
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  async function getData() {
+    try {
+      const resp = await axios.get(
+        "https://careercompass-backend.vercel.app/auth/admin"
+      );
+      setData(resp.data.filter((e) => e.id_admin === Number(userId.id_admin)));
+      console.log(
+        resp.data.filter((e) => e.id_admin === Number(userId.id_admin))
+      );
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <>
       <div className="dashboard-header">
@@ -106,8 +129,17 @@ export function HeaderDashboard({ content, search, setSearch }) {
           onClick={() => nav("/dashboard/pengaturan")}
           className="dashboard-h-profil"
         >
-          <p>admin</p>
-          <img src="/profil-pelamar.svg" alt="profil pelamar" />
+          <p>{loading ? "Loading..." : data[0].nama}</p>
+          <img
+            src={
+              loading
+                ? "/profil-pelamar.svg"
+                : data[0].profil
+                ? data[0].profil
+                : "/profil-pelamar.svg"
+            }
+            alt="profil pelamar"
+          />
         </div>
       </div>
     </>
