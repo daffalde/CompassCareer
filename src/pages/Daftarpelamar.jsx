@@ -17,9 +17,6 @@ export default function DaftarPelamar() {
 
   const [loadingPage, setLoadingPage] = useState(true);
 
-  const [data, setData] = useState(null);
-  const [user, setUser] = useState(null);
-
   const [dataApplication, setDataApplication] = useState(null);
 
   // pemanggilan data dummy_______________________________________________________
@@ -55,17 +52,6 @@ export default function DaftarPelamar() {
       const listDataCv = getCv.data;
       const listPelamar = getPelamar.data;
       setDataApplication(
-        listDataApp.map((e) => ({
-          ...e,
-          ...(listDataLowongan.find(
-            (find) => find.id_lowongan === e.id_lowongan
-          ) || {}),
-          ...(listDataCv.find((find) => find.id_cv === e.id_cv) || {}),
-          ...(listPelamar.find((find) => find.id_pelamar === e.id_pelamar) ||
-            {}),
-        }))
-      );
-      console.log(
         listDataApp.map((e) => ({
           ...e,
           ...(listDataLowongan.find(
