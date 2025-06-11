@@ -4,6 +4,7 @@ import pdfToText from "react-pdftotext";
 import { franc } from "franc-min";
 import { useState } from "react";
 import { LoadingPage } from "./Loading";
+import axios from "axios";
 
 export function TabBarGuest() {
   const nav = useNavigate();
@@ -105,6 +106,24 @@ export function TabBarPelamar() {
     }
   }
 
+  // send request
+  async function handleCari(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", pdfFile);
+    try {
+      localStorage.removeItem("data");
+      const resp = await axios.post(
+        "https://ml-caps-production.up.railway.app/predict",
+        formData
+      );
+      localStorage.setItem("data", JSON.stringify(resp.data.top_matches));
+      window.location.href = "/cv-lowongan";
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   const [popupCv, setPopupCv] = useState(false);
   return (
     <>
@@ -201,7 +220,7 @@ export function TabBarPelamar() {
               {pdfFile ? (
                 <>
                   <img src="/pdf.svg" alt="upload icon" />
-                  <p>{pdfFile.name}</p>
+                  <p style={{ textAlign: "center" }}>{pdfFile.name}</p>
                 </>
               ) : loadingButton ? (
                 <LoadingPage />
@@ -226,7 +245,9 @@ export function TabBarPelamar() {
                 </p>
               ) : null}
             </div>
-            <button className="button-main">Cari Pekerjaan</button>
+            <button onClick={handleCari} className="button-main">
+              Cari Pekerjaan
+            </button>
           </div>
         </form>
       </div>

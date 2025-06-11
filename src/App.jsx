@@ -27,6 +27,7 @@ import Privasi from "./pages/Privasi.jsx";
 import Syarat from "./pages/Syarat.jsx";
 import SetelanPelamar from "./pages/SetelanPelamar.jsx";
 import SetelanPerusahaan from "./pages/SetelanPerusahaan.jsx";
+import CvLowongan from "./pages/CvLowongan.jsx";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path="/" Component={Home} />
           <Route path="/lowongan" Component={Kerja} />
+          <Route path="/cv-lowongan" Component={CvLowongan} />
           <Route path="/lowongan/:id" Component={Kerjadetail} />
           <Route path="/perusahaan" Component={Perusahaan} />
           <Route path="/perusahaan/:id" Component={Perusahaandetail} />

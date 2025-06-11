@@ -145,11 +145,13 @@ export default function Header() {
     const formData = new FormData();
     formData.append("file", pdfFile);
     try {
+      localStorage.removeItem("data");
       const resp = await axios.post(
         "https://ml-caps-production.up.railway.app/predict",
         formData
       );
-      console.log(resp);
+      localStorage.setItem("data", JSON.stringify(resp.data.top_matches));
+      window.location.href = "/cv-lowongan";
     } catch (e) {
       console.log(e);
     }
@@ -238,7 +240,7 @@ export default function Header() {
                       {pdfFile ? (
                         <>
                           <img src="/pdf.svg" alt="upload icon" />
-                          <p>{pdfFile.name}</p>
+                          <p style={{ textAlign: "center" }}>{pdfFile.name}</p>
                         </>
                       ) : loadingButton ? (
                         <LoadingPage />
