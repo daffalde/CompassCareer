@@ -13,6 +13,7 @@ import {
   TabBarPelamar,
   TabBarPerusahaan,
 } from "../components/TabBar";
+import { Skeleton } from "../components/Skeleton";
 
 export default function Kerja() {
   const nav = useNavigate();
@@ -133,140 +134,132 @@ export default function Kerja() {
     <>
       <div className="container">
         <Header />
-        {loading ? (
-          <LoadingPage />
-        ) : (
-          <>
-            <div className="kerja">
-              <Lowongan
-                onSearch={handleSearch}
-                onJenis={handleJenis}
-                onTanggal={handleTanggal}
-                onGaji={handleGaji}
-                onKategori={handleKategori}
-                onLocation={hanldeLokasi}
-              />
-              <div className="k-list">
-                {currentItems
-                  ? currentItems
-                      .filter(
-                        (job) =>
-                          job?.posisi
-                            ?.toLowerCase()
-                            .includes(searchResult.toLowerCase()) &&
-                          job?.provinsi
-                            ?.toLowerCase()
-                            .includes(lokasiResult.toLowerCase()) &&
-                          job?.jenis
-                            ?.toLowerCase()
-                            .includes(jenisResult.toLowerCase()) &&
-                          moment(
-                            job?.lowongan_created_at?.split("T")[0],
-                            "YYYYMMDD"
-                          ).isBetween(startDate, endDate, "day", "[]") &&
-                          job?.gaji_min >= gajiMinResult &&
-                          job?.gaji_max <= gajiMaxResult &&
-                          job?.kategori
-                            ?.toLowerCase()
-                            .includes(kategoriResult.toLowerCase()) &&
-                          job?.provinsi
-                            ?.toLowerCase()
-                            .includes(lokasiFilterResult.toLocaleLowerCase())
-                      )
+        <div className="kerja">
+          <Lowongan
+            onSearch={handleSearch}
+            onJenis={handleJenis}
+            onTanggal={handleTanggal}
+            onGaji={handleGaji}
+            onKategori={handleKategori}
+            onLocation={hanldeLokasi}
+          />
+          <div className="k-list">
+            {loading
+              ? Array.from({ length: 20 }).map((_, i) => (
+                  <Skeleton width={"100%"} height={"300px"} />
+                ))
+              : currentItems
+              ? currentItems
+                  .filter(
+                    (job) =>
+                      job?.posisi
+                        ?.toLowerCase()
+                        .includes(searchResult.toLowerCase()) &&
+                      job?.provinsi
+                        ?.toLowerCase()
+                        .includes(lokasiResult.toLowerCase()) &&
+                      job?.jenis
+                        ?.toLowerCase()
+                        .includes(jenisResult.toLowerCase()) &&
+                      moment(
+                        job?.lowongan_created_at?.split("T")[0],
+                        "YYYYMMDD"
+                      ).isBetween(startDate, endDate, "day", "[]") &&
+                      job?.gaji_min >= gajiMinResult &&
+                      job?.gaji_max <= gajiMaxResult &&
+                      job?.kategori
+                        ?.toLowerCase()
+                        .includes(kategoriResult.toLowerCase()) &&
+                      job?.provinsi
+                        ?.toLowerCase()
+                        .includes(lokasiFilterResult.toLocaleLowerCase())
+                  )
 
-                      .map((e) => (
-                        <div
-                          onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
-                          className="lowongan-card"
-                          key={e.id_lowongan}
-                        >
-                          <div className="l-c-wrap">
-                            <div className="l-c-tanggal">
-                              <p>
-                                {moment(
-                                  e.lowongan_created_at.split("T")[0],
-                                  "YYYYMMDD"
-                                ).fromNow()}
-                              </p>
-                            </div>
-                            <div className="l-c-title">
-                              <span>
-                                <p>{e.nama_perusahaan}</p>
-                                <h5>{e.posisi}</h5>
-                              </span>
-                              <img
-                                src={
-                                  e.picture
-                                    ? e.picture
-                                    : "/profil-perusahaan.svg"
-                                }
-                                alt="gambar profil perusahaan"
-                              />
-                            </div>
-                            <div className="l-c-skill">
-                              {JSON.parse(e.skill) ? (
-                                JSON.parse(e.skill).map((skill, index) => (
-                                  <p key={index}>{skill}</p>
-                                ))
-                              ) : (
-                                <p>Belum ada data</p>
-                              )}
-                            </div>
-                          </div>
-                          <div className="l-c-action">
-                            <span>
-                              <h6>
-                                Rp{" "}
-                                {e.gaji_min / 1000000 >= 1
-                                  ? `${e.gaji_min / 1000000}Jt`
-                                  : `${e.gaji_min / 1000}Rb`}
-                                -
-                                {e.gaji_max / 1000000 >= 1
-                                  ? `${e.gaji_max / 1000000}Jt`
-                                  : `${e.gaji_max / 1000}Rb`}
-                              </h6>
-                              <p>{e.provinsi}</p>
-                            </span>
-                            <button className="button-main">Lihat</button>
-                          </div>
+                  .map((e) => (
+                    <div
+                      onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
+                      className="lowongan-card"
+                      key={e.id_lowongan}
+                    >
+                      <div className="l-c-wrap">
+                        <div className="l-c-tanggal">
+                          <p>
+                            {moment(
+                              e.lowongan_created_at.split("T")[0],
+                              "YYYYMMDD"
+                            ).fromNow()}
+                          </p>
                         </div>
-                      ))
-                  : null}
-              </div>
+                        <div className="l-c-title">
+                          <span>
+                            <p>{e.nama_perusahaan}</p>
+                            <h5>{e.posisi}</h5>
+                          </span>
+                          <img
+                            src={
+                              e.picture ? e.picture : "/profil-perusahaan.svg"
+                            }
+                            alt="gambar profil perusahaan"
+                          />
+                        </div>
+                        <div className="l-c-skill">
+                          {JSON.parse(e.skill) ? (
+                            JSON.parse(e.skill).map((skill, index) => (
+                              <p key={index}>{skill}</p>
+                            ))
+                          ) : (
+                            <p>Belum ada data</p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="l-c-action">
+                        <span>
+                          <h6>
+                            Rp{" "}
+                            {e.gaji_min / 1000000 >= 1
+                              ? `${e.gaji_min / 1000000}Jt`
+                              : `${e.gaji_min / 1000}Rb`}
+                            -
+                            {e.gaji_max / 1000000 >= 1
+                              ? `${e.gaji_max / 1000000}Jt`
+                              : `${e.gaji_max / 1000}Rb`}
+                          </h6>
+                          <p>{e.provinsi}</p>
+                        </span>
+                        <button className="button-main">Lihat</button>
+                      </div>
+                    </div>
+                  ))
+              : null}
+          </div>
 
-              {/* Pagination */}
-              <div className="pagination">
-                <div
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                  className="p-arrow"
-                >
-                  <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
-                </div>
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <div
-                    key={i}
-                    className={`p-item ${
-                      currentPage === i + 1 ? "pagig-on" : ""
-                    }`}
-                    onClick={() => setCurrentPage(i + 1)}
-                  >
-                    <p>{i + 1}</p>
-                  </div>
-                ))}
-                <div
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                  className="p-arrow"
-                >
-                  <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
-                </div>
-              </div>
+          {/* Pagination */}
+          <div className="pagination">
+            <div
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              className="p-arrow"
+            >
+              <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
             </div>
-          </>
-        )}
+            {Array.from({ length: totalPages }, (_, i) => (
+              <div
+                key={i}
+                className={`p-item ${currentPage === i + 1 ? "pagig-on" : ""}`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                <p>{i + 1}</p>
+              </div>
+            ))}
+            <div
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              className="p-arrow"
+            >
+              <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
+            </div>
+          </div>
+        </div>
       </div>
       <br />
       {token ? (

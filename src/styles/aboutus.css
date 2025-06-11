@@ -2,7 +2,7 @@
 
 .aboutus-head {
   width: 100%;
-  height: calc(100vh - 85px);
+  height: calc(100dvh - 85px);
   border-radius: 30px;
   background-image: url("/about-header.jpg");
   background-size: cover;
@@ -140,7 +140,7 @@
 @media screen and (width < 800px) {
   .aboutus-benefit {
     flex-direction: column;
-    margin: 80px 0;
+    margin-top: 80px;
     gap: 50px;
     height: fit-content;
   }

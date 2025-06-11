@@ -14,6 +14,7 @@ import {
   TabBarPelamar,
   TabBarPerusahaan,
 } from "../components/TabBar";
+import { Skeleton } from "../components/Skeleton";
 
 export default function Perusahaan() {
   const nav = useNavigate();
@@ -62,57 +63,54 @@ export default function Perusahaan() {
     <>
       <div className="container">
         <Header />
-        {loading ? (
-          <LoadingPage />
-        ) : (
-          <>
-            <div
-              style={{ backgroundImage: `url("/building-header.jpg")` }}
-              className="perusahaan-head"
-            >
+        <div
+          style={{ backgroundImage: `url("/building-header.jpg")` }}
+          className="perusahaan-head"
+        >
+          <span>
+            <h2>Temukan Perusahaan Impian untuk Karier Anda</h2>
+            <p>
+              Jelajahi peluang kerja dari berbagai perusahaan terbaik untuk
+              karier Anda.
+            </p>
+          </span>
+          <div className="p-h-search">
+            <form>
               <span>
-                <h2>Temukan Perusahaan Impian untuk Karier Anda</h2>
-                <p>
-                  Jelajahi peluang kerja dari berbagai perusahaan terbaik untuk
-                  karier Anda.
-                </p>
+                <img src="/search1.svg" alt="search logo" />
+                <input
+                  ref={inputCari}
+                  type="text"
+                  placeholder="Cari Perusahaan...."
+                />
               </span>
-              <div className="p-h-search">
-                <form>
-                  <span>
-                    <img src="/search1.svg" alt="search logo" />
-                    <input
-                      ref={inputCari}
-                      type="text"
-                      placeholder="Cari Perusahaan...."
-                    />
-                  </span>
-                  <div className="perusahaan-gap"></div>
-                  <span>
-                    <img src="/location4.svg" alt="location logo" />
-                    <input
-                      list="prov"
-                      value={inputLokasi}
-                      onChange={(e) => setInputLokasi(e.target.value)}
-                      type="text"
-                      placeholder="Lokasi?"
-                    />
-                    <datalist id="prov">
-                      {inputLokasi.length >= 2 &&
-                        provinsi.map((provinsi) => (
-                          <option
-                            key={provinsi.id}
-                            value={provinsi.name}
-                          ></option>
-                        ))}
-                    </datalist>
-                  </span>
-                  <button onClick={handleCari}>Cari</button>
-                </form>
-              </div>
-            </div>
-            <div className="perusahaan-body">
-              {currentItems
+              <div className="perusahaan-gap"></div>
+              <span>
+                <img src="/location4.svg" alt="location logo" />
+                <input
+                  list="prov"
+                  value={inputLokasi}
+                  onChange={(e) => setInputLokasi(e.target.value)}
+                  type="text"
+                  placeholder="Lokasi?"
+                />
+                <datalist id="prov">
+                  {inputLokasi.length >= 2 &&
+                    provinsi.map((provinsi) => (
+                      <option key={provinsi.id} value={provinsi.name}></option>
+                    ))}
+                </datalist>
+              </span>
+              <button onClick={handleCari}>Cari</button>
+            </form>
+          </div>
+        </div>
+        <div className="perusahaan-body">
+          {loading
+            ? Array.from({ length: 10 }).map((_, i) => (
+                <Skeleton width={"100%"} height={"130px"} />
+              ))
+            : currentItems
                 .filter(
                   (filtering) =>
                     filtering.nama_perusahaan
@@ -153,38 +151,34 @@ export default function Perusahaan() {
                     </div>
                   </div>
                 ))}
-            </div>
+        </div>
 
-            {/* Pagination */}
-            <div className="pagination">
-              <div
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                className="p-arrow"
-              >
-                <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
-              </div>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <div
-                  key={i}
-                  className={`p-item ${
-                    currentPage === i + 1 ? "pagig-on" : ""
-                  }`}
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  <p>{i + 1}</p>
-                </div>
-              ))}
-              <div
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                className="p-arrow"
-              >
-                <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
-              </div>
+        {/* Pagination */}
+        <div className="pagination">
+          <div
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            className="p-arrow"
+          >
+            <img src="./pagig-arrow2.svg" alt="tanda panah pagination" />
+          </div>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <div
+              key={i}
+              className={`p-item ${currentPage === i + 1 ? "pagig-on" : ""}`}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              <p>{i + 1}</p>
             </div>
-          </>
-        )}
+          ))}
+          <div
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            className="p-arrow"
+          >
+            <img src="./pagig-arrow.svg" alt="tanda panah pagination" />
+          </div>
+        </div>
       </div>
       <br />
       {token ? (
