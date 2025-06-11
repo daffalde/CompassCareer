@@ -705,7 +705,11 @@ input[list]::-webkit-calendar-picker-indicator {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
-
+@media screen and (width <= 800px) {
+  .footer {
+    display: none;
+  }
+}
 @media screen and (width < 750px) {
   .f-top {
     grid-template-columns: 1fr 1fr;

@@ -139,6 +139,22 @@ export default function Header() {
     }
   }
 
+  // send request
+  async function handleCari(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", pdfFile);
+    try {
+      const resp = await axios.post(
+        "https://ml-caps-production.up.railway.app/predict",
+        formData
+      );
+      console.log(resp);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   // fungsi ham menu
   function loginUserHam() {
     if (user && token) {
@@ -247,7 +263,9 @@ export default function Header() {
                         </p>
                       ) : null}
                     </div>
-                    <button className="button-main">Cari Pekerjaan</button>
+                    <button onClick={handleCari} className="button-main">
+                      Cari Pekerjaan
+                    </button>
                   </div>
                 </form>
                 <div className="hlm-action">
