@@ -29,7 +29,12 @@ export default function Kerja() {
       const resp = await axios.get(
         "https://careercompass-backend.vercel.app/data/lowongan"
       );
-      setData(resp.data);
+      setData(
+        resp.data.sort(
+          (a, b) =>
+            new Date(b.lowongan_created_at) - new Date(a.lowongan_created_at)
+        )
+      );
       setLoading(false);
     } catch (e) {
       console.log(e);

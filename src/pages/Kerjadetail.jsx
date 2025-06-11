@@ -402,21 +402,27 @@ export default function Kerjadetail() {
                     <div className="t-f-l-body">
                       <div className="numbering">
                         <h6>Tentang Pekerjaan:</h6>
-                        {e.tentang_lowongan.split("\n").map((e, i) => (
-                          <div key={i} className="numbering-item">
-                            <p>{i + 1}.</p>
-                            <p>{e}</p>
-                          </div>
-                        ))}
+                        {e.tentang_lowongan
+                          .split("\n")
+                          .filter((filter) => filter.trim() !== "")
+                          .map((e, i) => (
+                            <div key={i} className="numbering-item">
+                              <p>{i + 1}.</p>
+                              <p>{e}</p>
+                            </div>
+                          ))}
                       </div>
                       <div className="numbering">
                         <h6>Persyaratan:</h6>
-                        {e.syarat.split("\n").map((e, i) => (
-                          <div key={i} className="numbering-item">
-                            <p>{i + 1}.</p>
-                            <p>{e}</p>
-                          </div>
-                        ))}
+                        {e.syarat
+                          .split("\n")
+                          .filter((filter) => filter.trim() !== "")
+                          .map((e, i) => (
+                            <div key={i} className="numbering-item">
+                              <p>{i + 1}.</p>
+                              <p>{e}</p>
+                            </div>
+                          ))}
                       </div>
                       <div className="skill">
                         <h6>Keahlian:</h6>
