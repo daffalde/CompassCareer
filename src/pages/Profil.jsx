@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { LoadingButton, LoadingPage } from "../components/Loading";
+import { NavBack } from "../components/Navigation";
 
 export default function Profil() {
   const nav = useNavigate();
@@ -254,6 +255,22 @@ export default function Profil() {
       {handleImage && (
         <div className="change">
           <form className="change-content">
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleImage(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Tambah Skill</h5>
+              <div className="empty"></div>
+            </div>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={handlePicture} className="button-main">
+                Simpan
+              </button>
+            </div>
+            {/* ____________________________ */}
             <h6>Ubah foto profil</h6>
             <div className="c-c-image">
               <label
@@ -291,6 +308,22 @@ export default function Profil() {
       {handleBio && (
         <div className="change">
           <form className="change-content">
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleBio(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Tambah Skill</h5>
+              <div className="empty"></div>
+            </div>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={upBio} className="button-main">
+                Simpan
+              </button>
+            </div>
+            {/* ____________________________ */}
             <h6>Ubah profil</h6>
             <div className="c-c-form">
               <div>
@@ -364,6 +397,22 @@ export default function Profil() {
       {handleSkill && (
         <div className="change">
           <form className="change-content">
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleSkill(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Tambah Skill</h5>
+              <div className="empty"></div>
+            </div>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={upSkill} className="button-main">
+                Tambah
+              </button>
+            </div>
+            {/* ____________________________ */}
             <h6>Tambah Keahlian</h6>
             <div className="c-c-form">
               <div>
@@ -397,6 +446,22 @@ export default function Profil() {
       {handleRingkasan && (
         <div className="change">
           <form className="change-content">
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleRingkasan(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Tambah Skill</h5>
+              <div className="empty"></div>
+            </div>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={upRingkasan} className="button-main">
+                Simpan
+              </button>
+            </div>
+            {/* ____________________________ */}
             <h6>Ubah Ringkasan</h6>
             <div className="c-c-form">
               <div>
@@ -432,6 +497,7 @@ export default function Profil() {
         <>
           <div className="container">
             <Header />
+            <NavBack title={"Profil"} />
             <div className="template-head">
               <div className="t-h-top">
                 <img
@@ -566,14 +632,13 @@ export default function Profil() {
                                 />
                                 <h6>{e.nama}</h6>
                                 <span>
-                                  <p>{e.size / 1000} Kb</p>
+                                  <p>{Math.round(e.size / 1000)} Kb</p>
                                   <p>{moment(e.tanggal).format("LL")}</p>
                                 </span>
                               </div>
                             ))
                         : null}
 
-                      {/* !tambahin logic buat up pdf */}
                       <div className="cv-l-plus">
                         <label
                           for="cv-input"
@@ -619,6 +684,12 @@ export default function Profil() {
           </div>
           <br />
           <br />
+          {/* bottom button */}
+          <div className="bottombutton-container">
+            <button onClick={() => setHandleBio(true)} className="button-main">
+              Ubah
+            </button>
+          </div>
           <Footer />
         </>
       )}

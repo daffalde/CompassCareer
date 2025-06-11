@@ -9,10 +9,16 @@ import { LoadingPage } from "../components/Loading";
 import { supabase } from "../data/supabaseClient";
 import axios from "axios";
 import Cookies from "js-cookie";
+import {
+  TabBarGuest,
+  TabBarPelamar,
+  TabBarPerusahaan,
+} from "../components/TabBar";
 
 export default function Perusahaan() {
   const nav = useNavigate();
-  const userData = Cookies.get("data") ? Cookies.get("data") : null;
+  const token = Cookies.get("token");
+  const userData = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const inputCari = useRef("");
   const [inputLokasi, setInputLokasi] = useState("");
   const [lokasi, setLokasi] = useState("");
@@ -22,6 +28,8 @@ export default function Perusahaan() {
   const [user, setUser] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Jumlah item per halaman
+
+  console.log(userData);
 
   function handleCari(e) {
     e.preventDefault();
@@ -180,6 +188,15 @@ export default function Perusahaan() {
           </>
         )}
       </div>
+      {token ? (
+        userData?.role === "pelamar" ? (
+          <TabBarPelamar />
+        ) : (
+          <TabBarPerusahaan />
+        )
+      ) : (
+        <TabBarGuest />
+      )}
       <Footer />
     </>
   );

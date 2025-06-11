@@ -161,7 +161,7 @@ h6 {
 
 .button-second {
   font-size: 16px;
-  background-color: transparent;
+  background-color: var(--white);
   border: 2px solid var(--black);
   color: var(--black);
   padding: 10px 20px;
@@ -439,6 +439,12 @@ h6 {
   display: none;
 }
 @media screen and (width < 800px) {
+  .header {
+    display: none;
+  }
+  .header-void {
+    display: none;
+  }
   .ham-button {
     display: block;
   }
@@ -573,6 +579,11 @@ input[list]::-webkit-calendar-picker-indicator {
   .header {
     left: 0;
     padding: 10 20px;
+  }
+}
+@media screen and (width < 800px) {
+  .container {
+    padding: 10px;
   }
 }
 @media screen and (width < 600px) {
@@ -1141,4 +1152,82 @@ input[list]::-webkit-calendar-picker-indicator {
 .button-deleting {
   background-color: #ff5757;
   color: var(--white);
+}
+@media screen and (width <= 800px) {
+  .heading-page {
+    display: none;
+  }
+}
+
+/* navigation ______________________ */
+.navback-container {
+  width: 100%;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  height: 55px;
+  position: fixed;
+  background-color: var(--white);
+  border: 1px solid var(--white-dark);
+  box-shadow: 0 0 50px 0 rgb(0, 0, 0, 0.05);
+}
+.navback-container-void {
+  width: 100%;
+  height: 55px;
+  display: none;
+}
+.navback-container img {
+  height: 30px;
+  padding: 2px;
+  border-radius: 3px;
+}
+.navback-container img:active {
+  background-color: var(--black-10);
+}
+.navback-container h5 {
+  font-weight: 600;
+  font-size: 18px;
+}
+.empty {
+  width: 30px;
+}
+
+/* button bottom _____________________________ */
+.bottombutton-container {
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  display: none;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: #ffffff;
+  background: #ffffff;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(0, 93, 244, 0) 100%
+  );
+  gap: 10px;
+}
+.bottombutton-container button {
+  width: 100%;
+}
+
+@media screen and (width <= 800px) {
+  .navback-container {
+    display: flex;
+  }
+  .bottombutton-container {
+    display: flex;
+  }
+  .navback-container-void {
+    display: block;
+  }
 }

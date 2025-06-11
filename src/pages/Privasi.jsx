@@ -1,5 +1,6 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { NavBack } from "../components/Navigation";
 import "../styles/kebijakan.css";
 
 export default function Privasi() {
@@ -7,6 +8,7 @@ export default function Privasi() {
     <>
       <div className="container">
         <Header />
+        <NavBack title={"Kebijakan  Privasi"} />
         <div className="kebijakan">
           <h4>Kebijakan Privasi</h4>
           <p>

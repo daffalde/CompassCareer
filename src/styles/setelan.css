@@ -1,0 +1,70 @@
+.setelan-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20px;
+  padding: 10px;
+  width: 100%;
+  height: fit-content;
+  min-height: 100dvh;
+}
+
+.setelan-head {
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  background: #83d3ff;
+  background: linear-gradient(
+    211deg,
+    rgba(131, 211, 255, 1) 0%,
+    rgba(0, 93, 244, 1) 100%
+  );
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+  color: var(--white);
+}
+.setelan-head img {
+  border-radius: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.setelan-head h3 {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.setelan-general {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.s-g-wrap {
+  border: 2px solid var(--black-10);
+  border-radius: 10px;
+  width: 100%;
+}
+.s-g-item {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--black-10);
+}
+.s-g-item:last-child {
+  border-bottom: none;
+}
+.s-g-item:active {
+  background-color: var(--black-10);
+}
+.s-g-item p {
+  width: 100%;
+}

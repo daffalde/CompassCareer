@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import { LoadingButton } from "../components/Loading";
 import axios from "axios";
 import { AlertFailed, AlertSucceed } from "../components/Alert";
+import { BottomButton, NavBack } from "../components/Navigation";
 
 export default function Posting() {
   const nav = useNavigate();
@@ -96,8 +97,8 @@ export default function Posting() {
       ) : null}
       <div className="container">
         <Header />
-        <h4>Buat lowongan pekerjaan</h4>
-        <br />
+        <NavBack title={"Posting"} />
+        <h4 className="posting-h4">Buat lowongan pekerjaan</h4>
         <div className="posting-body">
           <div>
             <h5>Informasi Lowongan</h5>
@@ -248,6 +249,12 @@ export default function Posting() {
         </div>
       </div>
       <br />
+      {/* bottom button */}
+      <div className="bottombutton-container">
+        <button onClick={handleSend} className="button-main">
+          Posting
+        </button>
+      </div>
       <Footer />
     </>
   );

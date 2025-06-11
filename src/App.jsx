@@ -25,6 +25,8 @@ import AdminLowongan from "./pages/AdminLowongan.jsx";
 import AdminPengaturan from "./pages/AdminPengaturan.jsx";
 import Privasi from "./pages/Privasi.jsx";
 import Syarat from "./pages/Syarat.jsx";
+import SetelanPelamar from "./pages/SetelanPelamar.jsx";
+import SetelanPerusahaan from "./pages/SetelanPerusahaan.jsx";
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
           <Route path="/tentang" Component={Aboutus} />
           <Route path="/kebijakan-privasi" Component={Privasi} />
           <Route path="/syarat" Component={Syarat} />
+          <Route path="/setelan-pelamar" Component={SetelanPelamar} />
+          <Route path="/setelan-perusahaan" Component={SetelanPerusahaan} />
 
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={Logout} />

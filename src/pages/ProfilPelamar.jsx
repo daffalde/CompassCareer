@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { LoadingButton, LoadingPage } from "../components/Loading";
+import { NavBack } from "../components/Navigation";
 
 export default function ProfilPelamar() {
   const nav = useNavigate();
@@ -61,6 +62,7 @@ export default function ProfilPelamar() {
         <>
           <div className="container">
             <Header />
+            <NavBack title={"Profil Pelamar"} />
             <div className="template-head">
               <div className="t-h-top">
                 <img

@@ -8,9 +8,16 @@ import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LoadingPage } from "../components/Loading";
 import axios from "axios";
+import {
+  TabBarGuest,
+  TabBarPelamar,
+  TabBarPerusahaan,
+} from "../components/TabBar";
 
 export default function Kerja() {
   const nav = useNavigate();
+  const token = Cookies.get("token");
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -255,6 +262,15 @@ export default function Kerja() {
           </>
         )}
       </div>
+      {token ? (
+        userId?.role === "pelamar" ? (
+          <TabBarPelamar />
+        ) : (
+          <TabBarPerusahaan />
+        )
+      ) : (
+        <TabBarGuest />
+      )}
       <Footer />
     </>
   );

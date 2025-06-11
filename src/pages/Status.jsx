@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LoadingPage } from "../components/Loading";
 import Cookies from "js-cookie";
+import { NavBack } from "../components/Navigation";
 
 export default function Status() {
   const nav = useNavigate();
@@ -106,6 +107,7 @@ export default function Status() {
     <>
       <div className="container">
         <Header />
+        <NavBack title={"Status Lamaran"} />
         {loading ? (
           <LoadingPage />
         ) : (

@@ -8,10 +8,17 @@ import axios from "axios";
 import { LoadingPage } from "../components/Loading";
 import moment from "moment";
 import Lowongan from "../components/Lowongan";
+import {
+  TabBarGuest,
+  TabBarPelamar,
+  TabBarPerusahaan,
+} from "../components/TabBar";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const nav = useNavigate();
-
+  const token = Cookies.get("token");
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
   const [lowongan, setLowongan] = useState(null);
   const [loadingPage, setLoadingPage] = useState(true);
   async function getData() {
@@ -45,6 +52,7 @@ export default function Home() {
           <LoadingPage />
         ) : (
           <div className="home">
+            <img id="home-logo" src="/logo1.svg" alt="logo" />
             <div className="h-hero">
               <div className="h-h-title">
                 <h1>Temukan Pekerjaan Impianmu dengan Mudah!</h1>
@@ -230,6 +238,15 @@ export default function Home() {
           </div>
         )}
       </div>
+      {token ? (
+        userId?.role === "pelamar" ? (
+          <TabBarPelamar />
+        ) : (
+          <TabBarPerusahaan />
+        )
+      ) : (
+        <TabBarGuest />
+      )}
       <Footer />
     </>
   );

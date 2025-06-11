@@ -8,6 +8,7 @@ import { supabase } from "../data/supabaseClient";
 import { LoadingPage } from "../components/Loading";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { NavBack } from "../components/Navigation";
 
 export default function Tersimpan() {
   const nav = useNavigate();
@@ -111,6 +112,7 @@ export default function Tersimpan() {
     <>
       <div className="container">
         <Header />
+        <NavBack title={"Tersimpan"} />
         {loading ? (
           <LoadingPage />
         ) : (

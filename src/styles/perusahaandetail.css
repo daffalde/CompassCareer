@@ -7,6 +7,7 @@
 .info-perusahaan span p:first-child {
   display: block;
   width: 200px;
+  color: var(--black-50);
 }
 
 .body-left-wraping {
@@ -25,4 +26,11 @@ b {
 }
 b:hover {
   text-decoration: underline;
+}
+
+@media screen and (width <= 700px) {
+  .info-perusahaan span {
+    flex-direction: column;
+    border-bottom: 1px solid var(--black-50);
+  }
 }

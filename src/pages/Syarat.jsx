@@ -1,5 +1,6 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { NavBack } from "../components/Navigation";
 import "../styles/kebijakan.css";
 
 export default function Syarat() {
@@ -7,6 +8,7 @@ export default function Syarat() {
     <>
       <div className="container">
         <Header />
+        <NavBack title={"Syarat & Ketentuan"} />
         <div className="kebijakan">
           <h4>Syarat dan Ketentuan</h4>
           <p>

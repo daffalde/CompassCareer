@@ -8,6 +8,7 @@ import { LoadingPage } from "../components/Loading";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { NoData } from "../components/NoData";
+import { NavBack } from "../components/Navigation";
 
 export default function Perusahaandetail() {
   const token = Cookies.get("token");
@@ -116,6 +117,7 @@ export default function Perusahaandetail() {
     <>
       <div className="container">
         <Header />
+        <NavBack title={"Perusahaan"} />
         {loading ? (
           <LoadingPage />
         ) : (
@@ -150,23 +152,46 @@ export default function Perusahaandetail() {
                       )}
                     </span>
                     {userData?.role === "pelamar" ? (
-                      <span>
-                        {tersimpan?.id_perusahaan === Number(urlId) ? (
-                          <button
-                            onClick={() => hapusSimpanLowongan(e.id_perusahaan)}
-                            className="button-second"
-                          >
-                            Disimpan
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => simpanLowongan(e.id_perusahaan)}
-                            className="button-second"
-                          >
-                            Simpan
-                          </button>
-                        )}
-                      </span>
+                      <>
+                        <span>
+                          {tersimpan?.id_perusahaan === Number(urlId) ? (
+                            <button
+                              onClick={() =>
+                                hapusSimpanLowongan(e.id_perusahaan)
+                              }
+                              className="button-second"
+                            >
+                              Disimpan
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => simpanLowongan(e.id_perusahaan)}
+                              className="button-second"
+                            >
+                              Simpan
+                            </button>
+                          )}
+                        </span>
+                        <div className="bottombutton-container">
+                          {tersimpan?.id_perusahaan === Number(urlId) ? (
+                            <button
+                              onClick={() =>
+                                hapusSimpanLowongan(e.id_perusahaan)
+                              }
+                              className="button-second"
+                            >
+                              Disimpan
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => simpanLowongan(e.id_perusahaan)}
+                              className="button-second"
+                            >
+                              Simpan
+                            </button>
+                          )}
+                        </div>
+                      </>
                     ) : null}
                   </div>
                 </div>

@@ -9,6 +9,7 @@ import { StatusApp } from "../components/StatusApp";
 import moment from "moment";
 import { AlertSucceed } from "../components/Alert";
 import Cookies from "js-cookie";
+import { NavBack } from "../components/Navigation";
 
 export default function DaftarPelamar() {
   const nav = useNavigate();
@@ -276,6 +277,7 @@ export default function DaftarPelamar() {
               </div>
             </div>
             {/* _____________________________________ */}
+            <NavBack title={"Daftar Pelamar"} />
             <h4 className="heading-page">Manajemen Pelamar</h4>
             <div className="daftar-header">
               <h6>Pelamar</h6>

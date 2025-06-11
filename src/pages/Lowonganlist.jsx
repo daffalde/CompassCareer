@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { LoadingPage } from "../components/Loading";
 import { AlertFailed, AlertSucceed } from "../components/Alert";
 import Cookies from "js-cookie";
+import { NavBack } from "../components/Navigation";
 
 export default function Lowonganlist() {
   const nav = useNavigate();
@@ -135,16 +136,10 @@ export default function Lowonganlist() {
               </div>
             </div>
             {/* _____________________________________________________________ */}
+            <NavBack title={"Daftar Lowongan"} />
             <h4 style={{ marginBottom: "10px" }} className="heading-page">
               Daftar Lowongan
             </h4>
-            <button
-              style={{ marginBottom: "10px" }}
-              onClick={() => nav("/posting")}
-              className="button-main posting-button"
-            >
-              Posting
-            </button>
             <div className="t-b-lowongan-wrap">
               {visibleItems
                 .sort(
@@ -254,6 +249,12 @@ export default function Lowonganlist() {
         )}
       </div>
       <br />
+      {/* bottom button */}
+      <div className="bottombutton-container">
+        <button onClick={() => nav("/posting")} className="button-main">
+          Posting
+        </button>
+      </div>
       <Footer />
     </>
   );

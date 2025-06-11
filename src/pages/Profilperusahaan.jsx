@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { LoadingButton, LoadingPage } from "../components/Loading";
 import { provinsi } from "../data/Provinsi";
+import { NavBack } from "../components/Navigation";
 
 export default function Profilperusahaan() {
   const nav = useNavigate();
@@ -237,7 +238,23 @@ export default function Profilperusahaan() {
       {handleImage && (
         <div className="change">
           <form className="change-content">
-            <h6>Ubah foto profil</h6>
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleImage(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Ubah Profil</h5>
+              <div className="empty"></div>
+            </div>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={handlePicture} className="button-main">
+                Simpan
+              </button>
+            </div>
+            {/* ____________________________ */}
+            <h5>Ubah foto profil</h5>
             <div className="c-c-image">
               <label
                 style={{
@@ -274,7 +291,18 @@ export default function Profilperusahaan() {
       {handleBio && (
         <div className="change">
           <form className="change-content">
-            <h6>Ubah profil perusahaan</h6>
+            {/* __________ */}
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleBio(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Ubah Profil</h5>
+              <div className="empty"></div>
+            </div>
+            {/* __________ */}
+            <h5>Ubah profil perusahaan</h5>
             <div className="c-c-form">
               <div>
                 <label for="c-c-f-nama">Nama perusahaan</label>
@@ -341,13 +369,28 @@ export default function Profilperusahaan() {
                 Simpan {loadingButton ? <LoadingButton /> : null}
               </button>
             </span>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={upBio} className="button-main">
+                Simpan
+              </button>
+            </div>
           </form>
         </div>
       )}
       {handleRingkasan && (
         <div className="change">
           <form className="change-content">
-            <h6>Ubah ringkasan perusahaan</h6>
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleRingkasan(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Ubah Profil</h5>
+              <div className="empty"></div>
+            </div>
+            <h5>Ubah ringkasan perusahaan</h5>
             <div className="c-c-form">
               <div>
                 <label for="c-c-f-area"></label>
@@ -371,13 +414,35 @@ export default function Profilperusahaan() {
                 Tambah {loadingButton ? <LoadingButton /> : null}
               </button>
             </span>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={upRingkas} className="button-main">
+                Simpan
+              </button>
+            </div>
           </form>
         </div>
       )}
       {handleVisi && (
         <div className="change">
           <form className="change-content">
-            <h6>Ubah visi perusahaan</h6>
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleVisi(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Ubah Profil</h5>
+              <div className="empty"></div>
+            </div>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={upVisi} className="button-main">
+                Simpan
+              </button>
+            </div>
+            {/* ____________________________ */}
+            <h5>Ubah visi perusahaan</h5>
             <div className="c-c-form">
               <div>
                 <label for="c-c-f-area"></label>
@@ -411,7 +476,23 @@ export default function Profilperusahaan() {
       {handleMisi && (
         <div className="change">
           <form className="change-content">
-            <h6>Ubah visi perusahaan</h6>
+            <div className="navback-container">
+              <img
+                onClick={() => setHandleMisi(false)}
+                src="/left-arrow.png"
+                alt="back icon"
+              />
+              <h5>Ubah Profil</h5>
+              <div className="empty"></div>
+            </div>
+            {/* bottom button */}
+            <div className="bottombutton-container">
+              <button onClick={upMisi} className="button-main">
+                Simpan
+              </button>
+            </div>
+            {/* ____________________________ */}
+            <h5>Ubah visi perusahaan</h5>
             <div className="c-c-form">
               <div>
                 <label for="c-c-f-area"></label>
@@ -448,6 +529,7 @@ export default function Profilperusahaan() {
       ) : (
         <div className="container">
           <Header />
+          <NavBack title={"Profil"} />
           <div className="template-head">
             <div className="t-h-top">
               <img
@@ -526,7 +608,7 @@ export default function Profilperusahaan() {
               <div className="t-f-l-body">
                 <div className="paragraph">
                   <span className="t-f-l-b-title">
-                    <h6>Tentang perusahaan</h6>
+                    <h5>Tentang perusahaan</h5>
                     <img
                       onClick={() => setHandleRingkasan(true)}
                       src="/pencil2.svg"
@@ -537,7 +619,7 @@ export default function Profilperusahaan() {
                 </div>
                 <div className="paragraph">
                   <span className="t-f-l-b-title">
-                    <h6>Visi</h6>
+                    <h5>Visi</h5>
                     <img
                       onClick={() => setHandleVisi(true)}
                       src="/pencil2.svg"
@@ -557,7 +639,7 @@ export default function Profilperusahaan() {
                 </div>
                 <div className="paragraph">
                   <span className="t-f-l-b-title">
-                    <h6>Misi</h6>
+                    <h5>Misi</h5>
                     <img
                       onClick={() => setHandleMisi(true)}
                       src="/pencil2.svg"
@@ -580,7 +662,7 @@ export default function Profilperusahaan() {
             <div className="t-f-right">
               <div className="t-f-l-body">
                 <div className="lowongan-lain-wrap">
-                  <h6>Lowongan di posting</h6>
+                  <h5>Lowongan di posting</h5>
                   {lowonganPost.slice(0, 7).map((list) => (
                     <div
                       className="lowongan-lain"

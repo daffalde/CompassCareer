@@ -9,6 +9,7 @@ import { LoadingButton, LoadingPage } from "../components/Loading";
 import axios from "axios";
 import { AlertFailed, AlertSucceed } from "../components/Alert";
 import Cookies from "js-cookie";
+import { NavBack } from "../components/Navigation";
 
 export default function Kerjadetail() {
   const token = Cookies.get("token");
@@ -178,6 +179,7 @@ export default function Kerjadetail() {
     <>
       <div className="container">
         <Header />
+        <NavBack title={"Lowongan"} />
         {alertPesanShow ? (
           alertPesan === "Lamaran berhasil terkirim!" ? (
             <AlertSucceed message={alertPesan} />
@@ -338,29 +340,59 @@ export default function Kerjadetail() {
                         </p>
                       </span>
                       {getId?.role === "pelamar" ? (
-                        <span>
-                          {!tersimpan?.id_lowongan_tersimpan ? (
+                        <>
+                          <span>
+                            {!tersimpan?.id_lowongan_tersimpan ? (
+                              <button
+                                onClick={() => simpanLowongan(e.id_lowongan)}
+                                className="button-second"
+                              >
+                                Simpan
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() =>
+                                  hapusSimpanLowongan(e.id_lowongan)
+                                }
+                                className="button-second"
+                              >
+                                Disimpan
+                              </button>
+                            )}
                             <button
-                              onClick={() => simpanLowongan(e.id_lowongan)}
-                              className="button-second"
+                              onClick={() => setShowPopup(true)}
+                              className="button-main"
                             >
-                              Simpan
+                              Lamar
                             </button>
-                          ) : (
+                          </span>
+                          {/* __________________ */}
+                          <div className="bottombutton-container">
+                            {!tersimpan?.id_lowongan_tersimpan ? (
+                              <button
+                                onClick={() => simpanLowongan(e.id_lowongan)}
+                                className="button-second"
+                              >
+                                Simpan
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() =>
+                                  hapusSimpanLowongan(e.id_lowongan)
+                                }
+                                className="button-second"
+                              >
+                                Disimpan
+                              </button>
+                            )}
                             <button
-                              onClick={() => hapusSimpanLowongan(e.id_lowongan)}
-                              className="button-second"
+                              onClick={setShowPopup}
+                              className="button-main"
                             >
-                              Disimpan
+                              Lamar
                             </button>
-                          )}
-                          <button
-                            onClick={() => setShowPopup(true)}
-                            className="button-main"
-                          >
-                            Lamar
-                          </button>
-                        </span>
+                          </div>
+                        </>
                       ) : null}
                     </div>
                   </div>

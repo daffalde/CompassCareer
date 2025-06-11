@@ -93,3 +93,14 @@
     gap: 20px;
   }
 }
+@media screen and (width < 800px) {
+  .posting-action {
+    display: none;
+  }
+  .posting-h4 {
+    display: none;
+  }
+  .posting-body {
+    border-top: none;
+  }
+}

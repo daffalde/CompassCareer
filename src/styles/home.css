@@ -3,6 +3,11 @@
   height: fit-content;
   background-color: var(--white);
 }
+#home-logo {
+  display: none;
+  height: 50px;
+  margin-bottom: 10px;
+}
 /* hero_____________________ */
 .h-hero {
   width: 100%;
@@ -268,6 +273,9 @@
   }
 }
 @media screen and (width <700px) {
+  #home-logo {
+    display: block;
+  }
   .h-l-list {
     grid-template-columns: 1fr 1fr;
   }

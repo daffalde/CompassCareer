@@ -263,12 +263,25 @@
 
 /* perushaan */
 @media screen and (width < 700px) {
+  .change {
+    height: 100vh;
+  }
+  .change-content {
+    height: 100vh;
+    justify-content: start;
+    border-radius: 0;
+    padding: 10px;
+  }
+  .change-content span {
+    display: none;
+  }
+  #c-c-f-area {
+    height: calc(100dvh - 160px);
+  }
   .cv-l-wrap {
     grid-template-columns: 1fr 1fr;
   }
-}
-@media screen and (width < 400px) {
-  .cv-l-wrap {
-    grid-template-columns: 1fr;
+  .cv-l-item span {
+    flex-direction: column;
   }
 }
