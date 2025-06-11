@@ -262,6 +262,7 @@ export default function Kerja() {
           </>
         )}
       </div>
+      <br />
       {token ? (
         userId?.role === "pelamar" ? (
           <TabBarPelamar />

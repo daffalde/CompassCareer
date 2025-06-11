@@ -533,6 +533,7 @@ export default function Kerjadetail() {
           </>
         )}
       </div>
+      <br />
       <Footer />
     </>
   );

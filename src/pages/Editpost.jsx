@@ -8,6 +8,7 @@ import { supabase } from "../data/supabaseClient";
 import { LoadingButton, LoadingPage } from "../components/Loading";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { NavBack } from "../components/Navigation";
 
 export default function Editpost() {
   const nav = useNavigate();
@@ -123,12 +124,12 @@ export default function Editpost() {
     <>
       <div className="container">
         <Header />
+        <NavBack title={"Edit Lowongan"} />
         {loadingPage ? (
           <LoadingPage />
         ) : (
           <>
-            <h4>Edit lowongan pekerjaan</h4>
-            <br />
+            <h4 className="posting-h4">Edit lowongan pekerjaan</h4>
             <div className="posting-body">
               <div>
                 <h5>Informasi Lowongan</h5>
@@ -281,6 +282,12 @@ export default function Editpost() {
         )}
       </div>
       <br />
+      <br />
+      <div className="bottombutton-container">
+        <button onClick={handleSend} className="button-main">
+          Posting
+        </button>
+      </div>
       <Footer />
     </>
   );

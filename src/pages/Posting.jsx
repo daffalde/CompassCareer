@@ -249,6 +249,7 @@ export default function Posting() {
         </div>
       </div>
       <br />
+      <br />
       {/* bottom button */}
       <div className="bottombutton-container">
         <button onClick={handleSend} className="button-main">

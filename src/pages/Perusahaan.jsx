@@ -188,6 +188,7 @@ export default function Perusahaan() {
           </>
         )}
       </div>
+      <br />
       {token ? (
         userData?.role === "pelamar" ? (
           <TabBarPelamar />
