@@ -29,8 +29,6 @@ export default function Perusahaan() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Jumlah item per halaman
 
-  console.log(userData);
-
   function handleCari(e) {
     e.preventDefault();
     setCari(inputCari.current.value);

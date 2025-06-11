@@ -146,28 +146,29 @@ export default function Kerja() {
                   ? currentItems
                       .filter(
                         (job) =>
-                          job.posisi
-                            .toLowerCase()
+                          job?.posisi
+                            ?.toLowerCase()
                             .includes(searchResult.toLowerCase()) &&
-                          job.provinsi
-                            .toLowerCase()
+                          job?.provinsi
+                            ?.toLowerCase()
                             .includes(lokasiResult.toLowerCase()) &&
-                          job.jenis
-                            .toLowerCase()
+                          job?.jenis
+                            ?.toLowerCase()
                             .includes(jenisResult.toLowerCase()) &&
                           moment(
-                            job.lowongan_created_at.split("T")[0],
+                            job?.lowongan_created_at?.split("T")[0],
                             "YYYYMMDD"
                           ).isBetween(startDate, endDate, "day", "[]") &&
-                          job.gaji_min >= gajiMinResult &&
-                          job.gaji_max <= gajiMaxResult &&
-                          job.kategori
-                            .toLowerCase()
+                          job?.gaji_min >= gajiMinResult &&
+                          job?.gaji_max <= gajiMaxResult &&
+                          job?.kategori
+                            ?.toLowerCase()
                             .includes(kategoriResult.toLowerCase()) &&
-                          job.provinsi
-                            .toLowerCase()
+                          job?.provinsi
+                            ?.toLowerCase()
                             .includes(lokasiFilterResult.toLocaleLowerCase())
                       )
+
                       .map((e) => (
                         <div
                           onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
