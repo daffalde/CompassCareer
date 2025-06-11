@@ -53,8 +53,8 @@ export default function Header() {
 
   // fungsi header
   function loginUser() {
-    if (token && user) {
-      if (user ? user.role === "pelamar" : null) {
+    if (token) {
+      if (userId.role === "pelamar") {
         return (
           <>
             <div className="h-action">
@@ -63,7 +63,7 @@ export default function Header() {
                   onClick={() => setHam(true)}
                   style={{
                     backgroundImage: `url("${
-                      user.profil ? user.profil : "/profil-pelamar.svg"
+                      userId.profil ? userId.profil : "/profil-pelamar.svg"
                     }")`,
                   }}
                   id="user-profil"
@@ -73,7 +73,7 @@ export default function Header() {
           </>
         );
       }
-      if (user ? user.role === "perusahaan" : null) {
+      if (userId.role === "perusahaan") {
         return (
           <>
             <div className="h-action">
@@ -87,7 +87,7 @@ export default function Header() {
                   onClick={() => setHam(true)}
                   style={{
                     backgroundImage: `url("${
-                      user.picture ? user.picture : "/profil-perusahaan.svg"
+                      userId.picture ? userId.picture : "/profil-perusahaan.svg"
                     }")`,
                   }}
                   id="user-profil"
@@ -159,8 +159,8 @@ export default function Header() {
 
   // fungsi ham menu
   function loginUserHam() {
-    if (user && token) {
-      if (user.role === "pelamar") {
+    if (token) {
+      if (userId.role === "pelamar") {
         return (
           <>
             <div
@@ -173,14 +173,14 @@ export default function Header() {
                   <div
                     style={{
                       backgroundImage: `url("${
-                        user.profil ? user.profil : "/profil-pelamar.svg"
+                        userId.profil ? userId.profil : "/profil-pelamar.svg"
                       }")`,
                     }}
                     className="hlm-u-img"
                   ></div>
                   <div className="hlm-u-desc">
-                    <h6>{user.nama_pelamar}</h6>
-                    <p>{user.email}</p>
+                    <h6>{userId.nama_pelamar}</h6>
+                    <p>{userId.email}</p>
                   </div>
                 </div>
                 <div className="gap-ham"></div>
@@ -283,7 +283,7 @@ export default function Header() {
           </>
         );
       }
-      if (user.role === "perusahaan") {
+      if (userId.role === "perusahaan") {
         return (
           <>
             <div className="header-list-mobile">
@@ -293,14 +293,16 @@ export default function Header() {
                   <div
                     style={{
                       backgroundImage: `url("${
-                        user.picture ? user.picture : "/profil-perusahaan.svg"
+                        userId.picture
+                          ? userId.picture
+                          : "/profil-perusahaan.svg"
                       }")`,
                     }}
                     className="hlm-u-img"
                   ></div>
                   <div className="hlm-u-desc">
-                    <h6>{user.nama_perusahaan}</h6>
-                    <p>{user.email}</p>
+                    <h6>{userId.nama_perusahaan}</h6>
+                    <p>{userId.email}</p>
                   </div>
                 </div>
                 <div className="gap-ham"></div>

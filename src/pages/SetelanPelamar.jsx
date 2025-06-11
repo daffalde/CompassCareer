@@ -44,18 +44,12 @@ export default function SetelanPelamar() {
           <img
             width={"60px"}
             height={"60px"}
-            src={
-              loading
-                ? "/profil-pelamar.svg"
-                : data[0].profil
-                ? data[0].profil
-                : "/profil-pelamar.svg"
-            }
+            src={userId.profil ? userId.profil : "/profil-pelamar.svg"}
             alt="profil pelamar"
           />
           <span>
-            <h3>{loading ? "loading..." : data[0].nama_pelamar}</h3>
-            <p>{loading ? "loading..." : data[0].email}</p>
+            <h3>{userId.nama_pelamar}</h3>
+            <p>{userId.email}</p>
           </span>
         </div>
         <div className="setelan-general">
