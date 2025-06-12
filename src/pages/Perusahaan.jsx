@@ -15,6 +15,7 @@ import {
   TabBarPerusahaan,
 } from "../components/TabBar";
 import { Skeleton } from "../components/Skeleton";
+import { SideLowongan, SidePerusahaan } from "../components/SideLowongan";
 
 export default function Perusahaan() {
   const nav = useNavigate();
@@ -104,10 +105,28 @@ export default function Perusahaan() {
     } // Set cursor jika masih valid
   };
 
+  // select lowongan function
+  const [select, setSelect] = useState(null);
+
   return (
     <>
       <div className="container">
         <Header />
+        {select !== null ? (
+          <button onClick={() => setSelect(null)} className="side-back">
+            <img src="/left-arrow.png" alt="back icon" />
+            <p>Kembali</p>
+          </button>
+        ) : null}
+        <div
+          onClick={() => setSelect(null)}
+          onScroll={(e) => e.stopPropagation()}
+          className={`side-wrap ${select === null ? "side-wrap-off" : ""}`}
+        ></div>
+        <SidePerusahaan
+          data={data.filter((e) => e.id_perusahaan === select)}
+          show={select !== null ? true : false}
+        />
         <div
           style={{ backgroundImage: `url("/building-header.jpg")` }}
           className="perusahaan-head"
@@ -159,7 +178,7 @@ export default function Perusahaan() {
             : data.map((e) => (
                 <div
                   className="p-b-list"
-                  onClick={() => nav(`/perusahaan/${e.id_perusahaan}`)}
+                  onClick={() => setSelect(e.id_perusahaan)}
                   key={e.id_perusahaan}
                 >
                   <img

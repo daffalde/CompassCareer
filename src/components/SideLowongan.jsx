@@ -7,6 +7,7 @@ import axios from "axios";
 import { LoadingButton, LoadingButtonBlue } from "./Loading";
 import { Link } from "react-router-dom";
 import { AlertFailed, AlertSucceed } from "./Alert";
+import Perusahaan from "../pages/Perusahaan";
 
 export function SideLowongan({ data, show }) {
   const getGrad = Math.round(Number(data[0]?.id_lowongan) % 19);
@@ -302,9 +303,9 @@ export function SideLowongan({ data, show }) {
             <br />
             <div className="s-p-t-location">
               <p>{data[0]?.lokasi}</p>
-              {data[0]?.posisi && data[0]?.provinsi ? <p>,</p> : null}
+              {data[0]?.lokasi && data[0]?.provinsi ? <p>,</p> : null}
               <p>{data[0]?.provinsi}</p>
-              {data[0]?.posisi && data[0]?.provinsi ? (
+              {data[0]?.lokasi && data[0]?.provinsi ? (
                 <div className="dot"></div>
               ) : null}
 
@@ -413,6 +414,203 @@ export function SideLowongan({ data, show }) {
               className="button-main s-a-main"
             >
               Lamar
+            </button>
+          </div>
+        ) : null}
+      </div>
+    </>
+  );
+}
+
+export function SidePerusahaan({ data, show }) {
+  const getGrad = Math.round(Number(data[0]?.id_perusahaan) % 19);
+  const token = Cookies.get("token");
+  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+  const [loadingButton, setLoadingButton] = useState(false);
+
+  //   cek simpan
+  const [perusahaanSimpan, setPerusahaanSimpan] = useState(null);
+  async function getSimpan() {
+    setLoadingButton(true);
+    try {
+      const companySimpan = await axios.get(
+        "https://careercompass-backend.vercel.app/data/perusahaan-tersimpan",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (token && userId?.role === "pelamar") {
+        setPerusahaanSimpan(
+          companySimpan.data.filter(
+            (e) =>
+              e.id_pelamar === userId.id_pelamar &&
+              e.id_perusahaan === data[0]?.id_perusahaan
+          )
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoadingButton(false);
+    }
+  }
+  useEffect(() => {
+    getSimpan();
+  }, [data[0]?.id_perusahaan]);
+
+  //   fungsi simpan
+  async function save() {
+    setLoadingButton(true);
+    try {
+      if (perusahaanSimpan?.length === 0) {
+        await axios.post(
+          "https://careercompass-backend.vercel.app/data/perusahaan-tersimpan",
+          {
+            pelamar: userId?.id_pelamar,
+            lowongan: data[0]?.id_perusahaan,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        getSimpan();
+      } else {
+        await axios.delete(
+          `https://careercompass-backend.vercel.app/data/perusahaan-tersimpan/${perusahaanSimpan[0]?.id_perusahaan_tersimpan}`,
+
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        getSimpan();
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoadingButton(false);
+    }
+  }
+
+  return (
+    <>
+      <div className={`side-container ${show ? "side-container-on" : ""} `}>
+        <div
+          style={{
+            backgroundImage: gradient[getGrad ? getGrad + 1 : 1].gradient,
+          }}
+          className="side-head"
+        ></div>
+        <div className="side-info">
+          <img
+            className="side-profil"
+            src={data[0]?.picture ? data[0].picture : "/profil-perusahaan.svg"}
+            alt="profil perusahaan"
+          />
+          <div className="s-p-title">
+            <h4>{data[0]?.nama_perusahaan}</h4>
+            <p>{data[0]?.bidang}</p>
+            <br />
+            <div className="s-p-t-location">
+              <p>{data[0]?.lokasi}</p>
+              {data[0]?.lokasi && data[0]?.provinsi ? <p>,</p> : null}
+              <p>{data[0]?.provinsi}</p>
+            </div>
+          </div>
+          {token && userId?.role === "pelamar" ? (
+            <div className="s-p-action">
+              <button onClick={save} className="button-save">
+                {loadingButton ? (
+                  <LoadingButtonBlue />
+                ) : (
+                  <img
+                    src={
+                      perusahaanSimpan?.length > 0 ? "/save2.svg" : "/save1.svg"
+                    }
+                    alt="save icon"
+                  />
+                )}
+              </button>
+            </div>
+          ) : null}
+        </div>
+        <div className="side-detail">
+          <div className="s-d-item">
+            <h6>Situs</h6>
+            <h5
+              style={{ cursor: "pointer" }}
+              onClick={() => window.open(data[0]?.situs)}
+            >
+              {data[0]?.situs ? data[0]?.situs.split(".")[1] : "Kosong."}
+            </h5>
+          </div>
+          <div className="s-d-item">
+            <h6>Didirikan</h6>
+            <h5>
+              {data[0]?.tahun_didirikan ? data[0]?.tahun_didirikan : "Kosong."}
+            </h5>
+          </div>
+          <div className="s-d-item">
+            <h6>Karyawan</h6>
+            <h5>{data[0]?.karyawan ? data[0]?.karyawan : "Kosong."}</h5>
+          </div>
+        </div>
+        <div className="side-desc">
+          <h5>Tentang:</h5>
+          {data[0]?.tentang}
+        </div>
+        <div className="side-desc">
+          <h5>Visi:</h5>
+          {data[0]?.visi
+            ? data[0]?.visi
+                .split("\n")
+                .filter((filter) => filter.trim() !== "")
+                .map((e, i) => (
+                  <span key={i}>
+                    <p>{i + 1}.</p>
+                    <p>{e}</p>
+                  </span>
+                ))
+            : null}
+        </div>
+        <div className="side-desc">
+          <h5>Misi:</h5>
+          {data[0]?.misi
+            ? data[0]?.misi
+                .split("\n")
+                .filter((filter) => filter.trim() !== "")
+                .map((e, i) => (
+                  <span key={i}>
+                    <p>{i + 1}.</p>
+                    <p>{e}</p>
+                  </span>
+                ))
+            : null}
+        </div>
+
+        {data?.length === 0 ? null : token && userId?.role === "pelamar" ? (
+          <div className="side-action">
+            <button
+              onClick={save}
+              className="button-save s-a-save s-a-save-perusahaan"
+            >
+              {loadingButton ? (
+                <LoadingButtonBlue />
+              ) : (
+                <img
+                  src={
+                    perusahaanSimpan?.length > 0 ? "/save2.svg" : "/save1.svg"
+                  }
+                  alt="save icon"
+                />
+              )}
+              {perusahaanSimpan?.length > 0 ? "Disimpan" : "Simpan"}
             </button>
           </div>
         ) : null}
