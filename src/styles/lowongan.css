@@ -168,6 +168,9 @@
   border-radius: 5px;
   color: var(--black-50);
 }
+.k-b-filter select option {
+  color: var(--black);
+}
 .k-b-filter select:focus {
   outline: 1px solid var(--blue);
 }
@@ -211,7 +214,7 @@
   }
   .k-b-search button {
     font-size: 13px;
-    padding: 5px;
+    padding: 8px;
     width: 100%;
   }
   .k-b-filter {

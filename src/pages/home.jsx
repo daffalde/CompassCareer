@@ -27,7 +27,7 @@ export default function Home() {
       const resp = await axios.get(
         "https://careercompass-backend.vercel.app/data/lowongan"
       );
-      setLowongan(resp.data.sort(() => Math.random() - 0.5));
+      setLowongan(resp.data.data.sort(() => Math.random() - 0.5));
     } catch (e) {
       console.log(e);
     } finally {

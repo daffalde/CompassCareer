@@ -606,7 +606,7 @@ input[list]::-webkit-calendar-picker-indicator {
 }
 @media screen and (width < 800px) {
   .container {
-    padding: 10px;
+    padding: 15px;
   }
 }
 @media screen and (width < 600px) {

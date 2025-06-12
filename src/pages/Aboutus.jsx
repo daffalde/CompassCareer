@@ -3,7 +3,6 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles/aboutus.css";
 import { kategori } from "../data/Data";
-import { LoadingPage } from "../components/Loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -30,8 +29,8 @@ export default function Aboutus() {
       const resp3 = await axios.get(
         "https://careercompass-backend.vercel.app/auth/pelamar"
       );
-      setLowongan(resp.data);
-      setPerusahaan(resp2.data);
+      setLowongan(resp.data.data);
+      setPerusahaan(resp2.data.data);
       setUser(resp3.data);
     } catch (e) {
       console.log(e);
