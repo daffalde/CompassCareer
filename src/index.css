@@ -44,7 +44,7 @@ body {
 }
 
 p {
-  font-size: clamp(13px, 1vw, 16px);
+  font-size: clamp(14px, 1vw, 16px);
 }
 
 h1 {
@@ -796,6 +796,10 @@ input[list]::-webkit-calendar-picker-indicator {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+.p-arrow-off {
+  opacity: 30%;
+  pointer-events: none;
 }
 .p-arrow:hover {
   background-color: var(--black-10);

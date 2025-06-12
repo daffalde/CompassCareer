@@ -495,7 +495,7 @@ export default function Kerjadetail() {
                       </div>
                     </div>
                     <div className="t-f-l-body">
-                      <div className="lowongan-lain-wrap">
+                      {/* <div className="lowongan-lain-wrap">
                         <h6>Lowongan lain</h6>
                         {otherLowongan
                           .slice(0, 7)
@@ -530,7 +530,7 @@ export default function Kerjadetail() {
                               </span>
                             </div>
                           ))}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
