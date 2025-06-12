@@ -201,7 +201,6 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   width: 100%;
-  height: 100px;
 }
 .role-button {
   height: 120px;
@@ -251,6 +250,9 @@
   }
   .a-b-role {
     padding: 0;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
   }
   .a-b-role div {
     grid-template-columns: 1fr;
