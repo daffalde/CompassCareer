@@ -67,6 +67,9 @@
 /* apply section */
 .apply-page {
   width: 900px;
+  height: fit-content;
+  overflow: auto;
+  scrollbar-width: none;
 }
 .apply-p-head {
   display: flex;
@@ -229,6 +232,9 @@
 }
 .apply-b-c-lowongan img {
   height: 70px;
+  width: 70px;
+  object-fit: cover;
+  object-position: center;
   border-radius: 100%;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
 }

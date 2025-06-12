@@ -32,7 +32,7 @@ export default function DaftarPelamar() {
         }
       );
       const getLowongan = await axios.get(
-        `https://careercompass-backend.vercel.app/data/lowongan`
+        `https://careercompass-backend.vercel.app/data/all-lowongan`
       );
       const getPelamar = await axios.get(
         "https://careercompass-backend.vercel.app/auth/pelamar"

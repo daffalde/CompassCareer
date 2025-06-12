@@ -8,6 +8,16 @@ export function LoadingButton() {
   );
 }
 
+export function LoadingButtonBlue() {
+  return (
+    <>
+      <div id="loading-botton">
+        <img src="/loading1.png" alt="loading icon" />
+      </div>
+    </>
+  );
+}
+
 export function LoadingPage() {
   return (
     <>

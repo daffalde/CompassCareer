@@ -1,0 +1,210 @@
+.side-container {
+  position: fixed;
+  top: 10px;
+  right: -750px;
+  max-width: 750px;
+  width: 100%;
+  height: calc(100vh - 20px);
+  background-color: var(--white);
+  z-index: 20;
+  padding: 15px;
+  transition: 0.5s;
+  pointer-events: none;
+  overflow-y: auto;
+  border-radius: 25px;
+  scrollbar-width: none;
+}
+.side-container-on {
+  right: 10px;
+  pointer-events: all;
+  transition: 0.5s 0.3s;
+}
+.side-head {
+  background-color: grey;
+  width: 100%;
+  height: 100px;
+  border-radius: 15px;
+  position: relative;
+}
+.side-back {
+  display: none;
+  height: fit-content;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  border-radius: 100px;
+  gap: 5px;
+  border: 1px solid var(--black-10);
+  background-color: var(--white);
+  padding: 5px 10px;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  columns: var(--black);
+}
+.side-back img {
+  height: 20px;
+}
+.side-back:active {
+  background-color: var(--black-10);
+}
+
+.side-info {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+.side-profil {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: -40px;
+  border: 2px solid var(--black-10);
+  border-radius: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.dot {
+  width: 5px;
+  height: 5px;
+  background-color: var(--black-10);
+  border-radius: 100%;
+}
+.s-p-t-location {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  color: var(--black-50);
+}
+.s-p-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.button-save {
+  height: 40px;
+  width: 40px;
+  background-color: transparent;
+  border: transparent;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.button-save:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+.button-save img {
+  height: 100%;
+}
+
+/* ______________________ */
+.side-detail {
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0;
+  margin: 10px 0;
+  text-align: center;
+  border: 0.5px solid var(--black-10);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.s-d-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0.5px solid var(--black-10);
+  padding: 10px 0;
+}
+.s-d-item h6 {
+  color: var(--black-50);
+  font-weight: 500;
+}
+
+/* ________________________________ */
+.side-desc {
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+}
+.side-desc h5 {
+  margin-bottom: 5px;
+}
+.side-desc span {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+}
+.s-d-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* __________________________________ */
+.side-action {
+  width: 100%;
+  height: fit-content;
+  position: fixed;
+  padding: 10px;
+
+  left: 0;
+  bottom: 0;
+  z-index: 30;
+  background: #ffffff;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(209, 209, 209, 0) 100%
+  );
+  display: none;
+  gap: 10px;
+}
+.s-a-main {
+  width: 100%;
+  height: 50px;
+}
+.s-a-save {
+  border: 1px solid var(--black-10);
+  backdrop-filter: blur(5px);
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+}
+
+@media screen and (width <= 770px) {
+  .side-container {
+    height: 100vh;
+  }
+  .side-back {
+    display: flex;
+  }
+  .side-container-on {
+    top: 0;
+    right: 0;
+    border-radius: 0;
+    padding: 10px;
+    padding-bottom: 70px;
+  }
+  .s-p-action {
+    display: none;
+  }
+  .s-d-item h5 {
+    font-size: 14px;
+  }
+  .side-action {
+    display: flex;
+  }
+}

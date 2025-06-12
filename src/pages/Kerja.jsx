@@ -16,6 +16,7 @@ import {
 } from "../components/TabBar";
 import { Skeleton } from "../components/Skeleton";
 import { provinsi } from "../data/Provinsi";
+import { SideLowongan } from "../components/SideLowongan";
 
 export default function Kerja() {
   const nav = useNavigate();
@@ -111,10 +112,28 @@ export default function Kerja() {
 
   // _____________________________________________________________________
 
+  // select lowongan function
+  const [select, setSelect] = useState(null);
+
   return (
     <>
       <div className="container">
         <Header />
+        {select !== null ? (
+          <button onClick={() => setSelect(null)} className="side-back">
+            <img src="/left-arrow.png" alt="back icon" />
+            <p>Kembali</p>
+          </button>
+        ) : null}
+        <div
+          onClick={() => setSelect(null)}
+          onScroll={(e) => e.stopPropagation()}
+          className={`side-wrap ${select === null ? "side-wrap-off" : ""}`}
+        ></div>
+        <SideLowongan
+          data={data.filter((e) => e.id_lowongan === select)}
+          show={select !== null ? true : false}
+        />
         <div className="kerja">
           <div className="kerja-banner">
             <span>
@@ -197,7 +216,7 @@ export default function Kerja() {
               : data
               ? data.map((e) => (
                   <div
-                    onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
+                    onClick={() => setSelect(e.id_lowongan)}
                     className="lowongan-card"
                     key={e.id_lowongan}
                   >

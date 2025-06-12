@@ -44,7 +44,8 @@ body {
 }
 
 p {
-  font-size: clamp(14px, 1vw, 16px);
+  font-size: clamp(14px, 2vw, 16px);
+  line-height: 25px;
 }
 
 h1 {
@@ -63,7 +64,7 @@ h4 {
   font-weight: 600;
 }
 h5 {
-  font-size: clamp(18px, 2vw, 20px);
+  font-size: clamp(16px, 1vw, 20px);
   font-weight: 600;
 }
 h6 {
@@ -1013,7 +1014,7 @@ input[list]::-webkit-calendar-picker-indicator {
   background-color: rgba(0, 0, 0, 0.7);
   left: 0;
   top: 0;
-  z-index: 20;
+  z-index: 100;
   display: grid;
   transition: 0.3s;
 }
