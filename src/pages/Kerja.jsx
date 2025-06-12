@@ -36,6 +36,10 @@ export default function Kerja() {
     setInputLokasi(valueLokasi);
   }
 
+  const queryString = window.location.search;
+  const params = new URLSearchParams(queryString);
+  const variabelKategori = params.get("kategori");
+
   const [inputKategori, setInputKategori] = useState("");
   const [inputJenis, setInputJenis] = useState("");
 
@@ -63,7 +67,9 @@ export default function Kerja() {
       try {
         // Panggil API dengan cursor dan limit
         const res = await axios.get(
-          `https://careercompass-backend.vercel.app/data/lowongan?cursor=${currentCursor}&posisi=${inputCari}&provinsi=${inputLokasi}&kategori=${inputKategori}&jenis=${inputJenis}`
+          `https://careercompass-backend.vercel.app/data/lowongan?cursor=${currentCursor}&posisi=${inputCari}&provinsi=${inputLokasi}&kategori=${
+            variabelKategori ? variabelKategori : inputKategori
+          }&jenis=${inputJenis}`
         );
 
         // Jika masih ada halaman berikutnya
@@ -198,9 +204,7 @@ export default function Kerja() {
               </span>
               <button
                 onClick={() => {
-                  setInputKategori("");
-                  setInputJenis("");
-                  setCurrentCursor(0);
+                  window.location.href = "/lowongan";
                 }}
               >
                 Clear all

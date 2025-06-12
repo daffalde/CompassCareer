@@ -70,7 +70,6 @@ export default function Kerjadetail() {
       }
       setOtherLowongan(resp2.data);
       setDataLowongan(resp.data);
-      console.log(resp.data);
     } catch (e) {
       console.log(e);
     } finally {

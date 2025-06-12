@@ -40,9 +40,6 @@ export function SideLowongan({ data, show }) {
         setGetCv(
           takeCv.data.filter((e) => e.id_pelamar === userId?.id_pelamar)
         );
-        console.log(
-          takeCv.data.filter((e) => e.id_pelamar === userId?.id_pelamar)
-        );
       }
 
       if (token && userId?.role === "pelamar") {
