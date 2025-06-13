@@ -19,7 +19,7 @@ export default function Lowonganlist() {
   async function getData() {
     try {
       const resp = await axios.get(
-        "https://careercompass-backend.vercel.app/data/lowongan"
+        "https://careercompass-backend.vercel.app/data/all-lowongan"
       );
       console.log(
         resp.data.filter((e) => e.perusahaan_id === userId.id_perusahaan)

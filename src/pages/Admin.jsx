@@ -23,10 +23,10 @@ export default function Admin() {
         "https://careercompass-backend.vercel.app/auth/pelamar"
       );
       const respPerusahaan = await axios.get(
-        "https://careercompass-backend.vercel.app/auth/perusahaan"
+        "https://careercompass-backend.vercel.app/auth/all-perusahaan"
       );
       const respLowongan = await axios.get(
-        "https://careercompass-backend.vercel.app/data/lowongan"
+        "https://careercompass-backend.vercel.app/data/all-lowongan"
       );
       const respApp = await axios.get(
         "https://careercompass-backend.vercel.app/data/app",
@@ -37,7 +37,7 @@ export default function Admin() {
         }
       );
       setPelamar(respPelamar.data);
-      setPerusahaan(respPerusahaan.data);
+      setPerusahaan(respPerusahaan.data.data);
       setLowongan(respLowongan.data);
       setApp(respApp.data);
       setLoadingPage(false);

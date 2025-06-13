@@ -28,7 +28,7 @@ export default function Profilperusahaan() {
         `https://careercompass-backend.vercel.app/auth/perusahaan/${userId.id_perusahaan}`
       );
       const resp2 = await axios.get(
-        "https://careercompass-backend.vercel.app/data/lowongan"
+        "https://careercompass-backend.vercel.app/data/all-lowongan"
       );
       setData(resp.data[0]);
       setLowonganPost(

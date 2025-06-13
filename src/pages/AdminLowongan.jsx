@@ -17,13 +17,13 @@ export default function AdminLowongan() {
   async function getData() {
     try {
       const takeData = await axios.get(
-        "https://careercompass-backend.vercel.app/data/lowongan"
+        "https://careercompass-backend.vercel.app/data/all-lowongan"
       );
       const takePerusahaan = await axios.get(
-        "https://careercompass-backend.vercel.app/auth/perusahaan"
+        "https://careercompass-backend.vercel.app/auth/all-perusahaan"
       );
       setData(takeData.data);
-      setPerusahaan(takePerusahaan.data);
+      setPerusahaan(takePerusahaan.data.data);
       setLoadingPage(false);
     } catch (e) {
       console.log(e);

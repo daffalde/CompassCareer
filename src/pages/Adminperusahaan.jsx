@@ -15,9 +15,9 @@ export default function Adminperusahaan() {
   async function getData() {
     try {
       const takeData = await axios.get(
-        "https://careercompass-backend.vercel.app/auth/perusahaan"
+        "https://careercompass-backend.vercel.app/auth/all-perusahaan"
       );
-      setData(takeData.data);
+      setData(takeData.data.data);
       setLoadingPage(false);
     } catch (e) {
       console.log(e);
