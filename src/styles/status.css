@@ -103,7 +103,10 @@
   color: var(--black-50);
 }
 .status-b-i-info img {
-  height: 100%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
   border-radius: 10px;
   border: 2px solid var(--white);
 }

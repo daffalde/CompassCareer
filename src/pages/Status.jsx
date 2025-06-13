@@ -33,7 +33,7 @@ export default function Status() {
         }
       );
       const getLowongan = await axios.get(
-        `https://careercompass-backend.vercel.app/data/lowongan`
+        `https://careercompass-backend.vercel.app/data/all-lowongan`
       );
       const getCv = await axios.get(
         "https://careercompass-backend.vercel.app/data/cv",
