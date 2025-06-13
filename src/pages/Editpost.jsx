@@ -25,7 +25,7 @@ export default function Editpost() {
   async function getDataLowongan() {
     try {
       const resp = await axios.get(
-        "https://careercompass-backend.vercel.app/data/lowongan"
+        "https://careercompass-backend.vercel.app/data/all-lowongan"
       );
       setDataLowongan(
         resp.data.filter(
