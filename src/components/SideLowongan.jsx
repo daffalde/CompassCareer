@@ -459,6 +459,8 @@ export function SidePerusahaan({ data, show }) {
   }
   useEffect(() => {
     getSimpan();
+
+    console.log(data[0]);
   }, [data[0]?.id_perusahaan]);
 
   //   fungsi simpan

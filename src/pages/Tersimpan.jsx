@@ -4,11 +4,11 @@ import Header from "../components/Header";
 import "../styles/tersimpan.css";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../data/supabaseClient";
 import { LoadingPage } from "../components/Loading";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { NavBack } from "../components/Navigation";
+import { SideLowongan, SidePerusahaan } from "../components/SideLowongan";
 
 export default function Tersimpan() {
   const nav = useNavigate();
@@ -32,7 +32,7 @@ export default function Tersimpan() {
         }
       );
       const lowongan = await axios.get(
-        `https://careercompass-backend.vercel.app/data/lowongan`
+        `https://careercompass-backend.vercel.app/data/all-lowongan`
       );
       const perusahaanTersimpan = await axios.get(
         `https://careercompass-backend.vercel.app/data/perusahaan-tersimpan`,
@@ -43,7 +43,7 @@ export default function Tersimpan() {
         }
       );
       const perusahaan = await axios.get(
-        `https://careercompass-backend.vercel.app/auth/perusahaan`
+        `https://careercompass-backend.vercel.app/auth/all-perusahaan`
       );
       setDataLowongan(
         lowongan.data.filter((e) =>
@@ -54,7 +54,7 @@ export default function Tersimpan() {
       );
 
       setDataPerusahaan(
-        perusahaan.data.filter((e) =>
+        perusahaan.data.data.filter((e) =>
           perusahaanTersimpan.data
             .map((item) => item.id_perusahaan)
             .includes(e.id_perusahaan)
@@ -108,11 +108,36 @@ export default function Tersimpan() {
       )
     : null;
 
+  // select lowongan function
+  const [select, setSelect] = useState(null);
+  const [select2, setSelect2] = useState(null);
+
   return (
     <>
       <div className="container">
         <Header />
         <NavBack title={"Tersimpan"} />
+        {select !== null ? (
+          <button onClick={() => setSelect(null)} className="side-back">
+            <img src="/left-arrow.png" alt="back icon" />
+            <p>Kembali</p>
+          </button>
+        ) : null}
+        <div
+          onClick={() => setSelect(null)}
+          onScroll={(e) => e.stopPropagation()}
+          className={`side-wrap ${select === null ? "side-wrap-off" : ""}`}
+        ></div>
+        {loading ? null : (
+          <SideLowongan
+            data={
+              dataLowongan
+                ? dataLowongan.filter((e) => e.id_lowongan === select)
+                : null
+            }
+            show={select !== null ? true : false}
+          />
+        )}
         {loading ? (
           <LoadingPage />
         ) : (
@@ -141,11 +166,11 @@ export default function Tersimpan() {
                   <h4>Lowongan Tersimpan</h4>
                   <br />
                   <div className="t-b-lowongan-wrap">
-                    {visibleItems ? (
-                      visibleItems.length !== 0 ? (
-                        visibleItems.map((e) => (
+                    {!loading ? (
+                      dataLowongan.length !== 0 ? (
+                        dataLowongan.map((e) => (
                           <div
-                            onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
+                            onClick={() => setSelect(e.id_lowongan)}
                             className="lowongan-card"
                             key={e.id_lowongan}
                           >
@@ -204,56 +229,42 @@ export default function Tersimpan() {
                     ) : null}
                   </div>
                   <br />
-                  {/* pagination */}
-                  <div className="pagination">
-                    <div
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(prev - 1, 1))
-                      }
-                      className="p-arrow"
-                    >
-                      <img
-                        src="./pagig-arrow2.svg"
-                        alt="tanda panah pagination"
-                      />
-                    </div>
-                    {Array.from({ length: totalPages }, (_, i) => (
-                      <div
-                        key={i}
-                        className={`p-item ${
-                          currentPage === i + 1 ? "pagig-on" : ""
-                        }`}
-                        onClick={() => setCurrentPage(i + 1)}
-                      >
-                        <p>{i + 1}</p>
-                      </div>
-                    ))}
-                    <div
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                      }
-                      className="p-arrow"
-                    >
-                      <img
-                        src="./pagig-arrow.svg"
-                        alt="tanda panah pagination"
-                      />
-                    </div>
-                  </div>
                 </>
               ) : (
                 <>
+                  {select2 !== null ? (
+                    <button
+                      onClick={() => setSelect2(null)}
+                      className="side-back"
+                    >
+                      <img src="/left-arrow.png" alt="back icon" />
+                      <p>Kembali</p>
+                    </button>
+                  ) : null}
+                  <div
+                    onClick={() => setSelect2(null)}
+                    onScroll={(e) => e.stopPropagation()}
+                    className={`side-wrap ${
+                      select2 === null ? "side-wrap-off" : ""
+                    }`}
+                  ></div>
+                  {!loading ? (
+                    <SidePerusahaan
+                      data={dataPerusahaan?.filter(
+                        (e) => e.id_perusahaan === select2
+                      )}
+                      show={select2 !== null ? true : false}
+                    />
+                  ) : null}
                   <h4>Perusahaan Tersimpan</h4>
                   <br />
                   <div className="t-b-perushaan-wrap">
-                    {visibleItemss ? (
-                      visibleItemss.length !== 0 ? (
-                        visibleItemss.map((e) => (
+                    {dataPerusahaan ? (
+                      dataPerusahaan.length !== 0 ? (
+                        dataPerusahaan.map((e) => (
                           <div
                             className="p-b-list"
-                            onClick={() =>
-                              nav(`/perusahaan/${e.id_perusahaan}`)
-                            }
+                            onClick={() => setSelect2(e.id_perusahaan)}
                             key={e.id_perusahaan}
                           >
                             <img
@@ -285,44 +296,6 @@ export default function Tersimpan() {
                     )}
                   </div>
                   <br />
-                  {/* pagination */}
-                  <div className="pagination">
-                    <div
-                      onClick={() =>
-                        setCurrentPagee((prev) => Math.max(prev - 1, 1))
-                      }
-                      className="p-arrow"
-                    >
-                      <img
-                        src="./pagig-arrow2.svg"
-                        alt="tanda panah pagination"
-                      />
-                    </div>
-                    {Array.from({ length: totalPagess }, (_, i) => (
-                      <div
-                        key={i}
-                        className={`p-item ${
-                          currentPagee === i + 1 ? "pagig-on" : ""
-                        }`}
-                        onClick={() => setCurrentPagee(i + 1)}
-                      >
-                        <p>{i + 1}</p>
-                      </div>
-                    ))}
-                    <div
-                      onClick={() =>
-                        setCurrentPagee((prev) =>
-                          Math.min(prev + 1, totalPages)
-                        )
-                      }
-                      className="p-arrow"
-                    >
-                      <img
-                        src="./pagig-arrow.svg"
-                        alt="tanda panah pagination"
-                      />
-                    </div>
-                  </div>
                 </>
               )}
               <br />
