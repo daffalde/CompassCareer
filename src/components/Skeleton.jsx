@@ -1,7 +1,10 @@
 export function Skeleton({ width, height }) {
   return (
     <>
-      <div style={{ width: width, height: height }} className="skeleton"></div>
+      <span
+        style={{ width: "100%", maxWidth: width, height: height }}
+        className="skeleton"
+      ></span>
     </>
   );
 }
