@@ -79,6 +79,11 @@
 .p-p-m-b-content {
   width: 100%;
 }
+.p-p-m-b-c-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25px 1fr;
+}
 
 .skill-wrap {
   width: 100%;

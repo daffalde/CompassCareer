@@ -5,6 +5,7 @@ import { franc } from "franc-min";
 import { useState } from "react";
 import { LoadingPage } from "./Loading";
 import axios from "axios";
+import { DataLogin } from "../data/DataLogin";
 
 export function TabBarGuest() {
   const nav = useNavigate();
@@ -65,11 +66,23 @@ export function TabBarGuest() {
         <div
           onClick={() => nav("/login")}
           className={`tabbar-content ${
-            path === "/login" ? "tabbar-content-on" : ""
+            path === "/login" || path === "/signup" ? "tabbar-content-on" : ""
           }`}
         >
-          <img src="/mobile/masuk.png" alt="" />
-          <p style={{ color: path === "/login" ? "#005df4" : "#393e46" }}>
+          <img
+            src={
+              path === "/login" || path === "/signup"
+                ? "/mobile/masuk-blue.png"
+                : "/mobile/masuk.png"
+            }
+            alt=""
+          />
+          <p
+            style={{
+              color:
+                path === "/login" || path === "/signup" ? "#005df4" : "#393e46",
+            }}
+          >
             Masuk
           </p>
         </div>
@@ -216,7 +229,7 @@ export function TabBarPelamar() {
       <div className={`tabbar-popup ${popupCv ? "tabbar-popup-on" : ""}`}>
         <form className="hlm-cv-up">
           <div className="hlm-cv-up-left">
-            <label className="input-file-class" for="input-file">
+            <label className="input-file-class" htmlFor="input-file">
               {pdfFile ? (
                 <>
                   <img src="/pdf.svg" alt="upload icon" />

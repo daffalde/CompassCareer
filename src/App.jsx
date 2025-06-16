@@ -29,6 +29,7 @@ import SetelanPelamar from "./pages/SetelanPelamar.jsx";
 import SetelanPerusahaan from "./pages/SetelanPerusahaan.jsx";
 import CvLowongan from "./pages/CvLowongan.jsx";
 import NewProfilPelamar from "./pages/NewProfilPelamar.jsx";
+import NewProfilPerusahaan from "./pages/NewProfilPerusahaan.jsx";
 
 function App() {
   return (
@@ -53,7 +54,7 @@ function App() {
           <Route path="/profil" Component={NewProfilPelamar} />
           <Route path="/tersimpan" Component={Tersimpan} />
           <Route path="/status-lamaran" Component={Status} />
-          <Route path="/profil-perusahaan" Component={Profilperusahaan} />
+          <Route path="/profil-perusahaan" Component={NewProfilPerusahaan} />
           <Route path="/lowongan-post" Component={Lowonganlist} />
           <Route path="/posting" Component={Posting} />
           <Route path="/edit-lowongan/:id" Component={Editpost} />

@@ -10,7 +10,8 @@ export default function Privasi() {
         <Header />
         <NavBack title={"Kebijakan  Privasi"} />
         <div className="kebijakan">
-          <h4>Kebijakan Privasi</h4>
+          <h4 className="heading-page">Kebijakan Privasi</h4>
+          <br />
           <p>
             Selamat datang di CompassCareer. Kami berkomitmen untuk menjaga
             privasi dan keamanan data pengguna saat menggunakan layanan kami.

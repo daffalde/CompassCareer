@@ -7,7 +7,6 @@ import axios from "axios";
 import { LoadingButton, LoadingButtonBlue } from "./Loading";
 import { Link } from "react-router-dom";
 import { AlertFailed, AlertSucceed } from "./Alert";
-import Perusahaan from "../pages/Perusahaan";
 
 export function SideLowongan({ data, show }) {
   const getGrad = Math.round(Number(data[0]?.id_lowongan) % 19);
@@ -21,15 +20,15 @@ export function SideLowongan({ data, show }) {
   async function getSimpan() {
     setLoadingButton(true);
     try {
-      const lokerSimpan = await axios.get(
-        "https://careercompass-backend.vercel.app/data/lowongan-tersimpan",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
       if (token && userId?.role === "pelamar") {
+        const lokerSimpan = await axios.get(
+          "https://careercompass-backend.vercel.app/data/lowongan-tersimpan",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const takeCv = await axios.get(
           "https://careercompass-backend.vercel.app/data/cv",
           {
@@ -41,9 +40,6 @@ export function SideLowongan({ data, show }) {
         setGetCv(
           takeCv.data.filter((e) => e.id_pelamar === userId?.id_pelamar)
         );
-      }
-
-      if (token && userId?.role === "pelamar") {
         setLowonganSimpan(
           lokerSimpan.data.filter(
             (e) =>
@@ -152,7 +148,7 @@ export function SideLowongan({ data, show }) {
       }, 6000);
       return () => clearTimeout(timeout);
     }
-  }, alertPesanShow);
+  }, [alertPesanShow]);
   return (
     <>
       {/* pop up____________________________________ */}
@@ -199,12 +195,19 @@ export function SideLowongan({ data, show }) {
                       alertCv ? "apply-b-c-cv-alert" : ""
                     }`}
                   >
-                    <h6>Tambahkan CV</h6>
+                    <h6>Pilih CV</h6>
                     {alertCv ? (
                       <p className="caution">
                         Pilih atau upload CV terlebih dahulu
                       </p>
-                    ) : null}
+                    ) : (
+                      <p style={{ color: "grey" }}>
+                        Tambahkan CV anda di{" "}
+                        <Link style={{ color: "grey" }} to={"/profil"}>
+                          Profil
+                        </Link>
+                      </p>
+                    )}
                     <div className="apply-b-c-cv-wrap">
                       {getCv ? (
                         getCv.map((e) => (
@@ -433,16 +436,15 @@ export function SidePerusahaan({ data, show }) {
   async function getSimpan() {
     setLoadingButton(true);
     try {
-      const companySimpan = await axios.get(
-        "https://careercompass-backend.vercel.app/data/perusahaan-tersimpan",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
       if (token && userId?.role === "pelamar") {
+        const companySimpan = await axios.get(
+          "https://careercompass-backend.vercel.app/data/perusahaan-tersimpan",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setPerusahaanSimpan(
           companySimpan.data.filter(
             (e) =>
@@ -459,8 +461,6 @@ export function SidePerusahaan({ data, show }) {
   }
   useEffect(() => {
     getSimpan();
-
-    console.log(data[0]);
   }, [data[0]?.id_perusahaan]);
 
   //   fungsi simpan
@@ -545,27 +545,37 @@ export function SidePerusahaan({ data, show }) {
         <div className="side-detail">
           <div className="s-d-item">
             <h6>Situs</h6>
-            <h5
-              style={{ cursor: "pointer" }}
-              onClick={() => window.open(data[0]?.situs)}
-            >
-              {data[0]?.situs ? data[0]?.situs.split(".")[1] : "Kosong."}
-            </h5>
+            {data[0]?.situs ? (
+              <h5
+                style={{ cursor: "pointer", textDecoration: "underline" }}
+                onClick={() => window.open(data[0]?.situs)}
+              >
+                {data[0]?.situs.split(".")[1]}
+              </h5>
+            ) : (
+              <p style={{ color: "#bdbdbd", fontSize: "13px" }}>Belum ada</p>
+            )}
           </div>
           <div className="s-d-item">
             <h6>Didirikan</h6>
-            <h5>
-              {data[0]?.tahun_didirikan ? data[0]?.tahun_didirikan : "Kosong."}
-            </h5>
+            {data[0]?.tahun_didirikan ? (
+              <h5>{data[0]?.tahun_didirikan}</h5>
+            ) : (
+              <p style={{ color: "#bdbdbd", fontSize: "13px" }}>Belum ada</p>
+            )}
           </div>
           <div className="s-d-item">
             <h6>Karyawan</h6>
-            <h5>{data[0]?.karyawan ? data[0]?.karyawan : "Kosong."}</h5>
+            {data[0]?.karyawan ? (
+              <h5>{data[0]?.karyawan}</h5>
+            ) : (
+              <p style={{ color: "#bdbdbd", fontSize: "13px" }}>Belum ada</p>
+            )}
           </div>
         </div>
         <div className="side-desc">
           <h5>Tentang:</h5>
-          {data[0]?.tentang}
+          <p>{data[0]?.tentang}</p>
         </div>
         <div className="side-desc">
           <h5>Visi:</h5>
@@ -597,7 +607,7 @@ export function SidePerusahaan({ data, show }) {
         </div>
 
         {data?.length === 0 ? null : token && userId?.role === "pelamar" ? (
-          <div className="side-action">
+          <div className="side-action side-action-perusahaan">
             <button
               onClick={save}
               className="button-save s-a-save s-a-save-perusahaan"

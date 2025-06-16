@@ -236,7 +236,7 @@ export default function Header() {
                 {/* cv_____________ */}
                 <form className="hlm-cv-up">
                   <div className="hlm-cv-up-left">
-                    <label className="input-file-class" for="input-file">
+                    <label className="input-file-class" htmlFor="input-file">
                       {pdfFile ? (
                         <>
                           <img src="/pdf.svg" alt="upload icon" />

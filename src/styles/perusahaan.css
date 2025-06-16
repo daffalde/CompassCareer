@@ -75,6 +75,12 @@
   display: flex;
   gap: 10px;
 }
+.p-b-l-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center;
+}
 
 /* ____________________ */
 .perusahaan-body {
@@ -129,7 +135,7 @@
     display: none;
   }
   .p-h-search {
-    border-radius: 15px;
+    border-radius: 15px 15px 25px 25px;
     width: 95%;
     padding: 10px;
     bottom: 10px;

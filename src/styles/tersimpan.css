@@ -1,6 +1,6 @@
 .tersimpan-head {
   border-bottom: 3.5px solid var(--black-10);
-  padding: 0 20px;
+  padding: 0 10px;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -27,9 +27,14 @@
 
 .tersimpan-head-button-on {
   color: var(--black);
-  border-bottom: 3px solid var(--black-50);
-  background-color: var(--black-10);
+  border-bottom: 3px solid var(--white);
+  background-image: radial-gradient(
+    circle farthest-corner at 7.2% 13.6%,
+    rgba(37, 249, 245, 1) 0%,
+    rgba(8, 70, 218, 1) 90%
+  );
   transition: 0.3s;
+  color: white;
 }
 
 .tersimpan-body {

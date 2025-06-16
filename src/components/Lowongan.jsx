@@ -70,16 +70,14 @@ export default function Lowongan({
         </form>
         <div className="l-filter">
           <select onChange={handleTanggal}>
-            <option hidden selected>
-              Tanggal diposting
-            </option>
+            <option hidden>Tanggal diposting</option>
             <option value="hari">Hari ini</option>
             <option value="minggu">Minggu ini</option>
             <option value="bulan">Bulan ini</option>
             <option value="tahun">Tahun ini</option>
           </select>
           <select onChange={handleJenis}>
-            <option hidden value="" disabled selected>
+            <option hidden value="" disabled>
               Jenis
             </option>
             <option value="Full Time">Full Time</option>
@@ -88,7 +86,7 @@ export default function Lowongan({
             <option value="Shift Work">Shift Work</option>
           </select>
           <select onChange={handleGaji}>
-            <option hidden value="" disabled selected>
+            <option hidden value="" disabled>
               Gaji
             </option>
             <option value="1-5">Rp 1-5 juta</option>
@@ -97,7 +95,7 @@ export default function Lowongan({
             <option value="50">{`Rp >50 juta`}</option>
           </select>
           <select onChange={handleKategori}>
-            <option hidden value="" disabled selected>
+            <option hidden value="" disabled>
               Kategori
             </option>
             {kategori
@@ -107,7 +105,7 @@ export default function Lowongan({
               ))}
           </select>
           <select onChange={handleLocation} id="lowongan-filter">
-            <option value="" hidden disabled selected>
+            <option value="" hidden disabled>
               Lokasi
             </option>
             {provinsi

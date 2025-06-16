@@ -1,27 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { provinsi } from "../data/Provinsi";
 import "../styles/perusahaan.css";
-import { kategori } from "../data/Data";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { LoadingPage } from "../components/Loading";
-import { supabase } from "../data/supabaseClient";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Skeleton } from "../components/Skeleton";
+import { SidePerusahaan } from "../components/SideLowongan";
 import {
   TabBarGuest,
   TabBarPelamar,
   TabBarPerusahaan,
 } from "../components/TabBar";
-import { Skeleton } from "../components/Skeleton";
-import { SideLowongan, SidePerusahaan } from "../components/SideLowongan";
+import { DataLogin } from "../data/DataLogin";
 
 export default function Perusahaan() {
   const nav = useNavigate();
   const token = Cookies.get("token");
   const userData = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
-  const [user, setUser] = useState(null);
+  const user = DataLogin();
 
   const [inputCari, setInputCari] = useState("");
   const [valueCari, setValueCari] = useState("");
@@ -166,14 +164,16 @@ export default function Perusahaan() {
                     ))}
                 </datalist>
               </span>
-              <button onClick={handleCari}>Cari</button>
+              <button className="button-main" onClick={handleCari}>
+                Cari
+              </button>
             </form>
           </div>
         </div>
         <div className="perusahaan-body">
           {loading
             ? Array.from({ length: 10 }).map((_, i) => (
-                <Skeleton width={"100%"} height={"130px"} />
+                <Skeleton key={i} width={"100%"} height={"130px"} />
               ))
             : data.map((e) => (
                 <div
@@ -227,8 +227,8 @@ export default function Perusahaan() {
         ) : null}
       </div>
       <br />
-      {token ? (
-        userData?.role === "pelamar" ? (
+      {user.token ? (
+        user.data.role === "pelamar" ? (
           <TabBarPelamar />
         ) : (
           <TabBarPerusahaan />

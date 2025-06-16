@@ -10,7 +10,8 @@ export default function Syarat() {
         <Header />
         <NavBack title={"Syarat & Ketentuan"} />
         <div className="kebijakan">
-          <h4>Syarat dan Ketentuan</h4>
+          <h4 className="heading-page">Syarat dan Ketentuan</h4>
+          <br />
           <p>
             Selamat datang di CompassCareer! Dengan menggunakan layanan kami,
             pengguna setuju untuk mematuhi syarat dan ketentuan yang telah kami

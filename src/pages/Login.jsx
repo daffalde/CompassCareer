@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { LoadingButton } from "../components/Loading";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { TabBarGuest } from "../components/TabBar";
 
 export default function Login() {
   const nav = useNavigate();
@@ -176,6 +177,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <TabBarGuest />
       <Footer />
     </>
   );

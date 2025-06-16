@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Lowongan from "../components/Lowongan";
 import "../styles/lowongan.css";
-import Cookies from "js-cookie";
 import moment from "moment";
-import { useLocation, useNavigate } from "react-router-dom";
-import { LoadingPage } from "../components/Loading";
 import axios from "axios";
+import { SideLowongan } from "../components/SideLowongan";
+import { Skeleton } from "../components/Skeleton";
 import {
   TabBarGuest,
   TabBarPelamar,
   TabBarPerusahaan,
 } from "../components/TabBar";
-import { SideLowongan } from "../components/SideLowongan";
-import { Skeleton } from "../components/Skeleton";
+import { DataLogin } from "../data/DataLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function CvLowongan() {
   const nav = useNavigate();
-  const token = Cookies.get("token");
-  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+  const user = DataLogin();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
 
@@ -90,12 +87,14 @@ export default function CvLowongan() {
           />
         ) : null}
         <div className="kerja">
-          <h4>Hasil pencarian berdasarkan CV anda.</h4>
+          <h4 style={{ textAlign: "center" }}>
+            Hasil pencarian berdasarkan CV anda.
+          </h4>
           <br />
           <div className="k-list">
             {loading
               ? Array.from({ length: 20 }).map((_, i) => (
-                  <Skeleton width={"100%"} height={"300px"} />
+                  <Skeleton key={i} width={"100%"} height={"300px"} />
                 ))
               : data
               ? data
@@ -164,8 +163,10 @@ export default function CvLowongan() {
         </div>
       </div>
       <br />
-      {token ? (
-        userId?.role === "pelamar" ? (
+      <br />
+      <br />
+      {user.token ? (
+        user.data.role === "pelamar" ? (
           <TabBarPelamar />
         ) : (
           <TabBarPerusahaan />

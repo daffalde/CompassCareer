@@ -7,12 +7,10 @@ import { useNavigate } from "react-router-dom";
 import "../styles/newProfilePelamar.css";
 import { gradient } from "../data/Data";
 import { Skeleton } from "../components/Skeleton";
-import { color } from "chart.js/helpers";
 import moment from "moment";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { CircularProgress } from "../components/Circular";
-import { LoadingButton, LoadingButtonBlue } from "../components/Loading";
+import { LoadingButton } from "../components/Loading";
 import { provinsi } from "../data/Provinsi";
 import { NavBack } from "../components/Navigation";
 
@@ -22,7 +20,7 @@ export default function NewProfilPelamar() {
   const getBanner = Math.round(new Date().getDate() % 19);
 
   const token = Cookies.get("token");
-  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+  const userId = Cookies.get("data") ? JSON.parse(Cookies.get("data")) : null;
 
   const [loading, setLoading] = useState(true);
 
@@ -81,12 +79,15 @@ export default function NewProfilPelamar() {
   //   ubah profil
   const [image, setImage] = useState(null);
   const [loadingImg, setLoadingImg] = useState(false);
+  const [imageWarning, setImageWarning] = useState(false);
 
   function handleImage(e) {
     const file = e.target.files[0];
 
-    if (file) {
+    if (file && file.size < 3 * 1024 * 1024) {
       setImage(file);
+    } else if (file.size > 3 * 1024 * 1024) {
+      setImageWarning(true);
     }
   }
 
@@ -191,9 +192,21 @@ export default function NewProfilPelamar() {
   const [inputTentang, setInputTentang] = useState("");
   const [inputSkill, setInputSkill] = useState([]);
 
+  function handleClear() {
+    setInputNama("");
+    setInputSpesialis("");
+    setInputLokasi("");
+    setInputProvinsi("");
+    setInputTentang("");
+    setTextSkill("");
+    setInputSkill([]);
+  }
+
   function handleInputSkill(e) {
     e.preventDefault();
-    setInputSkill((prev) => [...prev, textSkill]);
+    if (textSkill.trim() !== "") {
+      setInputSkill((prev) => [...prev, textSkill]);
+    }
     setTextSkill("");
   }
 
@@ -226,6 +239,7 @@ export default function NewProfilPelamar() {
         }
       );
       setPopup(false);
+      handleClear();
       getData();
     } catch (e) {
       console.log(e);
@@ -238,7 +252,10 @@ export default function NewProfilPelamar() {
       {/* pop up ___________________________________________________________ */}
 
       <div
-        onClick={() => setPopup(false)}
+        onClick={() => {
+          setPopup(false);
+          handleClear();
+        }}
         className={`popup-wrap ${popup ? "" : "popup-wrap-off"}`}
       >
         <div className={`popup-content ${popup ? "popup-content-off" : ""}`}>
@@ -288,7 +305,7 @@ export default function NewProfilPelamar() {
                 onChange={(e) => setInputProvinsi(e.target.value)}
                 id="profil-popup-provinsi"
               >
-                <option value="" selected hidden>
+                <option value="" hidden>
                   {pelamar ? pelamar?.provinsi : "Pilih provinsi"}
                 </option>
                 {provinsi.map((e, i) => (
@@ -310,7 +327,7 @@ export default function NewProfilPelamar() {
               ></textarea>
             </span>
             <span>
-              <label htmlFor="profil-popup-keahlian">Keahlian</label>
+              <label htmlFor="profil-popup-keahlian">Keahlian baru</label>
               <div className="profil-popup-keahlian">
                 <input
                   type="text"
@@ -320,6 +337,11 @@ export default function NewProfilPelamar() {
                     e.stopPropagation();
                     setTextSkill(e.target.value);
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleInputSkill(e);
+                    }
+                  }}
                 />
                 <button onClick={handleInputSkill} className="button-main">
                   Tambah
@@ -327,20 +349,43 @@ export default function NewProfilPelamar() {
               </div>
               <div className="skill-wrap">
                 {inputSkill
-                  ? inputSkill.map((e, i) => (
-                      <>
-                        <p key={i}>
-                          {e}
-                          <img
-                            onClick={() => handleDeleteSkill(i)}
-                            height={"13px"}
-                            src="/close.svg"
-                            alt="close icon"
-                          />
-                        </p>
-                      </>
+                  ? inputSkill.map((skill, i) => (
+                      <p key={i}>
+                        {skill}
+                        <img
+                          onClick={() => handleDeleteSkill(i)}
+                          height={"13px"}
+                          src="/close.svg"
+                          alt="close icon"
+                        />
+                      </p>
                     ))
                   : null}
+              </div>
+            </span>
+            <span>
+              <div
+                style={{ filter: "opacity(50%)" }}
+                className="p-p-m-b-content"
+              >
+                <label>Keahlian sebelumnya:</label>
+                <div className="skill-wrap">
+                  {!loading ? (
+                    pelamar?.skill ? (
+                      JSON.parse(pelamar?.skill).map((e, i) => (
+                        <p key={i}>{e}</p>
+                      ))
+                    ) : (
+                      <h6 style={{ color: "grey", fontWeight: "400" }}>
+                        Belum ada data.
+                      </h6>
+                    )
+                  ) : (
+                    Array.from({ length: 4 }).map((_, i) => (
+                      <Skeleton key={i} width={"120px"} height={"50px"} />
+                    ))
+                  )}
+                </div>
               </div>
             </span>
             <div className="profil-popup-action">
@@ -352,7 +397,7 @@ export default function NewProfilPelamar() {
         </div>
       </div>
 
-      {/* pop up ___________________________________________________________ */}
+      {/* ___________________________________________________________ */}
 
       <div className="container">
         <Header />
@@ -378,6 +423,9 @@ export default function NewProfilPelamar() {
               />
               <input type="file" onChange={handleImage} />
               <div className="p-p-m-h-left">
+                {imageWarning ? (
+                  <p className="caution">*Ukuran file max 3Mb</p>
+                ) : null}
                 {loading ? (
                   <Skeleton width={"400px"} height={"30px"} />
                 ) : pelamar ? (
@@ -433,7 +481,7 @@ export default function NewProfilPelamar() {
               <div className="p-p-m-b-content">
                 <h5>Keahlian:</h5>
                 <div className="skill-wrap">
-                  {pelamar ? (
+                  {!loading ? (
                     pelamar?.skill ? (
                       JSON.parse(pelamar?.skill).map((e, i) => (
                         <p key={i}>{e}</p>

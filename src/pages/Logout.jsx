@@ -6,6 +6,7 @@ import axios from "axios";
 import { LoadingButton } from "../components/Loading";
 import { AlertFailed, AlertSucceed } from "../components/Alert";
 import Cookies from "js-cookie";
+import { TabBarGuest } from "../components/TabBar";
 
 export default function Logout() {
   const nav = useNavigate();
@@ -138,7 +139,7 @@ export default function Logout() {
               <span id="role">
                 <label htmlFor="role">Role</label>
                 <select onChange={(e) => setRole(e.target.value)} id="role">
-                  <option value="" hidden selected>
+                  <option value="" hidden>
                     Pelamar/Perusahaan
                   </option>
                   <option value="pelamar">Pelamar</option>
@@ -162,6 +163,7 @@ export default function Logout() {
           </div>
         </div>
       </div>
+      <TabBarGuest />
       <Footer />
     </>
   );

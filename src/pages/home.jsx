@@ -3,41 +3,27 @@ import Header from "../components/Header";
 import "../styles/home.css";
 import { kategori } from "../data/Data";
 import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { LoadingPage } from "../components/Loading";
 import moment from "moment";
 import Lowongan from "../components/Lowongan";
+import { Skeleton } from "../components/Skeleton";
+import { useGetAllLowongan } from "../api/Lowongan";
+import { DataLogin } from "../data/DataLogin";
+import { useState } from "react";
+import { SideLowongan } from "../components/SideLowongan";
 import {
   TabBarGuest,
   TabBarPelamar,
   TabBarPerusahaan,
 } from "../components/TabBar";
-import Cookies from "js-cookie";
-import { Skeleton } from "../components/Skeleton";
 
 export default function Home() {
   const nav = useNavigate();
-  const token = Cookies.get("token");
-  const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
-  const [lowongan, setLowongan] = useState(null);
-  const [loadingPage, setLoadingPage] = useState(true);
-  async function getData() {
-    try {
-      const resp = await axios.get(
-        "https://careercompass-backend.vercel.app/data/lowongan"
-      );
-      setLowongan(resp.data.data.sort(() => Math.random() - 0.5));
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoadingPage(false);
-    }
-  }
+  const { data, loading } = useGetAllLowongan();
+  const user = DataLogin();
 
-  useEffect(() => {
-    getData();
-  }, []);
+  if (user.role) {
+    console.log("ada");
+  }
 
   const scrollToBottom = () => {
     window.scrollTo({
@@ -45,15 +31,37 @@ export default function Home() {
       behavior: "smooth",
     });
   };
+
+  const [select, setSelect] = useState(null);
   return (
     <>
       <div className="container">
         <Header />
+        {select !== null ? (
+          <button onClick={() => setSelect(null)} className="side-back">
+            <img src="/left-arrow.png" alt="back icon" />
+            <p>Kembali</p>
+          </button>
+        ) : null}
+        <div
+          onClick={() => setSelect(null)}
+          onScroll={(e) => e.stopPropagation()}
+          className={`side-wrap ${select === null ? "side-wrap-off" : ""}`}
+        ></div>
+        {data ? (
+          <SideLowongan
+            data={data?.filter((e) => e.id_lowongan === select)}
+            show={select !== null ? true : false}
+          />
+        ) : null}
         <div className="home">
           <img id="home-logo" src="/logo1.svg" alt="logo" />
           <div className="h-hero">
             <div className="h-h-title">
-              <h1>Temukan Pekerjaan Impianmu dengan Mudah!</h1>
+              <span>
+                <h1>Temukan</h1> <h1>Pekerjaan</h1> <h1>Impianmu dengan</h1>{" "}
+                <h1>Mudah!</h1>
+              </span>
               <p>
                 Unggah CV-mu dan biarkan teknologi machine learning kami
                 mencocokkan profilmu dengan lowongan pekerjaan yang paling
@@ -110,41 +118,45 @@ export default function Home() {
           </div>
           <div className="h-lowongan">
             <div className="h-l-list">
-              {loadingPage
+              {loading
                 ? Array.from({ length: 6 }).map((_, i) => (
-                    <Skeleton width={"100%"} height={"220px"} />
+                    <Skeleton key={i} width={"100%"} height={"220px"} />
                   ))
-                : lowongan.slice(0, 6).map((e) => (
-                    <div
-                      className="h-l-l-item"
-                      onClick={() => nav(`/lowongan/${e.id_lowongan}`)}
-                      key={e.id_lowongan}
-                    >
-                      <span>
-                        <p>{e.kategori}</p>
-                        <h6>{e.posisi}</h6>
-                      </span>
-                      <div className="h-l-l-i-info">
-                        <img src="./location1.svg" alt="location image" />
-                        <p style={{ fontWeight: "600", color: "#212730" }}>
-                          {e.provinsi}
-                        </p>
-                        <p>Full Time</p>
-                      </div>
-                      <div className="h-l-l-i-perusahaan">
+                : data
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 6)
+                    .map((e) => (
+                      <div
+                        className="h-l-l-item"
+                        onClick={() => setSelect(e.id_lowongan)}
+                        key={e.id_lowongan}
+                      >
                         <span>
-                          <p>{moment(e.lowongan_created_at).fromNow()}</p>
-                          <h6>{e.nama_perusahaan}</h6>
+                          <p>{e.kategori}</p>
+                          <h6>{e.posisi}</h6>
                         </span>
-                        <img
-                          src={e.picture ? e.picture : "/profil-perusahaan.svg"}
-                          alt="perusahaan profil"
-                        />
+                        <div className="h-l-l-i-info">
+                          <img src="./location1.svg" alt="location image" />
+                          <p style={{ fontWeight: "600", color: "#212730" }}>
+                            {e.provinsi}
+                          </p>
+                          <p>Full Time</p>
+                        </div>
+                        <div className="h-l-l-i-perusahaan">
+                          <span>
+                            <p>{moment(e.lowongan_created_at).fromNow()}</p>
+                            <h6>{e.nama_perusahaan}</h6>
+                          </span>
+                          <img
+                            src={
+                              e.picture ? e.picture : "/profil-perusahaan.svg"
+                            }
+                            alt="perusahaan profil"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
             </div>
-
             <div className="h-l-title">
               <h4>Lihat lowongan terbaru yang baru dipublikasikan</h4>
               <p>
@@ -233,8 +245,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {token ? (
-        userId?.role === "pelamar" ? (
+      {user.token ? (
+        user.data.role === "pelamar" ? (
           <TabBarPelamar />
         ) : (
           <TabBarPerusahaan />

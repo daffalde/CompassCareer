@@ -21,13 +21,13 @@ export default function Aboutus() {
   async function getData() {
     try {
       const resp = await axios.get(
-        "https://careercompass-backend.vercel.app/data/lowongan"
+        `${import.meta.env.VITE_BACKEND}data/lowongan`
       );
       const resp2 = await axios.get(
-        "https://careercompass-backend.vercel.app/auth/perusahaan"
+        `${import.meta.env.VITE_BACKEND}auth/perusahaan`
       );
       const resp3 = await axios.get(
-        "https://careercompass-backend.vercel.app/auth/pelamar"
+        `${import.meta.env.VITE_BACKEND}auth/pelamar`
       );
       setLowongan(resp.data.data);
       setPerusahaan(resp2.data.data);

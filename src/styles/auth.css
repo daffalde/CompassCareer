@@ -4,13 +4,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  z-index: 10;
 }
 .auth-head img {
   cursor: pointer;
 }
 .auth-body {
   width: 100%;
-  height: calc(100dvh - 80px);
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -190,11 +192,11 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  transition: 0.7s;
+  transition: 1s;
 }
 .a-b-role-hidden {
-  transform: translateX(-500px);
-  transition: 0.7s;
+  transform: translateX(-600px);
+  transition: 1s;
 }
 .a-b-role div {
   display: grid;
@@ -212,19 +214,23 @@
   font-weight: 500;
   color: var(--black);
   border-radius: 10px;
-  border: 3px solid var(--black-50);
+  border: 1px solid var(--black-50);
   background-color: transparent;
   transition: 0.3s;
   cursor: pointer;
 }
 .role-button:hover {
-  border: 3px solid var(--blue);
+  border: 1px solid var(--blue);
   transition: 0.3s;
 }
 .role-on {
-  border: 3px solid transparent;
+  border: 1px solid var(--white);
   color: var(--white);
-  background-color: var(--blue);
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(0, 97, 255, 1) 0%,
+    rgba(96, 239, 255, 1) 100.7%
+  );
 }
 
 /* button */
@@ -235,8 +241,11 @@
   .auth-head {
     padding: 0;
   }
+  .auth-head-img {
+    display: none;
+  }
   .auth-body {
-    height: calc(100dvh - 55px);
+    height: calc(100svh - 55px);
     padding: 0;
   }
   .a-b-content {
@@ -245,7 +254,7 @@
     box-shadow: none;
     height: calc(100vh - 150px);
     border-radius: 0;
-    justify-content: start;
+    justify-content: center;
     padding-top: 30px;
   }
   .a-b-role {

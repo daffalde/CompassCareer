@@ -59,8 +59,7 @@
 
 /* popup */
 .daftar-popup {
-  max-width: 1000px;
-  width: 100%;
+  width: 1000px;
   height: fit-content;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -215,11 +214,23 @@
   border-radius: 5px;
 }
 
-@media screen and (width <= 1000px) {
+@media screen and (width <= 1100px) {
+  .daftar-popup {
+    width: 80vw;
+    grid-template-columns: 1fr 1fr;
+    height: fit-content;
+    z-index: 100;
+  }
+  .daftar-p-content:last-child {
+    border-top: 2px solid var(--black-10);
+    padding-top: 10px;
+  }
+}
+@media screen and (width <= 900px) {
   .daftar-popup {
     width: 100%;
     grid-template-columns: 1fr;
-    height: 100vh;
+    height: fit-content;
     z-index: 100;
   }
   .daftar-p-content:last-child {
@@ -229,31 +240,31 @@
 }
 @media screen and (width <= 900px) {
   .daftar-w-content {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 0.5fr 50px;
+  }
+  .daftar-w-c-pelamar img {
+    width: 50px;
+    height: 50px;
+  }
+  .daftar-w-c-lowongan {
+    display: none;
+    position: absolute;
+    opacity: 0;
   }
   .daftar-header {
     display: none;
   }
   .daftar-w-c-action {
     display: none;
-    opacity: 0;
   }
 }
 
-@media screen and (width <= 800px) {
+@media screen and (width <= 600px) {
   .daftar-w-content {
-    grid-template-columns: 1fr;
-    padding-bottom: 0;
+    grid-template-columns: 1.5fr 0.5fr 50px;
   }
-  .daftar-w-content div {
-    margin-bottom: 10px;
-  }
-  .daftar-header {
-    display: none;
-  }
-  .daftar-w-c-action {
-    display: none;
+  .daftar-w-c-cv {
+    position: absolute;
     opacity: 0;
-    height: 0;
   }
 }

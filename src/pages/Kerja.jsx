@@ -9,19 +9,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { LoadingPage } from "../components/Loading";
 import { kategori } from "../data/Data";
 import axios from "axios";
+import { Skeleton } from "../components/Skeleton";
+import { provinsi } from "../data/Provinsi";
+import { SideLowongan } from "../components/SideLowongan";
 import {
   TabBarGuest,
   TabBarPelamar,
   TabBarPerusahaan,
 } from "../components/TabBar";
-import { Skeleton } from "../components/Skeleton";
-import { provinsi } from "../data/Provinsi";
-import { SideLowongan } from "../components/SideLowongan";
+import { DataLogin } from "../data/DataLogin";
 
 export default function Kerja() {
   const nav = useNavigate();
   const token = Cookies.get("token");
   const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+  const user = DataLogin();
   // ________________________________________________________________________________
   const [inputCari, setInputCari] = useState("");
   const [valueCari, setValueCari] = useState("");
@@ -29,8 +31,7 @@ export default function Kerja() {
   const [inputLokasi, setInputLokasi] = useState("");
   const [valueLokasi, setValueLokasi] = useState("");
 
-  function handleCari(e) {
-    e.preventDefault();
+  function handleCari() {
     setCurrentCursor(0);
     setInputCari(valueCari);
     setInputLokasi(valueLokasi);
@@ -157,6 +158,11 @@ export default function Kerja() {
                   onChange={(e) => setValueCari(e.target.value)}
                   type="text"
                   placeholder="Posisi pekerjaan"
+                  onKeyDown={(key) => {
+                    if (key.key === "Enter") {
+                      handleCari();
+                    }
+                  }}
                 />
               </div>
               <div className="k-b-s-input">
@@ -167,6 +173,11 @@ export default function Kerja() {
                   onChange={(e) => setValueLokasi(e.target.value)}
                   placeholder="Provinsi perusahaan"
                   list="prov"
+                  onKeyDown={(key) => {
+                    if (key.key === "Enter") {
+                      handleCari();
+                    }
+                  }}
                 />
                 <datalist id="prov">
                   {valueLokasi.length >= 2 &&
@@ -183,7 +194,7 @@ export default function Kerja() {
             <div className="k-b-filter">
               <span>
                 <select onChange={(e) => setInputKategori(e.target.value)}>
-                  <option value="" selected hidden>
+                  <option value="" hidden>
                     Kategori
                   </option>
                   {kategori.map((e) => (
@@ -193,7 +204,7 @@ export default function Kerja() {
                   ))}
                 </select>
                 <select onChange={(e) => setInputJenis(e.target.value)}>
-                  <option hidden value="" disabled selected>
+                  <option hidden value="" disabled>
                     Jenis
                   </option>
                   <option value="Full Time">Full Time</option>
@@ -207,71 +218,79 @@ export default function Kerja() {
                   window.location.href = "/lowongan";
                 }}
               >
-                Clear all
+                Bersihkan
               </button>
             </div>
           </div>
 
           <div className="k-list">
-            {loading
-              ? Array.from({ length: 20 }).map((_, i) => (
-                  <Skeleton width={"100%"} height={"300px"} />
-                ))
-              : data
-              ? data.map((e) => (
-                  <div
-                    onClick={() => setSelect(e.id_lowongan)}
-                    className="lowongan-card"
-                    key={e.id_lowongan}
-                  >
-                    <div className="l-c-wrap">
-                      <div className="l-c-tanggal">
-                        <p>
-                          {moment(
-                            e.lowongan_created_at.split("T")[0],
-                            "YYYYMMDD"
-                          ).fromNow()}
-                        </p>
-                      </div>
-                      <div className="l-c-title">
-                        <span>
-                          <p>{e.nama_perusahaan}</p>
-                          <h5>{e.posisi}</h5>
-                        </span>
-                        <img
-                          src={e.picture ? e.picture : "/profil-perusahaan.svg"}
-                          alt="gambar profil perusahaan"
-                        />
-                      </div>
-                      <div className="l-c-skill">
-                        {JSON.parse(e.skill) ? (
-                          JSON.parse(e.skill).map((skill, index) => (
-                            <p key={index}>{skill}</p>
-                          ))
-                        ) : (
-                          <p>Belum ada data</p>
-                        )}
-                      </div>
+            {loading ? (
+              Array.from({ length: 20 }).map((_, i) => (
+                <Skeleton key={i} width={"100%"} height={"300px"} />
+              ))
+            ) : data.length !== 0 ? (
+              data.map((e) => (
+                <div
+                  onClick={() => setSelect(e.id_lowongan)}
+                  className="lowongan-card"
+                  key={e.id_lowongan}
+                >
+                  <div className="l-c-wrap">
+                    <div className="l-c-tanggal">
+                      <p>
+                        {moment(
+                          e.lowongan_created_at.split("T")[0],
+                          "YYYYMMDD"
+                        ).fromNow()}
+                      </p>
                     </div>
-                    <div className="l-c-action">
+                    <div className="l-c-title">
                       <span>
-                        <h6>
-                          Rp{" "}
-                          {e.gaji_min / 1000000 >= 1
-                            ? `${e.gaji_min / 1000000}Jt`
-                            : `${e.gaji_min / 1000}Rb`}
-                          -
-                          {e.gaji_max / 1000000 >= 1
-                            ? `${e.gaji_max / 1000000}Jt`
-                            : `${e.gaji_max / 1000}Rb`}
-                        </h6>
-                        <p>{e.provinsi}</p>
+                        <p>{e.nama_perusahaan}</p>
+                        <h5>{e.posisi}</h5>
                       </span>
-                      <button className="button-main">Lihat</button>
+                      <img
+                        src={e.picture ? e.picture : "/profil-perusahaan.svg"}
+                        alt="gambar profil perusahaan"
+                      />
+                    </div>
+                    <div className="l-c-skill">
+                      {JSON.parse(e.skill) ? (
+                        JSON.parse(e.skill).map((skill, index) => (
+                          <p key={index}>{skill}</p>
+                        ))
+                      ) : (
+                        <p>Belum ada data</p>
+                      )}
                     </div>
                   </div>
-                ))
-              : null}
+                  <div className="l-c-action">
+                    <span>
+                      <h6>
+                        Rp{" "}
+                        {e.gaji_min / 1000000 >= 1
+                          ? `${e.gaji_min / 1000000}Jt`
+                          : `${e.gaji_min / 1000}Rb`}
+                        -
+                        {e.gaji_max / 1000000 >= 1
+                          ? `${e.gaji_max / 1000000}Jt`
+                          : `${e.gaji_max / 1000}Rb`}
+                      </h6>
+                      <p>{e.provinsi}</p>
+                    </span>
+                    <button className="button-main">Lihat</button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="no-data">
+                <img src="/no-data.svg" alt="" />
+                <h5>Data tidak ditemukan</h5>
+                <p>
+                  Coba kata kunci lain atau periksa kembali filter pencarianmu.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Pagination */}
@@ -296,8 +315,8 @@ export default function Kerja() {
         </div>
       </div>
       <br />
-      {token ? (
-        userId?.role === "pelamar" ? (
+      {user.token ? (
+        user.data.role === "pelamar" ? (
           <TabBarPelamar />
         ) : (
           <TabBarPerusahaan />

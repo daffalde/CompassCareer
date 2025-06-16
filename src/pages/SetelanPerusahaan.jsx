@@ -1,14 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { TabBarPelamar, TabBarPerusahaan } from "../components/TabBar";
 import "../styles/setelan.css";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  TabBarGuest,
+  TabBarPelamar,
+  TabBarPerusahaan,
+} from "../components/TabBar";
+import { DataLogin } from "../data/DataLogin";
 
 export default function SetelanPerusahaan() {
   const nav = useNavigate();
   const token = Cookies.get("token");
   const userId = JSON.parse(Cookies.get("data") ? Cookies.get("data") : null);
+  const user = DataLogin();
   const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState(null);
@@ -107,7 +113,15 @@ export default function SetelanPerusahaan() {
           © 2025 · CompassCareer
         </p>
       </div>
-      <TabBarPerusahaan />
+      {user.token ? (
+        user.data.role === "pelamar" ? (
+          <TabBarPelamar />
+        ) : (
+          <TabBarPerusahaan />
+        )
+      ) : (
+        <TabBarGuest />
+      )}
     </>
   );
 }

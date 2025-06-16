@@ -356,3 +356,18 @@
     flex-wrap: wrap;
   }
 }
+
+@media screen and (width <= 500px) {
+  .status-b-d-head {
+    flex-direction: column;
+  }
+  .status-b-d-h-left {
+    width: 100%;
+    justify-content: start;
+  }
+  .status-b-d-h-right {
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+  }
+}

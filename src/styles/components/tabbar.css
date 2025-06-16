@@ -25,6 +25,9 @@
   align-items: center;
   border-radius: 10px;
 }
+.tabbar-content p {
+  line-height: 11px;
+}
 .tabbar-content:active {
   background-color: rgba(0, 94, 244, 0.1);
 }

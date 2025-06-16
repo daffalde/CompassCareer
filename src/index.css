@@ -160,17 +160,43 @@ h6 {
   }
 }
 
+.no-data {
+  place-self: center;
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  color: var(--black);
+  background-color: var(--white);
+  z-index: 10;
+  text-align: center;
+  height: fit-content;
+  width: 80%;
+}
+.no-data img {
+  width: 100px;
+}
+
 /* button */
 .button-main {
   font-size: 16px;
-  background-color: var(--blue);
+  background-image: linear-gradient(
+    to right,
+    #00d2ff 0%,
+    #3a7bd5 51%,
+    #00d2ff 100%
+  );
+  background-size: 200% auto;
   border: transparent;
   color: var(--white);
   padding: 10px 20px;
   border-radius: 500px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
-  transition: 0.3s;
+  transition: 0.7s;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -178,8 +204,8 @@ h6 {
   gap: 10px;
 }
 .button-main:hover {
-  background-color: var(--blue-button-hover);
-  transition: 0.3s;
+  background-position: right center;
+  transition: 0.7s;
 }
 .button-main:active {
   background-color: var(--blue-button-active);
@@ -1146,12 +1172,7 @@ input[list]::-webkit-calendar-picker-indicator {
 .heading-page {
   display: block;
   padding: 20px;
-  background: #48b9ff;
-  background: linear-gradient(
-    269deg,
-    rgba(72, 185, 255, 1) 0%,
-    rgba(0, 93, 244, 1) 100%
-  );
+  background-image: linear-gradient(135deg, #9708cc 10%, #43cbff 100%);
   border-radius: 20px;
   color: var(--white);
   font-weight: 500;
